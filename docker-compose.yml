@@ -1,7 +1,8 @@
 services:
   iq_app:
     build:
-      context: ./services/iq/backend
+      context: ./services/iq
+      dockerfile: ./backend/Dockerfile
     container_name: iq_app
     restart: unless-stopped
     env_file:
