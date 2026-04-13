@@ -64,7 +64,7 @@ async function startTest() {
     nickname: el('nickname').value || null,
     email: el('email').value || null,
   };
-  const res = await fetch('/iq/api/attempts/start', {
+  const res = await fetch('/api/attempts/start', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -127,7 +127,7 @@ async function submitTest() {
     answers: collectAnswers(),
     duration_seconds: durationSeconds,
   };
-  const res = await fetch(`/iq/api/attempts/${state.attemptId}/submit`, {
+  const res = await fetch(`/api/attempts/${state.attemptId}/submit`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),

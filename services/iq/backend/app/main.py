@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -31,6 +32,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/iq", StaticFiles(directory="/app/frontend", html=True), name="frontend")
 
 
 @app.on_event("startup")

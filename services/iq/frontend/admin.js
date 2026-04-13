@@ -5,7 +5,7 @@ const el = (id) => document.getElementById(id);
 async function login() {
   const username = el('admin-username').value;
   const password = el('admin-password').value;
-  const res = await fetch('/iq/api/admin/login', {
+  const res = await fetch('/api/admin/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password }),
@@ -52,7 +52,7 @@ function renderDashboard(data) {
 async function loadDashboard() {
   const token = localStorage.getItem(adminTokenKey);
   if (!token) return;
-  const res = await fetch('/iq/api/admin/dashboard', {
+  const res = await fetch('/api/admin/dashboard', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
