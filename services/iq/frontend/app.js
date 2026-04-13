@@ -113,6 +113,11 @@ function fillResult(data) {
   el('estimated-iq').textContent = data.estimated_iq;
   el('percentile').textContent = `P${data.percentile}`;
   el('duration').textContent = formatTime(data.duration_seconds);
+  const levelText = (data.interpretation.match(/当前大致处于“(.+?)”/) || [])[1] || '结果参考区间';
+  const shortSummary = `你的参考 IQ 为 ${data.estimated_iq}，百分位约为 P${data.percentile}。这表示你在本次测验中的整体表现大致处于“${levelText}”。`;
+  el('result-level-tag').textContent = levelText;
+  el('result-headline').textContent = '你的结果概览';
+  el('result-summary').textContent = shortSummary;
   el('interpretation').textContent = data.interpretation;
   el('disclaimer').textContent = data.disclaimer;
   renderCategoryBreakdown(data.category_breakdown);
