@@ -175,6 +175,8 @@ input {
 .interpretation {
   font-size: 18px;
   color: #f8fafc;
+  line-height: 1.8;
+  white-space: pre-line;
 }
 .review-item {
   padding: 14px 0;
