@@ -16,6 +16,7 @@ body {
   font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
   background: linear-gradient(180deg, #020617, #0f172a 40%, #111827);
   color: var(--text);
+  padding-top: 18px;
 }
 .container {
   width: min(1100px, 92vw);

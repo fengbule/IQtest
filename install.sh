@@ -22,6 +22,6 @@ fi
 docker compose up -d --build
 
 echo "[OK] 部署完成"
-echo "前台: http://服务器IP/"
-echo "后台: http://服务器IP/admin.html"
+echo "IQ 前台: http://服务器IP/iq/"
+echo "IQ 后台: http://服务器IP/iq/admin.html"
 echo "后续更新: ./update.sh"
