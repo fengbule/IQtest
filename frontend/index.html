@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智商检测与认知推理项目</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="hero card">
+      <div>
+        <p class="eyebrow">DEPLOYABLE PROJECT</p>
+        <h1>智商检测与认知推理项目</h1>
+        <p class="subtitle">娱乐性在线认知测评，支持题库、成绩计算、结果复盘、后台统计与 Docker 部署。</p>
+      </div>
+      <div class="hero-actions">
+        <a class="button secondary" href="/admin.html">管理员后台</a>
+      </div>
+    </header>
+
+    <section id="welcome-section" class="card">
+      <h2>开始测评</h2>
+      <p class="notice">注意：这不是临床标准化 IQ 诊断，只是用于展示逻辑、数理、言语与空间推理能力的项目样例。</p>
+      <div class="form-grid">
+        <label>
+          昵称（可选）
+          <input id="nickname" type="text" maxlength="100" placeholder="例如：Cko" />
+        </label>
+        <label>
+          邮箱（可选）
+          <input id="email" type="email" placeholder="用于留档，不填也可测试" />
+        </label>
+      </div>
+      <button id="start-btn" class="button primary">开始答题</button>
+    </section>
+
+    <section id="test-section" class="card hidden">
+      <div class="test-topbar">
+        <div>
+          <h2>答题中</h2>
+          <p id="meta-text">共 20 题</p>
+        </div>
+        <div class="timer-box">
+          <span>剩余时间</span>
+          <strong id="timer">20:00</strong>
+        </div>
+      </div>
+      <form id="questions-form"></form>
+      <div class="actions sticky-actions">
+        <button id="submit-btn" type="button" class="button primary">提交并生成报告</button>
+      </div>
+    </section>
+
+    <section id="result-section" class="hidden">
+      <div class="card result-header">
+        <h2>测评结果</h2>
+        <div class="score-grid">
+          <div class="metric"><span>答对题数</span><strong id="correct-count">-</strong></div>
+          <div class="metric"><span>原始得分</span><strong id="raw-score">-</strong></div>
+          <div class="metric"><span>内部标准分</span><strong id="normalized-score">-</strong></div>
+          <div class="metric highlight"><span>参考 IQ</span><strong id="estimated-iq">-</strong></div>
+          <div class="metric"><span>百分位</span><strong id="percentile">-</strong></div>
+          <div class="metric"><span>用时</span><strong id="duration">-</strong></div>
+        </div>
+        <p id="interpretation" class="interpretation"></p>
+        <p id="disclaimer" class="notice small"></p>
+      </div>
+
+      <div class="card">
+        <h3>维度表现</h3>
+        <div id="category-breakdown" class="dimension-grid"></div>
+      </div>
+
+      <div class="card">
+        <h3>答题复盘</h3>
+        <div id="review-list" class="review-list"></div>
+      </div>
+
+      <div class="actions">
+        <button id="restart-btn" class="button secondary">重新开始</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
