@@ -63,6 +63,12 @@ label {
   font-size: 14px;
   color: var(--muted);
 }
+.question-card > p {
+  font-size: 22px;
+  line-height: 1.75;
+  font-weight: 600;
+  margin: 0 0 18px;
+}
 input {
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -138,13 +144,38 @@ input {
 }
 .option-item {
   border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 14px;
+  border-radius: 18px;
+  padding: 0;
   background: #fff;
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
 .option-item label {
   color: var(--text);
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+  min-height: 92px;
+  padding: 18px 20px;
+  font-size: 19px;
+  line-height: 1.65;
+}
+.option-item input[type="radio"] {
+  width: 22px;
+  height: 22px;
+  margin-top: 4px;
+  flex: 0 0 auto;
+}
+.option-item strong {
+  font-size: 20px;
+}
+.option-item:hover {
+  border-color: rgba(47, 128, 237, 0.38);
+  box-shadow: 0 12px 24px rgba(47, 128, 237, 0.08);
+  transform: translateY(-1px);
 }
 .actions { display: flex; gap: 12px; }
 .sticky-actions {
@@ -215,6 +246,35 @@ input {
   line-height: 1.8;
   white-space: pre-line;
   margin-top: 18px;
+}
+.report-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.report-card {
+  background: #fff;
+  border: 1px solid #dde7f1;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+.report-card-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 700;
+}
+.report-card h4 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.report-card p {
+  margin: 0;
+  color: #33465c;
+  font-size: 16px;
+  line-height: 1.8;
 }
 .review-item {
   padding: 14px 0;
