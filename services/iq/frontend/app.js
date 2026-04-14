@@ -1,55 +1,91 @@
 const state = {
   attemptId: null,
   questions: [],
-  startTimestamp: null,
   timerId: null,
-  remainingSeconds: 20 * 60,
+  remainingSeconds: 25 * 60,
+  startTimestamp: null,
+  submitting: false,
+  activeQuestionId: null,
+  activeSince: null,
+  questionDurations: {},
 };
 
 const el = (id) => document.getElementById(id);
 
 function formatTime(seconds) {
-  const m = String(Math.floor(seconds / 60)).padStart(2, '0');
-  const s = String(seconds % 60).padStart(2, '0');
-  return `${m}:${s}`;
+  const minute = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const second = String(seconds % 60).padStart(2, '0');
+  return `${minute}:${second}`;
+}
+
+function formatPercent(ratio) {
+  return `${Math.round(Number(ratio || 0) * 100)}%`;
+}
+
+function syncActiveTiming() {
+  if (!state.activeQuestionId || !state.activeSince) return;
+  const now = Date.now();
+  const delta = Math.max(0, now - state.activeSince);
+  state.questionDurations[state.activeQuestionId] = (state.questionDurations[state.activeQuestionId] || 0) + delta;
+  state.activeSince = now;
+}
+
+function activateQuestion(questionId) {
+  const now = Date.now();
+  if (state.activeQuestionId && state.activeSince) {
+    const delta = Math.max(0, now - state.activeSince);
+    state.questionDurations[state.activeQuestionId] = (state.questionDurations[state.activeQuestionId] || 0) + delta;
+  }
+  state.activeQuestionId = questionId;
+  state.activeSince = now;
+}
+
+function attachQuestionTracking() {
+  document.querySelectorAll('.question-card').forEach((card) => {
+    const questionId = Number(card.dataset.questionId);
+    card.addEventListener('click', () => activateQuestion(questionId));
+    card.addEventListener('focusin', () => activateQuestion(questionId));
+  });
 }
 
 function renderQuestions() {
   const form = el('questions-form');
-  form.innerHTML = state.questions.map((q, index) => `
-    <div class="question-card">
+  form.innerHTML = state.questions.map((question) => `
+    <article class="question-card" data-question-id="${question.id}">
       <div class="question-head">
-        <strong>第 ${index + 1} 题</strong>
-        <span class="badge">${q.category} · 难度 ${q.difficulty}</span>
+        <strong>第 ${question.order_no} 题</strong>
+        <span class="badge">${question.category} · ${question.difficulty}</span>
       </div>
-      <p>${q.prompt}</p>
+      <p class="question-prompt">${question.prompt}</p>
       <div class="option-grid">
-        ${Object.entries(q.options).map(([key, value]) => `
-          <div class="option-item">
-            <label>
-              <input type="radio" name="q_${q.id}" value="${key}" />
-              <strong>${key}.</strong> ${value}
-            </label>
-          </div>
+        ${Object.entries(question.options).map(([key, value]) => `
+          <label class="option-item">
+            <input type="radio" name="q_${question.id}" value="${key}" />
+            <span class="option-letter">${key}</span>
+            <span>${value}</span>
+          </label>
         `).join('')}
       </div>
-    </div>
+    </article>
   `).join('');
+  attachQuestionTracking();
 }
 
 function collectAnswers() {
-  return state.questions.map((q) => {
-    const checked = document.querySelector(`input[name="q_${q.id}"]:checked`);
+  syncActiveTiming();
+  return state.questions.map((question) => {
+    const checked = document.querySelector(`input[name="q_${question.id}"]:checked`);
     return {
-      question_id: q.id,
+      question_id: question.id,
       selected_option: checked ? checked.value : null,
+      time_spent_seconds: Math.round((state.questionDurations[question.id] || 0) / 1000),
     };
   });
 }
 
 function startTimer() {
   el('timer').textContent = formatTime(state.remainingSeconds);
-  state.timerId = setInterval(() => {
+  state.timerId = window.setInterval(() => {
     state.remainingSeconds -= 1;
     el('timer').textContent = formatTime(state.remainingSeconds);
     if (state.remainingSeconds <= 0) {
@@ -59,136 +95,142 @@ function startTimer() {
   }, 1000);
 }
 
+async function loadPublicInfo() {
+  const response = await fetch('/api/public/info');
+  if (!response.ok) return;
+  const info = await response.json();
+  el('hero-title').textContent = info.title;
+  el('hero-question-count').textContent = `${info.question_count} 题`;
+  el('hero-time-limit').textContent = `${Math.round(info.time_limit_seconds / 60)} 分钟`;
+}
+
 async function startTest() {
   const payload = {
     nickname: el('nickname').value || null,
     email: el('email').value || null,
   };
-  const res = await fetch('/api/attempts/start', {
+
+  const response = await fetch('/api/attempts/start', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   });
-  if (!res.ok) {
-    alert('开始测评失败，请检查后端是否正常运行。');
+
+  if (!response.ok) {
+    alert('开始测评失败，请确认后端服务已正常启动。');
     return;
   }
-  const data = await res.json();
+
+  const data = await response.json();
   state.attemptId = data.attempt_id;
   state.questions = data.questions;
-  state.startTimestamp = Date.now();
   state.remainingSeconds = data.time_limit_seconds;
+  state.startTimestamp = Date.now();
+  state.questionDurations = {};
+  state.activeQuestionId = null;
+  state.activeSince = null;
 
   el('welcome-section').classList.add('hidden');
   el('test-section').classList.remove('hidden');
-  el('meta-text').textContent = `共 ${data.questions.length} 题，建议在 20 分钟内完成`;
+  el('meta-text').textContent = `共 ${data.questions.length} 题，建议在 ${Math.round(data.time_limit_seconds / 60)} 分钟内完成。`;
   renderQuestions();
   startTimer();
 }
 
-function renderCategoryBreakdown(categoryBreakdown) {
-  el('category-breakdown').innerHTML = Object.entries(categoryBreakdown).map(([name, info]) => `
-    <div class="dimension-card">
-      <span>${name}</span>
-      <strong>${info.correct}/${info.total}</strong>
-      <div>正确率 ${info.accuracy}%</div>
-    </div>
+function renderDimensionBreakdown(items) {
+  el('dimension-breakdown').innerHTML = items.map((item) => `
+    <article class="dimension-card">
+      <div class="dimension-top">
+        <div>
+          <h4>${item.label}</h4>
+          <p class="muted">${item.level_label}</p>
+        </div>
+        <div class="score-chip">${item.score}</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-track">
+          <div class="progress-fill" style="width:${Math.min(item.score, 130) / 130 * 100}%"></div>
+        </div>
+        <span>${item.correct}/${item.total}</span>
+      </div>
+      <p class="small muted">正确率：${item.accuracy}%</p>
+      <p>${item.description}</p>
+      <p class="small advice">${item.advice}</p>
+    </article>
   `).join('');
 }
 
 function renderReview(answerReview) {
-  el('review-list').innerHTML = answerReview.map((item, idx) => `
-    <div class="review-item">
-      <div><strong>第 ${idx + 1} 题</strong> · <span class="review-status ${item.is_correct ? 'correct' : 'wrong'}">${item.is_correct ? '答对' : '答错'}</span></div>
-      <div>你的答案：${item.selected_option || '未作答'} ｜ 正确答案：${item.correct_option}</div>
-      <div class="small">解析：${item.explanation || '暂无解析'}</div>
-    </div>
+  el('review-list').innerHTML = answerReview.map((item) => `
+    <article class="review-item ${item.is_correct ? 'is-correct' : 'is-wrong'}">
+      <div class="review-head">
+        <strong>第 ${item.question_order} 题</strong>
+        <span class="review-status">${item.is_correct ? '答对' : '答错'}</span>
+      </div>
+      <p class="review-prompt">${item.prompt}</p>
+      <div class="review-meta">
+        <span>${item.dimension}</span>
+        <span>${item.difficulty}</span>
+        <span>作答用时 ${item.time_spent_seconds}s</span>
+      </div>
+      <p class="small">你的答案：${item.selected_option || '未作答'} ｜ 正确答案：${item.correct_option}</p>
+      <p class="small muted">解析：${item.explanation || '暂无解析'}</p>
+    </article>
   `).join('');
 }
 
 function fillResult(data) {
-  el('correct-count').textContent = `${data.correct_count}/${data.total_questions}`;
-  el('raw-score').textContent = data.raw_score;
-  el('normalized-score').textContent = data.normalized_score;
-  el('estimated-iq').textContent = data.estimated_iq;
+  el('result-headline').textContent = `你的综合认知表现：${data.ability_label}`;
+  el('result-summary').textContent = data.summary;
+  el('result-level-tag').textContent = `${data.ability_level} · ${data.ability_label}`;
+  el('result-validity-tag').textContent = data.validity_label;
+
+  el('cpi-score').textContent = data.cpi_score;
+  el('ability-level').textContent = `${data.ability_level} / ${data.ability_label}`;
   el('percentile').textContent = `P${data.percentile}`;
+  el('iq-range').textContent = data.iq_range;
+  el('correct-count').textContent = `${data.correct_count}/${data.total_questions}`;
   el('duration').textContent = formatTime(data.duration_seconds);
-  const levelText = (data.interpretation.match(/当前大致处于“(.+?)”/) || [])[1] || '结果参考区间';
-  const shortSummary = `你的参考 IQ 为 ${data.estimated_iq}，百分位约为 P${data.percentile}。这表示你在本次测验中的整体表现大致处于“${levelText}”。`;
-  el('result-level-tag').textContent = levelText;
-  el('result-headline').textContent = '你的结果概览';
-  el('result-summary').textContent = shortSummary;
+
+  el('factor-accuracy').textContent = formatPercent(data.score_factors.accuracy_score);
+  el('factor-difficulty').textContent = formatPercent(data.score_factors.difficulty_score);
+  el('factor-completion').textContent = formatPercent(data.score_factors.completion_score);
+  el('factor-quality').textContent = formatPercent(data.score_factors.response_quality_score);
+
   el('interpretation').textContent = data.interpretation;
+  el('validity-title').textContent = data.validity_label;
+  el('validity-note').textContent = data.validity_note;
   el('disclaimer').textContent = data.disclaimer;
-  fillReportCards(data, levelText);
-  renderCategoryBreakdown(data.category_breakdown);
+
+  renderDimensionBreakdown(data.dimension_breakdown);
   renderReview(data.answer_review);
 }
 
-function fillReportCards(data, levelText) {
-  const iq = Number(data.estimated_iq);
-  let rangeTitle = '常见区间';
-  let rangeBody = '这表示你的本次表现大致落在较常见的范围内，基础理解和推理能力具有一定稳定性。';
-
-  if (iq >= 125) {
-    rangeTitle = '优势表现区';
-    rangeBody = '按本测验的内部换算，这通常意味着你在规律发现、信息整合和推理速度上表现较强。';
-  } else if (iq >= 110) {
-    rangeTitle = '良好表现区';
-    rangeBody = '按本测验的内部换算，这说明你的整体表现高于平均水平，在常见推理题上通常更容易找到正确思路。';
-  } else if (iq >= 90) {
-    rangeTitle = '常模区间';
-    rangeBody = '按本测验的内部换算，这属于比较常见的表现区间，说明当前基础能力整体较为正常稳定。';
-  } else if (iq >= 75) {
-    rangeTitle = '基础发展区';
-    rangeBody = '按本测验的内部换算，这说明你当前还有一定提升空间，尤其适合通过复盘和练习来强化薄弱题型。';
-  } else {
-    rangeTitle = '起步提升区';
-    rangeBody = '按本测验的内部换算，这次结果更适合作为一次摸底，不建议直接把它当成固定能力结论。';
-  }
-
-  let crowdTitle = '与他人相比';
-  let crowdBody = `你的参考百分位约为 P${data.percentile}，也就是在本测验内部换算里，大致位于相应位置。百分位越高，说明本次表现相对越靠前。`;
-
-  if (data.percentile <= 5) {
-    crowdBody += ' 但要注意，如果本次没有认真完整作答，这个位置可能会被明显低估。';
-  }
-
-  const sortedCategories = Object.entries(data.category_breakdown || {}).sort((a, b) => b[1].accuracy - a[1].accuracy);
-  const strongest = sortedCategories[0]?.[0] || '暂无';
-  const weakest = sortedCategories[sortedCategories.length - 1]?.[0] || '暂无';
-
-  el('report-overall-title').textContent = `${levelText}`;
-  el('report-overall-body').textContent = `从这次结果看，你目前的整体表现可以概括为“${levelText}”。参考 IQ ${iq} 仅代表本站题库下的粗略区间，不是医学或心理诊断。`;
-
-  el('report-range-title').textContent = rangeTitle;
-  el('report-range-body').textContent = rangeBody;
-
-  el('report-crowd-title').textContent = crowdTitle;
-  el('report-crowd-body').textContent = crowdBody;
-
-  el('report-advice-title').textContent = '下一步怎么提升';
-  el('report-advice-body').textContent = `你本次的相对优势在“${strongest}”，优先提升方向是“${weakest}”。建议先把错题重新做一遍，再集中练习同类型题目，这样比单纯重复刷题更有效。`;
-}
-
 async function submitTest() {
-  if (!state.attemptId) return;
+  if (!state.attemptId || state.submitting) return;
+  state.submitting = true;
+  syncActiveTiming();
   if (state.timerId) clearInterval(state.timerId);
+
   const durationSeconds = Math.min(7200, Math.floor((Date.now() - state.startTimestamp) / 1000));
   const payload = {
     answers: collectAnswers(),
     duration_seconds: durationSeconds,
   };
-  const res = await fetch(`/api/attempts/${state.attemptId}/submit`, {
+
+  const response = await fetch(`/api/attempts/${state.attemptId}/submit`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   });
-  if (!res.ok) {
-    alert('提交失败，请重试。');
+
+  if (!response.ok) {
+    state.submitting = false;
+    alert('提交失败，请稍后重试。');
     return;
   }
-  const data = await res.json();
+
+  const data = await response.json();
   el('test-section').classList.add('hidden');
   el('result-section').classList.remove('hidden');
   fillResult(data);
@@ -198,6 +240,19 @@ function restart() {
   window.location.reload();
 }
 
+window.addEventListener('blur', () => {
+  syncActiveTiming();
+  state.activeSince = null;
+});
+
+window.addEventListener('focus', () => {
+  if (state.activeQuestionId && !state.activeSince) {
+    state.activeSince = Date.now();
+  }
+});
+
 el('start-btn')?.addEventListener('click', startTest);
 el('submit-btn')?.addEventListener('click', submitTest);
 el('restart-btn')?.addEventListener('click', restart);
+
+loadPublicInfo();

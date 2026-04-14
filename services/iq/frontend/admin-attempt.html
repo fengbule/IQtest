@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>单次作答详情</title>
+  <link rel="stylesheet" href="/iq/styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <main class="container">
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">ATTEMPT DETAIL</p>
+            <h1>单次作答详情</h1>
+            <p id="detail-meta" class="muted">正在加载记录详情…</p>
+          </div>
+          <div class="actions">
+            <a class="button secondary" href="/iq/admin.html">返回后台</a>
+            <a class="button secondary" href="/iq/">返回前台</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="detail-section" class="hidden">
+        <section class="card">
+          <div class="result-hero">
+            <div>
+              <h2 id="detail-headline">结果概览</h2>
+              <p id="detail-summary" class="lead"></p>
+            </div>
+            <div class="result-badge-group">
+              <span id="detail-level-tag" class="report-tag">等级</span>
+              <span id="detail-validity-tag" class="report-tag muted-tag">可信度</span>
+            </div>
+          </div>
+          <div id="detail-metrics" class="metric-grid"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h3>四维能力画像</h3>
+              <p class="muted">查看本次在四个维度上的具体表现。</p>
+            </div>
+          </div>
+          <div id="detail-dimensions" class="dimension-grid"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h3>结果解释与可信度</h3>
+            </div>
+          </div>
+          <p id="detail-interpretation" class="interpretation"></p>
+          <div class="notice-panel">
+            <strong id="detail-validity-title">可信度提示</strong>
+            <p id="detail-validity-note" class="muted"></p>
+          </div>
+          <p id="detail-disclaimer" class="footnote"></p>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h3>逐题作答详情</h3>
+              <p class="muted">包含维度、难度、用时、正确答案与解析。</p>
+            </div>
+          </div>
+          <div id="detail-review" class="review-list"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="/iq/admin-attempt.js"></script>
+</body>
+</html>

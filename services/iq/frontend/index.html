@@ -3,115 +3,208 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>智商检测与认知推理项目</title>
+  <title>在线智力检测平台</title>
   <link rel="stylesheet" href="/iq/styles.css" />
 </head>
 <body>
-  <div class="container">
-    <header class="hero card">
-      <div>
-        <p class="eyebrow">DEPLOYABLE PROJECT</p>
-        <h1>智商检测与认知推理项目</h1>
-        <p class="subtitle">娱乐性在线认知测评，支持题库、成绩计算、结果复盘、后台统计与 Docker 部署。</p>
-      </div>
-      <div class="hero-actions">
-        <a class="button secondary" href="/iq/admin.html">管理员后台</a>
-      </div>
-    </header>
+  <div class="page-shell">
+    <div class="ambient ambient-left"></div>
+    <div class="ambient ambient-right"></div>
 
-    <section id="welcome-section" class="card">
-      <h2>开始测评</h2>
-      <p class="notice">注意：这不是临床标准化 IQ 诊断，只是用于展示逻辑、数理、言语与空间推理能力的项目样例。</p>
-      <div class="form-grid">
-        <label>
-          昵称（可选）
-          <input id="nickname" type="text" maxlength="100" placeholder="例如：Cko" />
-        </label>
-        <label>
-          邮箱（可选）
-          <input id="email" type="email" placeholder="用于留档，不填也可测试" />
-        </label>
-      </div>
-      <button id="start-btn" class="button primary">开始答题</button>
-    </section>
-
-    <section id="test-section" class="card hidden">
-      <div class="test-topbar">
-        <div>
-          <h2>答题中</h2>
-          <p id="meta-text">共 20 题</p>
-        </div>
-        <div class="timer-box">
-          <span>剩余时间</span>
-          <strong id="timer">20:00</strong>
-        </div>
-      </div>
-      <form id="questions-form"></form>
-      <div class="actions sticky-actions">
-        <button id="submit-btn" type="button" class="button primary">提交并生成报告</button>
-      </div>
-    </section>
-
-    <section id="result-section" class="hidden">
-      <div class="card result-header">
-        <h2>测评结果</h2>
-        <div class="score-grid">
-          <div class="metric"><span>答对题数</span><strong id="correct-count">-</strong></div>
-          <div class="metric"><span>原始得分</span><strong id="raw-score">-</strong></div>
-          <div class="metric"><span>内部标准分</span><strong id="normalized-score">-</strong></div>
-          <div class="metric highlight"><span>参考 IQ</span><strong id="estimated-iq">-</strong></div>
-          <div class="metric"><span>百分位</span><strong id="percentile">-</strong></div>
-          <div class="metric"><span>用时</span><strong id="duration">-</strong></div>
-        </div>
-        <div class="report-summary">
-          <div class="report-tag" id="result-level-tag">结果等级</div>
-          <h3 id="result-headline">你的结果概览</h3>
-          <p id="result-summary" class="result-summary-text"></p>
-        </div>
-        <p id="interpretation" class="interpretation"></p>
-        <p id="disclaimer" class="notice small"></p>
-      </div>
-
-      <div class="card">
-        <h3>结果报告卡</h3>
-        <div class="report-card-grid">
-          <div class="report-card">
-            <span class="report-card-label">总体结论卡</span>
-            <h4 id="report-overall-title">-</h4>
-            <p id="report-overall-body">-</p>
-          </div>
-          <div class="report-card">
-            <span class="report-card-label">IQ 区间说明</span>
-            <h4 id="report-range-title">-</h4>
-            <p id="report-range-body">-</p>
-          </div>
-          <div class="report-card">
-            <span class="report-card-label">适合人群对照解释</span>
-            <h4 id="report-crowd-title">-</h4>
-            <p id="report-crowd-body">-</p>
-          </div>
-          <div class="report-card">
-            <span class="report-card-label">后续训练建议</span>
-            <h4 id="report-advice-title">-</h4>
-            <p id="report-advice-body">-</p>
+    <main class="container">
+      <header class="hero card">
+        <div class="hero-copy">
+          <p class="eyebrow">COGNITIVE PERFORMANCE DEMO</p>
+          <h1 id="hero-title">在线智力检测平台</h1>
+          <p id="hero-subtitle" class="lead">
+            从数理推理、逻辑推理、言语理解与空间想象四个维度，快速查看你的综合认知表现。
+          </p>
+          <div class="hero-tags">
+            <span class="pill">32 题随机抽取</span>
+            <span class="pill">四维能力画像</span>
+            <span class="pill">结果附带可信度提示</span>
           </div>
         </div>
-      </div>
+        <div class="hero-side">
+          <div class="hero-stat">
+            <span>题量结构</span>
+            <strong id="hero-question-count">32 题</strong>
+          </div>
+          <div class="hero-stat">
+            <span>维度数量</span>
+            <strong>4 个维度</strong>
+          </div>
+          <div class="hero-stat">
+            <span>建议时长</span>
+            <strong id="hero-time-limit">25 分钟</strong>
+          </div>
+          <a class="button secondary" href="/iq/admin.html">进入后台</a>
+        </div>
+      </header>
 
-      <div class="card">
-        <h3>维度表现</h3>
-        <div id="category-breakdown" class="dimension-grid"></div>
-      </div>
+      <section id="welcome-section" class="card intro-card">
+        <div class="section-head">
+          <div>
+            <h2>开始测评</h2>
+            <p class="muted">
+              本项目的结果用于展示站内题库下的综合认知表现，不提供医学、心理或教育诊断结论。
+            </p>
+          </div>
+          <div class="notice-badge">
+            <span>注意</span>
+            <strong>更看重综合表现，而不是单一 IQ 数字</strong>
+          </div>
+        </div>
 
-      <div class="card">
-        <h3>答题复盘</h3>
-        <div id="review-list" class="review-list"></div>
-      </div>
+        <div class="form-grid">
+          <label>
+            昵称（可选）
+            <input id="nickname" type="text" maxlength="100" placeholder="例如：Lina" />
+          </label>
+          <label>
+            邮箱（可选）
+            <input id="email" type="email" placeholder="仅用于演示记录，可留空" />
+          </label>
+        </div>
 
-      <div class="actions">
-        <button id="restart-btn" class="button secondary">重新开始</button>
-      </div>
-    </section>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>评分逻辑更可解释</h3>
+            <p>结果会综合正确率、题目难度、作答完整度与作答质量，而不是只给一个黑盒分数。</p>
+          </article>
+          <article class="feature-card">
+            <h3>结果页更像产品</h3>
+            <p>你会看到 CPI、能力等级、百分位、四维画像、可信度提示与错题复盘。</p>
+          </article>
+          <article class="feature-card">
+            <h3>题目随机抽取</h3>
+            <p>每次从四个维度按固定难度结构抽题，复测时也更有区分度和新鲜感。</p>
+          </article>
+        </div>
+
+        <div class="actions">
+          <button id="start-btn" class="button primary">开始答题</button>
+        </div>
+      </section>
+
+      <section id="test-section" class="card hidden">
+        <div class="test-topbar">
+          <div>
+            <h2>答题中</h2>
+            <p id="meta-text" class="muted">正在准备题目…</p>
+          </div>
+          <div class="timer-box">
+            <span>剩余时间</span>
+            <strong id="timer">25:00</strong>
+          </div>
+        </div>
+        <form id="questions-form"></form>
+        <div class="sticky-actions">
+          <button id="submit-btn" type="button" class="button primary">提交并生成报告</button>
+        </div>
+      </section>
+
+      <section id="result-section" class="hidden result-stack">
+        <section class="card result-overview">
+          <div class="result-hero">
+            <div>
+              <p class="eyebrow">ASSESSMENT REPORT</p>
+              <h2 id="result-headline">你的综合认知表现报告</h2>
+              <p id="result-summary" class="lead"></p>
+            </div>
+            <div class="result-badge-group">
+              <span id="result-level-tag" class="report-tag">能力等级</span>
+              <span id="result-validity-tag" class="report-tag muted-tag">可信度</span>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric highlight">
+              <span>综合认知表现指数 CPI</span>
+              <strong id="cpi-score">-</strong>
+            </div>
+            <div class="metric">
+              <span>能力等级</span>
+              <strong id="ability-level">-</strong>
+            </div>
+            <div class="metric">
+              <span>站内百分位</span>
+              <strong id="percentile">-</strong>
+            </div>
+            <div class="metric">
+              <span>参考 IQ 区间</span>
+              <strong id="iq-range">-</strong>
+            </div>
+            <div class="metric">
+              <span>答对题数</span>
+              <strong id="correct-count">-</strong>
+            </div>
+            <div class="metric">
+              <span>实际用时</span>
+              <strong id="duration">-</strong>
+            </div>
+          </div>
+
+          <div class="factor-grid">
+            <div class="factor-card">
+              <span>正确率得分</span>
+              <strong id="factor-accuracy">-</strong>
+            </div>
+            <div class="factor-card">
+              <span>难度加权得分</span>
+              <strong id="factor-difficulty">-</strong>
+            </div>
+            <div class="factor-card">
+              <span>完整度得分</span>
+              <strong id="factor-completion">-</strong>
+            </div>
+            <div class="factor-card">
+              <span>作答质量得分</span>
+              <strong id="factor-quality">-</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h3>四维能力画像</h3>
+              <p class="muted">每个维度都会展示得分、等级、当前特点和下一步建议。</p>
+            </div>
+          </div>
+          <div id="dimension-breakdown" class="dimension-grid"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h3>结果解释</h3>
+              <p class="muted">报告会用更容易理解的方式解释本次表现。</p>
+            </div>
+          </div>
+          <p id="interpretation" class="interpretation"></p>
+          <div class="notice-panel">
+            <strong id="validity-title">可信度提示</strong>
+            <p id="validity-note" class="muted"></p>
+          </div>
+          <p id="disclaimer" class="footnote"></p>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h3>答题复盘</h3>
+              <p class="muted">你可以查看每道题的作答情况、正确答案和解析。</p>
+            </div>
+          </div>
+          <div id="review-list" class="review-list"></div>
+        </section>
+
+        <div class="actions">
+          <button id="restart-btn" class="button secondary">重新开始</button>
+        </div>
+      </section>
+    </main>
   </div>
 
   <script src="/iq/app.js"></script>

@@ -32,3 +32,5 @@ build/
 
 # Database / uploads
 postgres_data/
+data/
+*.db

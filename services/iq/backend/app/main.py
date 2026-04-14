@@ -1,29 +1,55 @@
-from datetime import datetime
+from __future__ import annotations
+
+import csv
+import io
+from datetime import date, datetime, time
+from pathlib import Path
 from typing import Annotated
 
-from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
-from fastapi.staticfiles import StaticFiles
+from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import func
+from fastapi.responses import RedirectResponse, StreamingResponse
+from fastapi.staticfiles import StaticFiles
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from .database import Base, SessionLocal, engine, get_db
+from .migrations import apply_lightweight_migrations
 from .models import AdminUser, AttemptAnswer, Question, TestAttempt
+from .question_selector import DIMENSIONS, QUESTION_PLAN, TIME_LIMIT_SECONDS, sample_questions
 from .schemas import (
     AdminLoginIn,
     AdminLoginOut,
+    AttemptDetailOut,
+    AttemptListOut,
+    AttemptSummaryOut,
     DashboardStatsOut,
     QuestionOut,
     ResultOut,
+    ScoreFactorsOut,
     StartAttemptIn,
     StartAttemptOut,
     SubmitAttemptIn,
 )
-from .scoring import CATEGORY_LABELS, score_attempt
+from .scoring import (
+    CATEGORY_LABELS,
+    CATEGORY_SCORE_FIELDS,
+    DIFFICULTY_LABELS,
+    ability_from_cpi,
+    score_attempt,
+)
 from .security import create_access_token, decode_access_token, verify_password
 from .seed import seed_admin, seed_questions
 
-app = FastAPI(title="IQ Assessment Project", version="1.0.0")
+
+FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
+VALIDITY_LABELS = {
+    "high": "高可信度",
+    "medium": "中可信度",
+    "low": "低可信度",
+}
+
+app = FastAPI(title="IQ Assessment Project", version="2.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,18 +59,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/iq", StaticFiles(directory="/app/frontend", html=True), name="frontend")
+app.mount("/iq", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")
 
 
 @app.on_event("startup")
-def startup_event():
+def startup_event() -> None:
     Base.metadata.create_all(bind=engine)
+    apply_lightweight_migrations(engine)
     db = SessionLocal()
     try:
         seed_admin(db)
         seed_questions(db)
     finally:
         db.close()
+
+
+@app.get("/", include_in_schema=False)
+def index_redirect():
+    return RedirectResponse(url="/iq/")
 
 
 @app.get("/api/health")
@@ -55,50 +87,159 @@ def health_check():
 @app.get("/api/public/info")
 def public_info():
     return {
-        "title": "智商检测与认知推理项目",
-        "time_limit_seconds": 20 * 60,
-        "question_count": 20,
-        "notice": "这是娱乐性在线认知测评，不等同于临床或教育标准化 IQ 诊断。",
+        "title": "在线智力检测平台",
+        "time_limit_seconds": TIME_LIMIT_SECONDS,
+        "question_count": len(DIMENSIONS) * sum(QUESTION_PLAN.values()),
+        "notice": "本项目展示的是基于站内题库的综合认知表现，不等同于正式标准化 IQ 测验。",
     }
+
+
+def serialize_attempt_summary(attempt: TestAttempt) -> AttemptSummaryOut:
+    ability = ability_from_cpi(attempt.cpi_score)
+    return AttemptSummaryOut(
+        attempt_id=attempt.id,
+        nickname=attempt.nickname or "匿名用户",
+        submitted_at=attempt.submitted_at.isoformat() if attempt.submitted_at else None,
+        duration_seconds=attempt.duration_seconds,
+        cpi_score=attempt.cpi_score,
+        ability_level=attempt.ability_level,
+        ability_label=ability["label"],
+        percentile=attempt.percentile,
+        validity_flag=attempt.validity_flag,
+        validity_label=VALIDITY_LABELS.get(attempt.validity_flag, "低可信度"),
+        iq_range=attempt.iq_range,
+    )
+
+
+def build_result_payload(attempt: TestAttempt, answer_rows: list[AttemptAnswer]) -> ResultOut:
+    derived = score_attempt(answer_rows, attempt.duration_seconds)
+    ability = ability_from_cpi(attempt.cpi_score)
+    return ResultOut(
+        attempt_id=attempt.id,
+        total_questions=attempt.total_questions,
+        answered_count=attempt.answered_count,
+        correct_count=attempt.correct_count,
+        cpi_score=attempt.cpi_score,
+        ability_level=attempt.ability_level,
+        ability_label=ability["label"],
+        percentile=attempt.percentile,
+        iq_range=attempt.iq_range,
+        validity_flag=attempt.validity_flag,
+        validity_label=VALIDITY_LABELS.get(attempt.validity_flag, "低可信度"),
+        validity_note=attempt.validity_note,
+        summary=attempt.summary,
+        interpretation=attempt.interpretation,
+        duration_seconds=attempt.duration_seconds,
+        disclaimer=derived["disclaimer"],
+        score_factors=ScoreFactorsOut(
+            accuracy_score=attempt.accuracy_score,
+            difficulty_score=attempt.difficulty_score,
+            completion_score=attempt.completion_score,
+            response_quality_score=attempt.response_quality_score,
+        ),
+        dimension_breakdown=derived["dimension_breakdown"],
+        answer_review=derived["answer_review"],
+    )
+
+
+def build_attempt_detail(attempt: TestAttempt) -> AttemptDetailOut:
+    payload = build_result_payload(attempt, attempt.answers).model_dump()
+    payload.update(
+        {
+            "nickname": attempt.nickname or "匿名用户",
+            "email": attempt.email,
+            "started_at": attempt.started_at.isoformat(),
+            "submitted_at": attempt.submitted_at.isoformat() if attempt.submitted_at else "",
+        }
+    )
+    return AttemptDetailOut(**payload)
+
+
+def query_attempts(
+    db: Session,
+    keyword: str | None = None,
+    level: str | None = None,
+    validity: str | None = None,
+    date_from: date | None = None,
+    date_to: date | None = None,
+):
+    query = db.query(TestAttempt).filter(TestAttempt.submitted_at.is_not(None))
+    if keyword:
+        like_value = f"%{keyword.strip()}%"
+        query = query.filter(
+            or_(TestAttempt.nickname.like(like_value), TestAttempt.email.like(like_value))
+        )
+    if level:
+        query = query.filter(TestAttempt.ability_level == level.upper())
+    if validity:
+        query = query.filter(TestAttempt.validity_flag == validity.lower())
+    if date_from:
+        query = query.filter(TestAttempt.submitted_at >= datetime.combine(date_from, time.min))
+    if date_to:
+        query = query.filter(TestAttempt.submitted_at <= datetime.combine(date_to, time.max))
+    return query
 
 
 @app.post("/api/attempts/start", response_model=StartAttemptOut)
 def start_attempt(payload: StartAttemptIn, request: Request, db: Session = Depends(get_db)):
-    questions = (
-        db.query(Question)
-        .filter(Question.is_active.is_(True))
-        .order_by(Question.order_no.asc())
-        .all()
-    )
+    question_rows = db.query(Question).filter(Question.is_active.is_(True)).all()
+    try:
+        selected_questions = sample_questions(question_rows)
+    except ValueError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
     attempt = TestAttempt(
         nickname=payload.nickname,
         email=str(payload.email) if payload.email else None,
         started_at=datetime.utcnow(),
-        total_questions=len(questions),
+        total_questions=len(selected_questions),
         client_ip=request.client.host if request.client else None,
         user_agent=request.headers.get("user-agent", "")[:255],
     )
     db.add(attempt)
+    db.flush()
+
+    for display_order, question in enumerate(selected_questions, start=1):
+        db.add(
+            AttemptAnswer(
+                attempt_id=attempt.id,
+                question_id=question.id,
+                question_order=display_order,
+                question_dimension=question.category,
+                question_difficulty=question.difficulty,
+                question_weight=question.difficulty_weight,
+                estimated_seconds=question.estimated_seconds,
+                prompt_snapshot=question.prompt,
+                correct_answer_snapshot=question.correct_option,
+                explanation_snapshot=question.explanation,
+            )
+        )
+
     db.commit()
     db.refresh(attempt)
 
     question_payload = [
         QuestionOut(
-            id=q.id,
-            order_no=q.order_no,
-            category=CATEGORY_LABELS.get(q.category, q.category),
-            difficulty=q.difficulty,
-            prompt=q.prompt,
-            options={"A": q.option_a, "B": q.option_b, "C": q.option_c, "D": q.option_d},
+            id=question.id,
+            order_no=index,
+            category=CATEGORY_LABELS.get(question.category, question.category),
+            difficulty=DIFFICULTY_LABELS.get(question.difficulty, question.difficulty),
+            prompt=question.prompt,
+            options={
+                "A": question.option_a,
+                "B": question.option_b,
+                "C": question.option_c,
+                "D": question.option_d,
+            },
         )
-        for q in questions
+        for index, question in enumerate(selected_questions, start=1)
     ]
     return StartAttemptOut(
         attempt_id=attempt.id,
         started_at=attempt.started_at.isoformat(),
-        time_limit_seconds=20 * 60,
+        time_limit_seconds=TIME_LIMIT_SECONDS,
         questions=question_payload,
-        note="题目提交后将生成内部标准化得分、分维度表现与答题复盘。",
+        note="本次将从四个维度随机抽取 32 题，结果会综合正确率、题目难度、完整度与作答质量生成。",
     )
 
 
@@ -110,46 +251,39 @@ def submit_attempt(attempt_id: int, payload: SubmitAttemptIn, db: Session = Depe
     if attempt.submitted_at is not None:
         raise HTTPException(status_code=400, detail="attempt already submitted")
 
-    questions = db.query(Question).filter(Question.is_active.is_(True)).order_by(Question.order_no.asc()).all()
-    submitted_answers = {item.question_id: item.selected_option for item in payload.answers}
-    scoring = score_attempt(questions, submitted_answers, payload.duration_seconds)
+    answer_rows = list(attempt.answers)
+    answer_map = {item.question_id: item for item in payload.answers}
 
+    for row in answer_rows:
+        submitted = answer_map.get(row.question_id)
+        row.selected_option = submitted.selected_option if submitted else None
+        row.time_spent_seconds = submitted.time_spent_seconds if submitted else 0
+        row.is_correct = bool(row.selected_option) and row.selected_option == row.correct_answer_snapshot
+
+    scoring = score_attempt(answer_rows, payload.duration_seconds)
     attempt.submitted_at = datetime.utcnow()
     attempt.duration_seconds = payload.duration_seconds
+    attempt.answered_count = scoring["answered_count"]
     attempt.correct_count = scoring["correct_count"]
-    attempt.raw_score = scoring["raw_score"]
-    attempt.normalized_score = scoring["normalized_score"]
-    attempt.estimated_iq = scoring["estimated_iq"]
+    attempt.accuracy_score = scoring["accuracy_score"]
+    attempt.difficulty_score = scoring["difficulty_score"]
+    attempt.completion_score = scoring["completion_score"]
+    attempt.response_quality_score = scoring["response_quality_score"]
+    attempt.cpi_score = scoring["cpi_score"]
     attempt.percentile = scoring["percentile"]
+    attempt.ability_level = scoring["ability_level"]
+    attempt.iq_range = scoring["iq_range"]
+    attempt.validity_flag = scoring["validity_flag"]
+    attempt.validity_note = scoring["validity_note"]
+    attempt.summary = scoring["summary"]
     attempt.interpretation = scoring["interpretation"]
 
-    for q in questions:
-        selected = submitted_answers.get(q.id)
-        db.add(
-            AttemptAnswer(
-                attempt_id=attempt.id,
-                question_id=q.id,
-                selected_option=selected,
-                is_correct=(selected == q.correct_option),
-            )
-        )
+    for field_name, value in scoring["stored_dimension_scores"].items():
+        setattr(attempt, field_name, value)
 
     db.commit()
-
-    return ResultOut(
-        attempt_id=attempt.id,
-        total_questions=scoring["total_questions"],
-        correct_count=scoring["correct_count"],
-        raw_score=scoring["raw_score"],
-        normalized_score=scoring["normalized_score"],
-        estimated_iq=scoring["estimated_iq"],
-        percentile=scoring["percentile"],
-        interpretation=scoring["interpretation"],
-        duration_seconds=payload.duration_seconds,
-        disclaimer="本结果仅基于站内题库与内部换算模型，不能替代正式心理测验、教育测量或医疗判断。",
-        category_breakdown=scoring["category_breakdown"],
-        answer_review=scoring["review"],
-    )
+    db.refresh(attempt)
+    return build_result_payload(attempt, answer_rows)
 
 
 @app.get("/api/attempts/{attempt_id}/result", response_model=ResultOut)
@@ -157,28 +291,7 @@ def get_result(attempt_id: int, db: Session = Depends(get_db)):
     attempt = db.query(TestAttempt).filter(TestAttempt.id == attempt_id).first()
     if not attempt or attempt.submitted_at is None:
         raise HTTPException(status_code=404, detail="result not found")
-
-    questions = db.query(Question).filter(Question.is_active.is_(True)).order_by(Question.order_no.asc()).all()
-    submitted_answers = {
-        row.question_id: row.selected_option
-        for row in db.query(AttemptAnswer).filter(AttemptAnswer.attempt_id == attempt.id).all()
-    }
-    scoring = score_attempt(questions, submitted_answers, attempt.duration_seconds)
-
-    return ResultOut(
-        attempt_id=attempt.id,
-        total_questions=scoring["total_questions"],
-        correct_count=scoring["correct_count"],
-        raw_score=scoring["raw_score"],
-        normalized_score=scoring["normalized_score"],
-        estimated_iq=attempt.estimated_iq,
-        percentile=attempt.percentile,
-        interpretation=attempt.interpretation,
-        duration_seconds=attempt.duration_seconds,
-        disclaimer="本结果仅基于站内题库与内部换算模型，不能替代正式心理测验、教育测量或医疗判断。",
-        category_breakdown=scoring["category_breakdown"],
-        answer_review=scoring["review"],
-    )
+    return build_result_payload(attempt, list(attempt.answers))
 
 
 @app.post("/api/admin/login", response_model=AdminLoginOut)
@@ -188,7 +301,6 @@ def admin_login(payload: AdminLoginIn, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="invalid credentials")
     token = create_access_token(subject=admin.username)
     return AdminLoginOut(access_token=token)
-
 
 
 def get_current_admin(authorization: Annotated[str | None, Header()] = None):
@@ -204,48 +316,146 @@ def get_current_admin(authorization: Annotated[str | None, Header()] = None):
 @app.get("/api/admin/dashboard", response_model=DashboardStatsOut)
 def admin_dashboard(_: str = Depends(get_current_admin), db: Session = Depends(get_db)):
     attempts = db.query(TestAttempt).all()
-    completed = [x for x in attempts if x.submitted_at is not None]
-    total_attempts = len(attempts)
-    completed_attempts = len(completed)
-    avg_iq = round(sum(x.estimated_iq for x in completed) / completed_attempts, 2) if completed_attempts else 0.0
-    avg_duration = round(sum(x.duration_seconds for x in completed) / completed_attempts, 2) if completed_attempts else 0.0
-    avg_accuracy = round(sum(x.raw_score for x in completed) / completed_attempts, 2) if completed_attempts else 0.0
+    completed = [item for item in attempts if item.submitted_at is not None]
+    completed_count = len(completed)
 
-    question_map = {q.id: q for q in db.query(Question).all()}
-    category_rollup: dict[str, list[int]] = {}
-    rows = db.query(AttemptAnswer).all()
-    for row in rows:
-        question = question_map.get(row.question_id)
-        if not question:
-            continue
-        key = CATEGORY_LABELS.get(question.category, question.category)
-        category_rollup.setdefault(key, [0, 0])
-        category_rollup[key][0] += int(row.is_correct)
-        category_rollup[key][1] += 1
+    average_cpi_score = round(
+        sum(item.cpi_score for item in completed) / completed_count, 2
+    ) if completed_count else 0.0
+    average_completion_score = round(
+        (sum(item.completion_score for item in completed) / completed_count) * 100, 2
+    ) if completed_count else 0.0
+    valid_attempt_rate = round(
+        (sum(1 for item in completed if item.validity_flag != "low") / completed_count) * 100,
+        2,
+    ) if completed_count else 0.0
 
-    category_accuracy = {
-        key: round((value[0] / value[1]) * 100, 2) if value[1] else 0.0
-        for key, value in category_rollup.items()
+    dimension_rollup = {label: [0, 0] for label in CATEGORY_LABELS.values()}
+    for attempt in completed:
+        for row in attempt.answers:
+            label = CATEGORY_LABELS.get(row.question_dimension, row.question_dimension)
+            dimension_rollup.setdefault(label, [0, 0])
+            dimension_rollup[label][0] += int(row.is_correct)
+            dimension_rollup[label][1] += 1
+
+    dimension_accuracy = {
+        label: round((correct / total) * 100, 2) if total else 0.0
+        for label, (correct, total) in dimension_rollup.items()
     }
 
     recent_results = [
-        {
-            "attempt_id": x.id,
-            "nickname": x.nickname or "匿名用户",
-            "estimated_iq": x.estimated_iq,
-            "percentile": x.percentile,
-            "duration_seconds": x.duration_seconds,
-            "submitted_at": x.submitted_at.isoformat() if x.submitted_at else None,
-        }
-        for x in sorted(completed, key=lambda item: item.submitted_at or datetime.min, reverse=True)[:20]
+        serialize_attempt_summary(item)
+        for item in sorted(completed, key=lambda row: row.submitted_at or datetime.min, reverse=True)[:20]
     ]
 
     return DashboardStatsOut(
-        total_attempts=total_attempts,
-        completed_attempts=completed_attempts,
-        average_estimated_iq=avg_iq,
-        average_duration_seconds=avg_duration,
-        average_accuracy=avg_accuracy,
-        category_accuracy=category_accuracy,
+        total_attempts=len(attempts),
+        completed_attempts=completed_count,
+        average_cpi_score=average_cpi_score,
+        average_completion_score=average_completion_score,
+        valid_attempt_rate=valid_attempt_rate,
+        dimension_accuracy=dimension_accuracy,
         recent_results=recent_results,
     )
+
+
+@app.get("/api/admin/attempts", response_model=AttemptListOut)
+def list_attempts(
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=10, ge=1, le=100),
+    keyword: str | None = None,
+    level: str | None = None,
+    validity: str | None = None,
+    date_from: date | None = None,
+    date_to: date | None = None,
+    _: str = Depends(get_current_admin),
+    db: Session = Depends(get_db),
+):
+    query = query_attempts(db, keyword=keyword, level=level, validity=validity, date_from=date_from, date_to=date_to)
+    total = query.count()
+    rows = (
+        query.order_by(TestAttempt.submitted_at.desc())
+        .offset((page - 1) * page_size)
+        .limit(page_size)
+        .all()
+    )
+    return AttemptListOut(
+        page=page,
+        page_size=page_size,
+        total=total,
+        items=[serialize_attempt_summary(row) for row in rows],
+    )
+
+
+@app.get("/api/admin/attempts/export.csv")
+def export_attempts(
+    keyword: str | None = None,
+    level: str | None = None,
+    validity: str | None = None,
+    date_from: date | None = None,
+    date_to: date | None = None,
+    _: str = Depends(get_current_admin),
+    db: Session = Depends(get_db),
+):
+    rows = (
+        query_attempts(db, keyword=keyword, level=level, validity=validity, date_from=date_from, date_to=date_to)
+        .order_by(TestAttempt.submitted_at.desc())
+        .all()
+    )
+
+    buffer = io.StringIO()
+    buffer.write("\ufeff")
+    writer = csv.writer(buffer)
+    writer.writerow(
+        [
+            "attempt_id",
+            "user_name",
+            "submitted_at",
+            "total_seconds",
+            "answered_count",
+            "correct_count",
+            "cpi",
+            "level",
+            "percentile",
+            "iq_range",
+            "math_score",
+            "logic_score",
+            "verbal_score",
+            "spatial_score",
+            "validity_flag",
+        ]
+    )
+    for row in rows:
+        writer.writerow(
+            [
+                row.id,
+                row.nickname or "匿名用户",
+                row.submitted_at.isoformat() if row.submitted_at else "",
+                row.duration_seconds,
+                row.answered_count,
+                row.correct_count,
+                row.cpi_score,
+                row.ability_level,
+                row.percentile,
+                row.iq_range,
+                row.math_score,
+                row.logic_score,
+                row.verbal_score,
+                row.spatial_score,
+                row.validity_flag,
+            ]
+        )
+
+    return StreamingResponse(
+        iter([buffer.getvalue()]),
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": "attachment; filename=iq-attempts.csv"},
+    )
+
+
+@app.get("/api/admin/attempts/{attempt_id}", response_model=AttemptDetailOut)
+def attempt_detail(attempt_id: int, _: str = Depends(get_current_admin), db: Session = Depends(get_db)):
+    attempt = db.query(TestAttempt).filter(TestAttempt.id == attempt_id).first()
+    if not attempt or attempt.submitted_at is None:
+        raise HTTPException(status_code=404, detail="attempt not found")
+    return build_attempt_detail(attempt)

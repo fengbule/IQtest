@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Literal
 
 from pydantic import BaseModel, EmailStr, Field
@@ -7,7 +9,7 @@ class QuestionOut(BaseModel):
     id: int
     order_no: int
     category: str
-    difficulty: int
+    difficulty: str
     prompt: str
     options: dict[str, str]
 
@@ -28,6 +30,7 @@ class StartAttemptOut(BaseModel):
 class AnswerIn(BaseModel):
     question_id: int
     selected_option: Literal["A", "B", "C", "D"] | None = None
+    time_spent_seconds: int = Field(default=0, ge=0, le=600)
 
 
 class SubmitAttemptIn(BaseModel):
@@ -35,26 +38,57 @@ class SubmitAttemptIn(BaseModel):
     duration_seconds: int = Field(ge=0, le=7200)
 
 
+class DimensionBreakdownOut(BaseModel):
+    key: str
+    label: str
+    correct: int
+    total: int
+    accuracy: float
+    score: int
+    level: str
+    level_label: str
+    description: str
+    advice: str
+
+
 class AnswerReviewOut(BaseModel):
-    question_id: int
+    question_order: int
+    prompt: str
+    dimension: str
+    difficulty: str
     selected_option: str | None
     correct_option: str
     is_correct: bool
+    time_spent_seconds: int
     explanation: str | None
+
+
+class ScoreFactorsOut(BaseModel):
+    accuracy_score: float
+    difficulty_score: float
+    completion_score: float
+    response_quality_score: float
 
 
 class ResultOut(BaseModel):
     attempt_id: int
     total_questions: int
+    answered_count: int
     correct_count: int
-    raw_score: float
-    normalized_score: float
-    estimated_iq: int
+    cpi_score: int
+    ability_level: str
+    ability_label: str
     percentile: int
+    iq_range: str
+    validity_flag: str
+    validity_label: str
+    validity_note: str
+    summary: str
     interpretation: str
     duration_seconds: int
     disclaimer: str
-    category_breakdown: dict[str, dict[str, float]]
+    score_factors: ScoreFactorsOut
+    dimension_breakdown: list[DimensionBreakdownOut]
     answer_review: list[AnswerReviewOut]
 
 
@@ -68,11 +102,39 @@ class AdminLoginOut(BaseModel):
     token_type: str = "bearer"
 
 
+class AttemptSummaryOut(BaseModel):
+    attempt_id: int
+    nickname: str
+    submitted_at: str | None
+    duration_seconds: int
+    cpi_score: int
+    ability_level: str
+    ability_label: str
+    percentile: int
+    validity_flag: str
+    validity_label: str
+    iq_range: str
+
+
+class AttemptListOut(BaseModel):
+    page: int
+    page_size: int
+    total: int
+    items: list[AttemptSummaryOut]
+
+
 class DashboardStatsOut(BaseModel):
     total_attempts: int
     completed_attempts: int
-    average_estimated_iq: float
-    average_duration_seconds: float
-    average_accuracy: float
-    category_accuracy: dict[str, float]
-    recent_results: list[dict]
+    average_cpi_score: float
+    average_completion_score: float
+    valid_attempt_rate: float
+    dimension_accuracy: dict[str, float]
+    recent_results: list[AttemptSummaryOut]
+
+
+class AttemptDetailOut(ResultOut):
+    nickname: str
+    email: str | None
+    started_at: str
+    submitted_at: str

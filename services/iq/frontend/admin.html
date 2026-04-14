@@ -3,39 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>管理员后台</title>
+  <title>IQ 测评后台</title>
   <link rel="stylesheet" href="/iq/styles.css" />
 </head>
 <body>
-  <div class="container narrow">
-    <section class="card">
-      <h1>管理员后台</h1>
-      <p class="subtitle">登录后可查看测评统计与最近成绩。</p>
-      <div class="form-grid single">
-        <label>
-          用户名
-          <input id="admin-username" type="text" placeholder="admin" />
-        </label>
-        <label>
-          密码
-          <input id="admin-password" type="password" placeholder="请输入密码" />
-        </label>
-      </div>
-      <button id="login-btn" class="button primary">登录</button>
-      <p id="login-message" class="notice small"></p>
-    </section>
+  <div class="page-shell">
+    <main class="container">
+      <section class="card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">ADMIN CONSOLE</p>
+            <h1>IQ 测评后台</h1>
+            <p class="muted">查看测评概览、筛选记录、进入单次详情并导出 CSV。</p>
+          </div>
+          <div class="actions">
+            <a class="button secondary" href="/iq/">返回前台</a>
+            <button id="logout-btn" class="button secondary" type="button">退出登录</button>
+          </div>
+        </div>
+      </section>
 
-    <section id="dashboard-section" class="card hidden">
-      <h2>统计概览</h2>
-      <div id="dashboard-metrics" class="score-grid"></div>
+      <section class="card">
+        <h2>管理员登录</h2>
+        <div class="form-grid">
+          <label>
+            用户名
+            <input id="admin-username" type="text" placeholder="admin" />
+          </label>
+          <label>
+            密码
+            <input id="admin-password" type="password" placeholder="请输入后台密码" />
+          </label>
+        </div>
+        <div class="actions">
+          <button id="login-btn" class="button primary" type="button">登录</button>
+        </div>
+        <p id="login-message" class="footnote"></p>
+      </section>
 
-      <h3>维度正确率</h3>
-      <div id="dashboard-categories" class="dimension-grid"></div>
+      <section id="dashboard-section" class="card hidden">
+        <div class="section-head">
+          <div>
+            <h2>统计概览</h2>
+            <p class="muted">关注整体样本质量、平均表现和四维维度正确率。</p>
+          </div>
+        </div>
+        <div id="dashboard-metrics" class="metric-grid"></div>
+        <div class="section-head compact">
+          <h3>维度正确率</h3>
+        </div>
+        <div id="dashboard-categories" class="dimension-grid"></div>
+      </section>
 
-      <h3>最近测评</h3>
-      <div id="recent-results" class="review-list"></div>
-    </section>
+      <section id="attempts-section" class="card hidden">
+        <div class="section-head">
+          <div>
+            <h2>作答记录</h2>
+            <p class="muted">支持按昵称、等级、可信度和时间范围筛选。</p>
+          </div>
+          <button id="export-btn" class="button secondary" type="button">导出 CSV</button>
+        </div>
+
+        <div class="filter-grid">
+          <label>
+            关键词
+            <input id="filter-keyword" type="text" placeholder="昵称或邮箱" />
+          </label>
+          <label>
+            能力等级
+            <select id="filter-level">
+              <option value="">全部</option>
+              <option value="S">S</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="D">D</option>
+              <option value="E">E</option>
+            </select>
+          </label>
+          <label>
+            可信度
+            <select id="filter-validity">
+              <option value="">全部</option>
+              <option value="high">高</option>
+              <option value="medium">中</option>
+              <option value="low">低</option>
+            </select>
+          </label>
+          <label>
+            开始日期
+            <input id="filter-date-from" type="date" />
+          </label>
+          <label>
+            结束日期
+            <input id="filter-date-to" type="date" />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="search-btn" class="button primary" type="button">查询</button>
+          <button id="reset-btn" class="button secondary" type="button">重置筛选</button>
+        </div>
+
+        <div id="attempt-list" class="admin-list"></div>
+
+        <div class="pager">
+          <button id="prev-page-btn" class="button secondary" type="button">上一页</button>
+          <span id="page-info" class="muted">第 1 页</span>
+          <button id="next-page-btn" class="button secondary" type="button">下一页</button>
+        </div>
+      </section>
+    </main>
   </div>
+
   <script src="/iq/admin.js"></script>
 </body>
 </html>

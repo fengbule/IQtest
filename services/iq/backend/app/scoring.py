@@ -1,5 +1,6 @@
-from collections import defaultdict
-from math import erf, sqrt
+from __future__ import annotations
+
+from collections import Counter, defaultdict
 
 
 CATEGORY_LABELS = {
@@ -9,140 +10,298 @@ CATEGORY_LABELS = {
     "spatial": "空间想象",
 }
 
+CATEGORY_SCORE_FIELDS = {
+    "numerical": "math_score",
+    "logical": "logic_score",
+    "verbal": "verbal_score",
+    "spatial": "spatial_score",
+}
 
-def normal_cdf(z: float) -> float:
-    return 0.5 * (1 + erf(z / sqrt(2)))
+DIFFICULTY_LABELS = {
+    "easy": "基础题",
+    "medium": "进阶题",
+    "hard": "挑战题",
+}
+
+ABILITY_META = [
+    ("S", "突出水平", "突出表现区", 125),
+    ("A", "优秀水平", "优秀表现区", 110),
+    ("B", "良好水平", "良好表现区", 90),
+    ("C", "中等水平", "中等表现区", 75),
+    ("D", "发展提升", "发展提升区", 60),
+    ("E", "基础观察", "基础观察区", 0),
+]
+
+DIMENSION_FEEDBACK = {
+    "numerical": {
+        "strength": "你在数量关系和基础计算转换上更容易把握核心结构。",
+        "focus": "建议继续练习数列、比例和方程转化，让计算过程更稳定。",
+    },
+    "logical": {
+        "strength": "你在规则识别和条件推断方面有不错的敏感度。",
+        "focus": "建议多做真假推理、条件命题和排序约束题，强化严密推断。",
+    },
+    "verbal": {
+        "strength": "你在词义辨析和信息提炼方面表现较稳。",
+        "focus": "建议加强阅读概括、语义关系和语句组织训练，提升理解精度。",
+    },
+    "spatial": {
+        "strength": "你在图形旋转、镜像和空间位置判断方面更容易建立直觉。",
+        "focus": "建议继续练习折叠、旋转和多步骤图形变换，提升空间想象速度。",
+    },
+}
 
 
+def clamp(value: float, lower: float, upper: float) -> float:
+    return max(lower, min(upper, value))
 
-def score_attempt(question_rows, submitted_answers: dict[int, str | None], duration_seconds: int):
-    total = len(question_rows)
-    correct_count = 0
-    answered_count = 0
-    difficulty_sum = sum(q.difficulty for q in question_rows)
-    earned_weight = 0
-    review = []
-    category_totals = defaultdict(lambda: {"total": 0, "correct": 0})
 
-    for q in question_rows:
-        selected = submitted_answers.get(q.id)
-        if selected is not None:
-            answered_count += 1
-        is_correct = selected == q.correct_option
-        if is_correct:
-            correct_count += 1
-            earned_weight += q.difficulty
-        category_totals[q.category]["total"] += 1
-        category_totals[q.category]["correct"] += int(is_correct)
-        review.append(
+def ability_from_cpi(cpi: int) -> dict[str, str]:
+    for level, label, zone, threshold in ABILITY_META:
+        if cpi >= threshold:
+            return {
+                "level": level,
+                "label": label,
+                "zone": zone,
+            }
+    return {
+        "level": "E",
+        "label": "基础观察",
+        "zone": "基础观察区",
+    }
+
+
+def percentile_from_cpi(cpi: int) -> int:
+    bands = [
+        (40, 59, 10, 20),
+        (60, 74, 20, 40),
+        (75, 89, 40, 60),
+        (90, 109, 60, 80),
+        (110, 124, 80, 92),
+        (125, 130, 92, 98),
+    ]
+    bounded = int(clamp(cpi, 40, 130))
+    for start, end, low, high in bands:
+        if start <= bounded <= end:
+            if end == start:
+                return low
+            ratio = (bounded - start) / (end - start)
+            return round(low + ratio * (high - low))
+    return 10
+
+
+def iq_range_from_cpi(cpi: int) -> str:
+    if cpi >= 125:
+        return "120-129"
+    if cpi >= 110:
+        return "110-119"
+    if cpi >= 90:
+        return "100-109"
+    if cpi >= 75:
+        return "90-99"
+    return "90 以下参考区间"
+
+
+def option_repeat_ratio(answer_rows: list) -> float:
+    selected = [row.selected_option for row in answer_rows if row.selected_option]
+    if not selected:
+        return 0.0
+    most_common = Counter(selected).most_common(1)[0][1]
+    return most_common / len(selected)
+
+
+def response_quality(answer_rows: list, duration_seconds: int, completion_score: float) -> tuple[float, dict]:
+    answered_rows = [row for row in answer_rows if row.selected_option]
+    answered_count = len(answered_rows)
+    avg_seconds = duration_seconds / answered_count if answered_count else 0.0
+    very_fast_count = 0
+    for row in answered_rows:
+        threshold = max(4, int(row.estimated_seconds * 0.35))
+        if row.time_spent_seconds and row.time_spent_seconds < threshold:
+            very_fast_count += 1
+    very_fast_ratio = very_fast_count / answered_count if answered_count else 0.0
+    repeat_ratio = option_repeat_ratio(answer_rows)
+
+    score = 1.0
+    if avg_seconds and avg_seconds < 4:
+        score -= 0.20
+    if very_fast_ratio > 0.35:
+        score -= 0.15
+    if completion_score < 0.85:
+        score -= 0.10
+    if repeat_ratio > 0.55:
+        score -= 0.10
+    score = clamp(score, 0.60, 1.0)
+
+    return score, {
+        "avg_seconds_per_question": round(avg_seconds, 2),
+        "very_fast_ratio": round(very_fast_ratio, 4),
+        "repeat_ratio": round(repeat_ratio, 4),
+    }
+
+
+def validity_from_scores(
+    completion_score: float,
+    quality_score: float,
+    quality_meta: dict,
+) -> dict[str, str]:
+    avg_seconds = quality_meta["avg_seconds_per_question"]
+    very_fast_ratio = quality_meta["very_fast_ratio"]
+
+    if completion_score >= 0.95 and quality_score >= 0.90 and very_fast_ratio <= 0.20:
+        return {
+            "flag": "high",
+            "label": "高可信度",
+            "note": "作答完整、节奏稳定，本次结果具有较高参考价值。",
+        }
+    if completion_score >= 0.85 and quality_score >= 0.75 and avg_seconds >= 4:
+        return {
+            "flag": "medium",
+            "label": "中可信度",
+            "note": "本次作答整体有效，但存在少量快速作答或节奏波动，建议结合复测结果综合判断。",
+        }
+    return {
+        "flag": "low",
+        "label": "低可信度",
+        "note": "本次作答存在较多快速作答或未完整完成的情况，结果更适合作为粗略参考。",
+    }
+
+
+def build_dimension_breakdown(answer_rows: list) -> list[dict]:
+    grouped: dict[str, list] = defaultdict(list)
+    for row in answer_rows:
+        grouped[row.question_dimension].append(row)
+
+    breakdown = []
+    for key, label in CATEGORY_LABELS.items():
+        rows = grouped.get(key, [])
+        total = len(rows)
+        correct = sum(1 for row in rows if row.is_correct)
+        weight_total = sum(row.question_weight for row in rows)
+        weight_correct = sum(row.question_weight for row in rows if row.is_correct)
+        accuracy = round((correct / total) * 100, 2) if total else 0.0
+        score_ratio = (weight_correct / weight_total) if weight_total else 0.0
+        dimension_cpi = round(40 + score_ratio * 90) if total else 40
+        ability = ability_from_cpi(dimension_cpi)
+        feedback = DIMENSION_FEEDBACK[key]
+        description = feedback["strength"] if accuracy >= 62 else feedback["focus"]
+        advice = feedback["focus"] if accuracy >= 62 else "建议优先复盘该维度错题，再做同类型训练来提升稳定性。"
+        breakdown.append(
             {
-                "question_id": q.id,
-                "selected_option": selected,
-                "correct_option": q.correct_option,
-                "is_correct": is_correct,
-                "explanation": q.explanation,
+                "key": key,
+                "label": label,
+                "correct": correct,
+                "total": total,
+                "accuracy": accuracy,
+                "score": dimension_cpi,
+                "level": ability["level"],
+                "level_label": ability["label"],
+                "description": description,
+                "advice": advice,
             }
         )
+    return breakdown
 
-    raw_score = round((correct_count / total) * 100, 2) if total else 0.0
-    weighted_accuracy = (earned_weight / difficulty_sum) if difficulty_sum else 0.0
-    completion_rate = round((answered_count / total) * 100, 2) if total else 0.0
 
-    expected_duration = 20 * 60
-    time_factor = max(0.90, min(1.05, expected_duration / max(duration_seconds, 300)))
-    normalized_score = round(min(100.0, raw_score * 0.85 + weighted_accuracy * 100 * 0.15) * time_factor, 2)
+def build_answer_review(answer_rows: list) -> list[dict]:
+    review = []
+    for row in answer_rows:
+        review.append(
+            {
+                "question_order": row.question_order,
+                "prompt": row.prompt_snapshot,
+                "dimension": CATEGORY_LABELS.get(row.question_dimension, row.question_dimension),
+                "difficulty": DIFFICULTY_LABELS.get(row.question_difficulty, row.question_difficulty),
+                "selected_option": row.selected_option,
+                "correct_option": row.correct_answer_snapshot,
+                "is_correct": row.is_correct,
+                "time_spent_seconds": row.time_spent_seconds,
+                "explanation": row.explanation_snapshot,
+            }
+        )
+    return review
 
-    z = ((normalized_score / 100.0) - 0.55) / 0.18
-    z = max(-2.33, min(2.33, z))
-    estimated_iq = round(100 + 15 * z)
-    percentile = round(normal_cdf(z) * 100)
 
-    category_breakdown = {}
-    for key, payload in category_totals.items():
-        total_num = payload["total"]
-        correct_num = payload["correct"]
-        category_breakdown[CATEGORY_LABELS.get(key, key)] = {
-            "correct": correct_num,
-            "total": total_num,
-            "accuracy": round((correct_num / total_num) * 100, 2) if total_num else 0.0,
-        }
-
-    sorted_categories = sorted(
-        category_breakdown.items(),
-        key=lambda item: (item[1]["accuracy"], item[1]["correct"]),
-        reverse=True,
+def build_interpretation(
+    ability: dict[str, str],
+    percentile: int,
+    strongest: dict,
+    weakest: dict,
+    validity: dict[str, str],
+) -> tuple[str, str]:
+    summary = (
+        f"你的综合认知表现处于“{ability['label']}”，当前结果大致超过站内 {percentile}% 的有效作答用户。"
     )
-    strongest_name = sorted_categories[0][0] if sorted_categories else "暂无"
-    weakest_name = sorted_categories[-1][0] if sorted_categories else "暂无"
-
-    if percentile >= 98:
-        crowd_desc = "已经明显高于大多数参与者"
-    elif percentile >= 84:
-        crowd_desc = "高于多数参与者"
-    elif percentile >= 50:
-        crowd_desc = "处于常见区间或略高于常见区间"
-    elif percentile >= 16:
-        crowd_desc = "略低于常见区间"
-    else:
-        crowd_desc = "目前明显低于本测验内部常见区间"
-
-    if estimated_iq >= 125:
-        level_label = "优势表现区"
-        level_desc = "从这次作答看，你在题目理解、规律发现和信息处理上都表现得比较稳定，整体属于非常突出的水平。"
-    elif estimated_iq >= 110:
-        level_label = "良好表现区"
-        level_desc = "从这次作答看，你的整体推理能力高于本测验内部平均水平，面对常规推理题时通常会更容易找到规律。"
-    elif estimated_iq >= 90:
-        level_label = "常模区间"
-        level_desc = "从这次作答看，你的表现处于常见区间，说明基础理解和推理能力是比较稳定的。"
-    elif estimated_iq >= 75:
-        level_label = "基础发展区"
-        level_desc = "从这次作答看，你当前在一些题型上还没有完全适应，尤其在规律提取和细节辨别上还有提升空间。"
-    else:
-        level_label = "起步提升区"
-        level_desc = "这次结果更像一次摸底，不建议把它直接理解为最终能力结论，尤其当作答不完整或答题过快时，结果会偏低。"
-
-    if answered_count < max(8, total // 2):
-        reliability_note = (
-            "【结果有效性提醒】你本次作答完成度偏低，未完成的题目较多，因此当前“参考 IQ”只能当作非常粗略的临时参考，"
-            "不能代表你的真实稳定水平。更建议完整作答后再看结果。"
-        )
-    elif duration_seconds < 180:
-        reliability_note = (
-            "【结果有效性提醒】你的提交速度非常快，说明这次结果可能更接近“快速尝试”而不是认真完成后的稳定表现，"
-            "建议重新完整作答一次，再看最终参考值。"
-        )
-    else:
-        reliability_note = (
-            "【结果有效性提醒】本次结果可作为一次相对有效的站内参考，但它仍然不是正式心理测验结果，"
-            "更适合用来观察你的大致表现区间和强弱项。"
-        )
-
     interpretation = (
-        f"一、你现在大概处于什么水平？\n"
-        f"本次结果显示：你当前大致处于“{level_label}”。参考 IQ 为 {estimated_iq}，参考百分位约为 P{percentile}，这意味着在本测验的内部换算里，你的表现 {crowd_desc}。\n\n"
-        f"二、这组数字应该怎么理解？\n"
-        f"- 参考 IQ：{estimated_iq}，这是基于本站题库和内部换算模型得到的粗略值，不等于正式智商测验结论。\n"
-        f"- 百分位：P{percentile}，表示如果把大家放在一起比较，你本次成绩大约处在什么位置。\n"
-        f"- 作答情况：本次共答对 {correct_count}/{total} 题，实际作答 {answered_count}/{total} 题，完成度约 {completion_rate}%。\n\n"
-        f"三、结合这次作答，应该怎么理解你的表现？\n"
-        f"{level_desc}\n\n"
-        f"四、你的强项和短板分别是什么？\n"
-        f"- 相对优势：{strongest_name}\n"
-        f"- 优先提升：{weakest_name}\n"
-        f"如果想让结果更好看、也更接近真实水平，最直接的方法就是先把弱项维度的错题做复盘，再做同类型训练。\n\n"
-        f"五、这次结果靠不靠谱？\n"
-        f"{reliability_note}"
+        f"总体结论：本次综合认知表现落在“{ability['zone']}”。\n"
+        f"优势维度：{strongest['label']}更稳，说明你在这一类题型上的规则识别与判断更顺畅。\n"
+        f"优先提升：{weakest['label']}相对偏弱，建议优先复盘该维度错题，再做针对性练习。\n"
+        f"可信度提示：{validity['note']}"
     )
+    return summary, interpretation
+
+
+def score_attempt(answer_rows: list, duration_seconds: int) -> dict:
+    total_questions = len(answer_rows)
+    answered_rows = [row for row in answer_rows if row.selected_option]
+    correct_rows = [row for row in answered_rows if row.is_correct]
+
+    answered_count = len(answered_rows)
+    correct_count = len(correct_rows)
+    accuracy_score = (correct_count / answered_count) if answered_count else 0.0
+    total_weight = sum(row.question_weight for row in answer_rows)
+    earned_weight = sum(row.question_weight for row in correct_rows)
+    difficulty_score = (earned_weight / total_weight) if total_weight else 0.0
+    completion_score = (answered_count / total_questions) if total_questions else 0.0
+    response_quality_score, quality_meta = response_quality(answer_rows, duration_seconds, completion_score)
+
+    final_score_ratio = (
+        0.45 * accuracy_score
+        + 0.30 * difficulty_score
+        + 0.10 * completion_score
+        + 0.15 * response_quality_score
+    )
+    cpi_score = round(40 + final_score_ratio * 90)
+    cpi_score = int(clamp(cpi_score, 40, 130))
+    percentile = percentile_from_cpi(cpi_score)
+    ability = ability_from_cpi(cpi_score)
+    iq_range = iq_range_from_cpi(cpi_score)
+    validity = validity_from_scores(completion_score, response_quality_score, quality_meta)
+
+    dimension_breakdown = build_dimension_breakdown(answer_rows)
+    strongest = max(dimension_breakdown, key=lambda item: (item["score"], item["accuracy"]))
+    weakest = min(dimension_breakdown, key=lambda item: (item["score"], item["accuracy"]))
+    summary, interpretation = build_interpretation(ability, percentile, strongest, weakest, validity)
+
+    stored_dimension_scores = {
+        CATEGORY_SCORE_FIELDS[item["key"]]: item["score"] for item in dimension_breakdown
+    }
 
     return {
-        "total_questions": total,
+        "total_questions": total_questions,
+        "answered_count": answered_count,
         "correct_count": correct_count,
-        "raw_score": raw_score,
-        "normalized_score": normalized_score,
-        "estimated_iq": estimated_iq,
+        "accuracy_score": round(accuracy_score, 4),
+        "difficulty_score": round(difficulty_score, 4),
+        "completion_score": round(completion_score, 4),
+        "response_quality_score": round(response_quality_score, 4),
+        "cpi_score": cpi_score,
         "percentile": percentile,
+        "ability_level": ability["level"],
+        "ability_label": ability["label"],
+        "ability_zone": ability["zone"],
+        "iq_range": iq_range,
+        "validity_flag": validity["flag"],
+        "validity_label": validity["label"],
+        "validity_note": validity["note"],
+        "summary": summary,
         "interpretation": interpretation,
-        "category_breakdown": category_breakdown,
-        "review": review,
+        "dimension_breakdown": dimension_breakdown,
+        "answer_review": build_answer_review(answer_rows),
+        "quality_meta": quality_meta,
+        "stored_dimension_scores": stored_dimension_scores,
+        "disclaimer": (
+            "本结果基于本站题库、评分规则与作答行为生成，仅供认知表现体验与项目展示参考，"
+            "不等同于正式标准化 IQ 测验、心理诊断或教育评估。"
+        ),
     }
