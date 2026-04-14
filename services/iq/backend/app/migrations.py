@@ -17,6 +17,7 @@ REQUIRED_COLUMNS = {
         "completion_score": "FLOAT DEFAULT 0",
         "response_quality_score": "FLOAT DEFAULT 0",
         "cpi_score": "INTEGER DEFAULT 40",
+        "estimated_iq": "INTEGER DEFAULT 100",
         "ability_level": "VARCHAR(4) DEFAULT 'E'",
         "iq_range": "VARCHAR(32) DEFAULT '90 以下参考区间'",
         "validity_flag": "VARCHAR(16) DEFAULT 'low'",

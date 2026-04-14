@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import io
+import os
 from datetime import date, datetime, time
 from pathlib import Path
 from typing import Annotated
@@ -33,7 +34,6 @@ from .schemas import (
 )
 from .scoring import (
     CATEGORY_LABELS,
-    CATEGORY_SCORE_FIELDS,
     DIFFICULTY_LABELS,
     ability_from_cpi,
     score_attempt,
@@ -42,14 +42,38 @@ from .security import create_access_token, decode_access_token, verify_password
 from .seed import seed_admin, seed_questions
 
 
-FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
 VALIDITY_LABELS = {
     "high": "高可信度",
     "medium": "中可信度",
     "low": "低可信度",
 }
 
-app = FastAPI(title="IQ Assessment Project", version="2.0.0")
+
+def resolve_frontend_dir() -> Path:
+    candidates = []
+    env_path = os.getenv("FRONTEND_DIR")
+    if env_path:
+        candidates.append(Path(env_path))
+    candidates.append(Path("/app/frontend"))
+    candidates.append(Path(__file__).resolve().parents[2] / "frontend")
+
+    checked = []
+    for candidate in candidates:
+        resolved = candidate.resolve()
+        checked.append(str(resolved))
+        if resolved.exists():
+            return resolved
+
+    raise RuntimeError(
+        "Frontend directory does not exist. Checked: "
+        + ", ".join(checked)
+        + ". Set FRONTEND_DIR or ensure the Docker image copies files into /app/frontend."
+    )
+
+
+FRONTEND_DIR = resolve_frontend_dir()
+
+app = FastAPI(title="IQ Assessment Project", version="2.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -102,6 +126,7 @@ def serialize_attempt_summary(attempt: TestAttempt) -> AttemptSummaryOut:
         submitted_at=attempt.submitted_at.isoformat() if attempt.submitted_at else None,
         duration_seconds=attempt.duration_seconds,
         cpi_score=attempt.cpi_score,
+        estimated_iq=attempt.estimated_iq,
         ability_level=attempt.ability_level,
         ability_label=ability["label"],
         percentile=attempt.percentile,
@@ -120,6 +145,7 @@ def build_result_payload(attempt: TestAttempt, answer_rows: list[AttemptAnswer])
         answered_count=attempt.answered_count,
         correct_count=attempt.correct_count,
         cpi_score=attempt.cpi_score,
+        estimated_iq=attempt.estimated_iq,
         ability_level=attempt.ability_level,
         ability_label=ability["label"],
         percentile=attempt.percentile,
@@ -270,6 +296,7 @@ def submit_attempt(attempt_id: int, payload: SubmitAttemptIn, db: Session = Depe
     attempt.completion_score = scoring["completion_score"]
     attempt.response_quality_score = scoring["response_quality_score"]
     attempt.cpi_score = scoring["cpi_score"]
+    attempt.estimated_iq = scoring["estimated_iq"]
     attempt.percentile = scoring["percentile"]
     attempt.ability_level = scoring["ability_level"]
     attempt.iq_range = scoring["iq_range"]
@@ -371,7 +398,14 @@ def list_attempts(
     _: str = Depends(get_current_admin),
     db: Session = Depends(get_db),
 ):
-    query = query_attempts(db, keyword=keyword, level=level, validity=validity, date_from=date_from, date_to=date_to)
+    query = query_attempts(
+        db,
+        keyword=keyword,
+        level=level,
+        validity=validity,
+        date_from=date_from,
+        date_to=date_to,
+    )
     total = query.count()
     rows = (
         query.order_by(TestAttempt.submitted_at.desc())
@@ -398,7 +432,14 @@ def export_attempts(
     db: Session = Depends(get_db),
 ):
     rows = (
-        query_attempts(db, keyword=keyword, level=level, validity=validity, date_from=date_from, date_to=date_to)
+        query_attempts(
+            db,
+            keyword=keyword,
+            level=level,
+            validity=validity,
+            date_from=date_from,
+            date_to=date_to,
+        )
         .order_by(TestAttempt.submitted_at.desc())
         .all()
     )
@@ -415,6 +456,7 @@ def export_attempts(
             "answered_count",
             "correct_count",
             "cpi",
+            "estimated_iq",
             "level",
             "percentile",
             "iq_range",
@@ -435,6 +477,7 @@ def export_attempts(
                 row.answered_count,
                 row.correct_count,
                 row.cpi_score,
+                row.estimated_iq,
                 row.ability_level,
                 row.percentile,
                 row.iq_range,

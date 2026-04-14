@@ -1,0 +1,9 @@
+backend/__pycache__/
+backend/app/__pycache__/
+backend/**/*.pyc
+backend/**/*.pyo
+backend/.pytest_cache/
+backend/.mypy_cache/
+backend/.ruff_cache/
+frontend/.DS_Store
+docs/

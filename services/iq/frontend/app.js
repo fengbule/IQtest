@@ -186,6 +186,7 @@ function fillResult(data) {
   el('result-validity-tag').textContent = data.validity_label;
 
   el('cpi-score').textContent = data.cpi_score;
+  el('estimated-iq').textContent = data.estimated_iq;
   el('ability-level').textContent = `${data.ability_level} / ${data.ability_label}`;
   el('percentile').textContent = `P${data.percentile}`;
   el('iq-range').textContent = data.iq_range;

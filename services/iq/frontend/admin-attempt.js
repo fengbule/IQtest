@@ -82,7 +82,7 @@ function renderReview(items) {
 function fillDetail(data) {
   el('detail-section').classList.remove('hidden');
   el('detail-meta').textContent = `记录 #${data.attempt_id} ｜ 用户：${data.nickname} ｜ 提交时间：${data.submitted_at}`;
-  el('detail-headline').textContent = `CPI ${data.cpi_score} · ${data.ability_level} / ${data.ability_label}`;
+  el('detail-headline').textContent = `CPI ${data.cpi_score} · 参考 IQ ${data.estimated_iq} · ${data.ability_level} / ${data.ability_label}`;
   el('detail-summary').textContent = data.summary;
   el('detail-level-tag').textContent = `${data.ability_level} · ${data.ability_label}`;
   el('detail-validity-tag').textContent = data.validity_label;
@@ -95,6 +95,10 @@ function fillDetail(data) {
     <div class="metric highlight">
       <span>综合认知表现指数 CPI</span>
       <strong>${data.cpi_score}</strong>
+    </div>
+    <div class="metric">
+      <span>参考 IQ 值</span>
+      <strong>${data.estimated_iq}</strong>
     </div>
     <div class="metric">
       <span>答对题数</span>

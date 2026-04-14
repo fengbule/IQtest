@@ -76,6 +76,7 @@ class ResultOut(BaseModel):
     answered_count: int
     correct_count: int
     cpi_score: int
+    estimated_iq: int
     ability_level: str
     ability_label: str
     percentile: int
@@ -108,6 +109,7 @@ class AttemptSummaryOut(BaseModel):
     submitted_at: str | None
     duration_seconds: int
     cpi_score: int
+    estimated_iq: int
     ability_level: str
     ability_label: str
     percentile: int

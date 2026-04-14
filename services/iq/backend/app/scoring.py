@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+from math import erf, sqrt
 
 
 CATEGORY_LABELS = {
@@ -56,19 +57,15 @@ def clamp(value: float, lower: float, upper: float) -> float:
     return max(lower, min(upper, value))
 
 
+def normal_cdf(z_value: float) -> float:
+    return 0.5 * (1 + erf(z_value / sqrt(2)))
+
+
 def ability_from_cpi(cpi: int) -> dict[str, str]:
     for level, label, zone, threshold in ABILITY_META:
         if cpi >= threshold:
-            return {
-                "level": level,
-                "label": label,
-                "zone": zone,
-            }
-    return {
-        "level": "E",
-        "label": "基础观察",
-        "zone": "基础观察区",
-    }
+            return {"level": level, "label": label, "zone": zone}
+    return {"level": "E", "label": "基础观察", "zone": "基础观察区"}
 
 
 def percentile_from_cpi(cpi: int) -> int:
@@ -90,14 +87,19 @@ def percentile_from_cpi(cpi: int) -> int:
     return 10
 
 
-def iq_range_from_cpi(cpi: int) -> str:
-    if cpi >= 125:
+def estimated_iq_from_ratio(final_score_ratio: float) -> int:
+    z_value = clamp((final_score_ratio - 0.55) / 0.18, -2.0, 2.33)
+    return int(clamp(round(100 + 15 * z_value), 70, 135))
+
+
+def iq_range_from_estimated_iq(estimated_iq: int) -> str:
+    if estimated_iq >= 120:
         return "120-129"
-    if cpi >= 110:
+    if estimated_iq >= 110:
         return "110-119"
-    if cpi >= 90:
+    if estimated_iq >= 100:
         return "100-109"
-    if cpi >= 75:
+    if estimated_iq >= 90:
         return "90-99"
     return "90 以下参考区间"
 
@@ -140,11 +142,7 @@ def response_quality(answer_rows: list, duration_seconds: int, completion_score:
     }
 
 
-def validity_from_scores(
-    completion_score: float,
-    quality_score: float,
-    quality_meta: dict,
-) -> dict[str, str]:
+def validity_from_scores(completion_score: float, quality_score: float, quality_meta: dict) -> dict[str, str]:
     avg_seconds = quality_meta["avg_seconds_per_question"]
     very_fast_ratio = quality_meta["very_fast_ratio"]
 
@@ -224,13 +222,15 @@ def build_answer_review(answer_rows: list) -> list[dict]:
 
 def build_interpretation(
     ability: dict[str, str],
+    estimated_iq: int,
     percentile: int,
     strongest: dict,
     weakest: dict,
     validity: dict[str, str],
 ) -> tuple[str, str]:
     summary = (
-        f"你的综合认知表现处于“{ability['label']}”，当前结果大致超过站内 {percentile}% 的有效作答用户。"
+        f"你的综合认知表现处于“{ability['label']}”，参考 IQ 值约为 {estimated_iq}，"
+        f"当前结果大致超过站内 {percentile}% 的有效作答用户。"
     )
     interpretation = (
         f"总体结论：本次综合认知表现落在“{ability['zone']}”。\n"
@@ -261,17 +261,24 @@ def score_attempt(answer_rows: list, duration_seconds: int) -> dict:
         + 0.10 * completion_score
         + 0.15 * response_quality_score
     )
-    cpi_score = round(40 + final_score_ratio * 90)
-    cpi_score = int(clamp(cpi_score, 40, 130))
+    cpi_score = int(clamp(round(40 + final_score_ratio * 90), 40, 130))
+    estimated_iq = estimated_iq_from_ratio(final_score_ratio)
     percentile = percentile_from_cpi(cpi_score)
     ability = ability_from_cpi(cpi_score)
-    iq_range = iq_range_from_cpi(cpi_score)
+    iq_range = iq_range_from_estimated_iq(estimated_iq)
     validity = validity_from_scores(completion_score, response_quality_score, quality_meta)
 
     dimension_breakdown = build_dimension_breakdown(answer_rows)
     strongest = max(dimension_breakdown, key=lambda item: (item["score"], item["accuracy"]))
     weakest = min(dimension_breakdown, key=lambda item: (item["score"], item["accuracy"]))
-    summary, interpretation = build_interpretation(ability, percentile, strongest, weakest, validity)
+    summary, interpretation = build_interpretation(
+        ability,
+        estimated_iq,
+        percentile,
+        strongest,
+        weakest,
+        validity,
+    )
 
     stored_dimension_scores = {
         CATEGORY_SCORE_FIELDS[item["key"]]: item["score"] for item in dimension_breakdown
@@ -286,6 +293,7 @@ def score_attempt(answer_rows: list, duration_seconds: int) -> dict:
         "completion_score": round(completion_score, 4),
         "response_quality_score": round(response_quality_score, 4),
         "cpi_score": cpi_score,
+        "estimated_iq": estimated_iq,
         "percentile": percentile,
         "ability_level": ability["level"],
         "ability_label": ability["label"],

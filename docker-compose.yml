@@ -1,18 +1,24 @@
 services:
   iq_app:
+    image: iqtest:local
     build:
-      context: ./services/iq
-      dockerfile: ./backend/Dockerfile
-    container_name: iq_app
+      context: ${IQ_BUILD_CONTEXT:-./services/iq}
+      dockerfile: ${IQ_DOCKERFILE:-./backend/Dockerfile}
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
-      DATABASE_URL: ${DATABASE_URL}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_USERNAME: ${ADMIN_USERNAME}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      DATABASE_URL: ${DATABASE_URL:-sqlite:////app/data/iq.db}
+      JWT_SECRET: ${JWT_SECRET:-change_this_jwt_secret_to_a_long_random_string}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-ChangeThisAdminPassword123!}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://127.0.0.1:8000}
+      FRONTEND_DIR: /app/frontend
     ports:
-      - "8000:8000"
+      - "${HOST_BIND:-0.0.0.0}:${HOST_PORT:-8000}:8000"
     volumes:
-      - ./data:/app/data
+      - "${IQ_DATA_DIR:-./data}:/app/data"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s

@@ -128,10 +128,10 @@ function renderAttempts(data) {
           <span class="pill">${item.validity_label}</span>
         </div>
         <p class="muted">
-          CPI ${item.cpi_score} ｜ 等级 ${item.ability_level} / ${item.ability_label} ｜ 百分位 P${item.percentile}
+          CPI ${item.cpi_score} ｜ 参考 IQ ${item.estimated_iq} ｜ 等级 ${item.ability_level} / ${item.ability_label} ｜ 百分位 P${item.percentile}
         </p>
         <p class="small muted">
-          提交时间：${item.submitted_at || '-'} ｜ 用时：${item.duration_seconds}s ｜ 参考 IQ：${item.iq_range}
+          提交时间：${item.submitted_at || '-'} ｜ 用时：${item.duration_seconds}s ｜ 参考 IQ 区间：${item.iq_range}
         </p>
       </div>
       <div class="actions">

@@ -54,6 +54,7 @@ class TestAttempt(Base):
     completion_score: Mapped[float] = mapped_column(Float, default=0.0)
     response_quality_score: Mapped[float] = mapped_column(Float, default=0.0)
     cpi_score: Mapped[int] = mapped_column(Integer, default=40)
+    estimated_iq: Mapped[int] = mapped_column(Integer, default=100)
     percentile: Mapped[int] = mapped_column(Integer, default=10)
     ability_level: Mapped[str] = mapped_column(String(4), default="E")
     iq_range: Mapped[str] = mapped_column(String(32), default="90 以下参考区间")
