@@ -4,12 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>在线智力检测平台</title>
-  <link rel="stylesheet" href="/iq/styles.css?v=20260415-3" />
+  <link rel="stylesheet" href="/iq/styles.css?v=20260415-4" />
 </head>
 <body>
   <div class="page-shell">
     <div class="ambient ambient-left"></div>
     <div class="ambient ambient-right"></div>
+    <div id="floating-timer-panel" class="floating-timer hidden" aria-live="polite">
+      <span class="floating-timer-label">剩余时间</span>
+      <strong id="floating-timer-value">25:00</strong>
+      <div class="floating-timer-track" aria-hidden="true">
+        <div id="floating-timer-progress" class="floating-timer-progress"></div>
+      </div>
+      <p id="floating-timer-tip" class="floating-timer-tip">倒计时会始终跟随答题进度，时间到后将自动交卷。</p>
+    </div>
 
     <main class="container">
       <header class="hero card">
@@ -88,14 +96,6 @@
       </section>
 
       <section id="test-section" class="card hidden">
-        <div id="floating-timer-panel" class="floating-timer hidden" aria-live="polite">
-          <span class="floating-timer-label">剩余时间</span>
-          <strong id="floating-timer-value">25:00</strong>
-          <div class="floating-timer-track" aria-hidden="true">
-            <div id="floating-timer-progress" class="floating-timer-progress"></div>
-          </div>
-          <p id="floating-timer-tip" class="floating-timer-tip">倒计时会始终跟随答题进度，时间到后将自动交卷。</p>
-        </div>
         <div class="test-topbar">
           <div>
             <h2>答题中</h2>
@@ -219,6 +219,6 @@
     </main>
   </div>
 
-  <script src="/iq/app.js?v=20260415-3"></script>
+  <script src="/iq/app.js?v=20260415-4"></script>
 </body>
 </html>
