@@ -159,9 +159,16 @@ async function loadPublicInfo() {
   const response = await fetch('/api/public/info');
   if (!response.ok) return;
   const info = await response.json();
+  const questionCount = Number(info.question_count || 0);
+  const questionPoolCount = Number(info.question_pool_count || questionCount);
   el('hero-title').textContent = info.title;
-  el('hero-question-count').textContent = `${info.question_count} 题`;
+  el('hero-question-count').textContent = questionPoolCount > questionCount
+    ? `${questionPoolCount} 题题库`
+    : `${questionCount} 题`;
   el('hero-time-limit').textContent = `${Math.round(info.time_limit_seconds / 60)} 分钟`;
+  el('hero-pool-tag').textContent = questionPoolCount > questionCount
+    ? `${questionPoolCount} 题题库 / 每次随机抽取 ${questionCount} 题`
+    : `${questionCount} 题随机抽取`;
 }
 
 async function startTest() {
@@ -197,7 +204,10 @@ async function startTest() {
   el('floating-timer-panel').classList.remove('hidden');
   el('submit-btn').disabled = false;
   el('submit-btn').textContent = '提交并生成报告';
-  el('meta-text').textContent = `共 ${data.questions.length} 题，建议在 ${Math.round(data.time_limit_seconds / 60)} 分钟内完成。`;
+  const poolText = el('hero-question-count')?.textContent || '';
+  el('meta-text').textContent = poolText.includes('题库')
+    ? `本次共 ${data.questions.length} 题，来自 ${poolText}，并优先避开最近做过的题。建议在 ${Math.round(data.time_limit_seconds / 60)} 分钟内完成。`
+    : `共 ${data.questions.length} 题，建议在 ${Math.round(data.time_limit_seconds / 60)} 分钟内完成。`;
   renderQuestions();
   startTimer();
 }

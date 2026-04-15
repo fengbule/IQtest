@@ -13,8 +13,9 @@ QUESTION_PLAN = {
 TIME_LIMIT_SECONDS = 25 * 60
 
 
-def sample_questions(question_rows: list) -> list:
+def sample_questions(question_rows: list, avoid_question_ids: set[int] | None = None) -> list:
     bucketed = defaultdict(list)
+    avoid_question_ids = set(avoid_question_ids or set())
     for row in question_rows:
         bucketed[(row.category, row.difficulty)].append(row)
 
@@ -27,7 +28,14 @@ def sample_questions(question_rows: list) -> list:
                     f"Question pool is insufficient for {dimension}/{difficulty}: "
                     f"need {count}, got {len(pool)}"
                 )
-            selected.extend(random.sample(pool, count))
+            fresh_pool = [row for row in pool if row.id not in avoid_question_ids]
+            if len(fresh_pool) >= count:
+                selected.extend(random.sample(fresh_pool, count))
+                continue
+
+            fallback_pool = [row for row in pool if row.id in avoid_question_ids]
+            selected.extend(fresh_pool)
+            selected.extend(random.sample(fallback_pool, count - len(fresh_pool)))
 
     random.shuffle(selected)
     return selected

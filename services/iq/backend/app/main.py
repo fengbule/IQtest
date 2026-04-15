@@ -48,6 +48,9 @@ VALIDITY_LABELS = {
     "low": "低可信度",
 }
 
+FRONTEND_ASSET_VERSION = "20260415-3"
+RECENT_ATTEMPT_LOOKBACK = 3
+
 
 def resolve_frontend_dir() -> Path:
     candidates = []
@@ -73,6 +76,16 @@ def resolve_frontend_dir() -> Path:
 
 FRONTEND_DIR = resolve_frontend_dir()
 
+
+class FrontendStaticFiles(StaticFiles):
+    async def get_response(self, path: str, scope):
+        response = await super().get_response(path, scope)
+        if response.status_code < 400:
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+        return response
+
 app = FastAPI(title="IQ Assessment Project", version="2.1.0")
 
 app.add_middleware(
@@ -83,7 +96,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/iq", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")
+app.mount("/iq", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")
 
 
 @app.on_event("startup")
@@ -109,11 +122,13 @@ def health_check():
 
 
 @app.get("/api/public/info")
-def public_info():
+def public_info(db: Session = Depends(get_db)):
     return {
         "title": "在线智力检测平台",
         "time_limit_seconds": TIME_LIMIT_SECONDS,
         "question_count": len(DIMENSIONS) * sum(QUESTION_PLAN.values()),
+        "question_pool_count": db.query(Question).filter(Question.is_active.is_(True)).count(),
+        "asset_version": FRONTEND_ASSET_VERSION,
         "notice": "本项目展示的是基于站内题库的综合认知表现，不等同于正式标准化 IQ 测验。",
     }
 
@@ -206,11 +221,37 @@ def query_attempts(
     return query
 
 
+def recent_question_ids_for_attempt(payload: StartAttemptIn, request: Request, db: Session) -> set[int]:
+    email = str(payload.email).strip().lower() if payload.email else None
+    nickname = payload.nickname.strip() if payload.nickname else None
+    client_ip = request.client.host if request.client else None
+
+    query = db.query(TestAttempt).filter(TestAttempt.submitted_at.is_not(None))
+    if email:
+        query = query.filter(TestAttempt.email == email)
+    elif nickname and client_ip:
+        query = query.filter(TestAttempt.nickname == nickname, TestAttempt.client_ip == client_ip)
+    elif nickname:
+        query = query.filter(TestAttempt.nickname == nickname)
+    elif client_ip:
+        query = query.filter(TestAttempt.client_ip == client_ip)
+    else:
+        return set()
+
+    attempts = (
+        query.order_by(TestAttempt.submitted_at.desc())
+        .limit(RECENT_ATTEMPT_LOOKBACK)
+        .all()
+    )
+    return {answer.question_id for attempt in attempts for answer in attempt.answers}
+
+
 @app.post("/api/attempts/start", response_model=StartAttemptOut)
 def start_attempt(payload: StartAttemptIn, request: Request, db: Session = Depends(get_db)):
     question_rows = db.query(Question).filter(Question.is_active.is_(True)).all()
+    avoid_question_ids = recent_question_ids_for_attempt(payload, request, db)
     try:
-        selected_questions = sample_questions(question_rows)
+        selected_questions = sample_questions(question_rows, avoid_question_ids=avoid_question_ids)
     except ValueError as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
@@ -265,7 +306,7 @@ def start_attempt(payload: StartAttemptIn, request: Request, db: Session = Depen
         started_at=attempt.started_at.isoformat(),
         time_limit_seconds=TIME_LIMIT_SECONDS,
         questions=question_payload,
-        note="本次将从四个维度随机抽取 32 题，结果会综合正确率、题目难度、完整度与作答质量生成。",
+        note="本次将从题库中随机抽取 32 题，并优先避开你最近测过的题目；结果会综合正确率、题目难度、完整度与作答质量生成。",
     )
 
 
