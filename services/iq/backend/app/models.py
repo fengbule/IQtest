@@ -96,3 +96,60 @@ class AttemptAnswer(Base):
     is_correct: Mapped[bool] = mapped_column(Boolean, default=False)
 
     attempt: Mapped[TestAttempt] = relationship("TestAttempt", back_populates="answers")
+
+
+class PersonalityQuestion(Base):
+    __tablename__ = "personality_questions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    dimension: Mapped[str] = mapped_column(String(50), nullable=False)
+    question: Mapped[str] = mapped_column(Text, nullable=False)
+    is_reverse: Mapped[bool] = mapped_column(Boolean, default=False)
+    position: Mapped[int] = mapped_column(Integer, nullable=False)
+
+
+class PersonalityAttempt(Base):
+    __tablename__ = "personality_attempts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    nickname: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    email: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    started_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    submitted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    duration_seconds: Mapped[int] = mapped_column(Integer, default=0)
+    
+    # 五大人格维度得分（0-100）
+    openness_score: Mapped[float] = mapped_column(Float, default=0.0)
+    conscientiousness_score: Mapped[float] = mapped_column(Float, default=0.0)
+    extraversion_score: Mapped[float] = mapped_column(Float, default=0.0)
+    agreeableness_score: Mapped[float] = mapped_column(Float, default=0.0)
+    neuroticism_score: Mapped[float] = mapped_column(Float, default=0.0)
+    
+    # 匹配的历史人物
+    top_match_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    top_match_similarity: Mapped[float] = mapped_column(Float, default=0.0)
+    second_match_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    second_match_similarity: Mapped[float] = mapped_column(Float, default=0.0)
+    third_match_id: Mapped[int] = mapped_column(Integer, nullable=True)
+    third_match_similarity: Mapped[float] = mapped_column(Float, default=0.0)
+    
+    summary: Mapped[str] = mapped_column(Text, default="")
+    client_ip: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    user_agent: Mapped[str | None] = mapped_column(String(255), nullable=True)
+
+    answers: Mapped[list["PersonalityAnswer"]] = relationship(
+        "PersonalityAnswer",
+        back_populates="attempt",
+        cascade="all, delete-orphan",
+    )
+
+
+class PersonalityAnswer(Base):
+    __tablename__ = "personality_answers"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    attempt_id: Mapped[int] = mapped_column(ForeignKey("personality_attempts.id"), nullable=False)
+    question_id: Mapped[int] = mapped_column(ForeignKey("personality_questions.id"), nullable=False)
+    score: Mapped[int] = mapped_column(Integer, nullable=False)  # 1-5
+
+    attempt: Mapped[PersonalityAttempt] = relationship("PersonalityAttempt", back_populates="answers")

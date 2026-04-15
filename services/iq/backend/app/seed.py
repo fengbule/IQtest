@@ -3,8 +3,9 @@ from __future__ import annotations
 from sqlalchemy.orm import Session
 
 from .config import settings
-from .models import AdminUser, Question
+from .models import AdminUser, Question, PersonalityQuestion
 from .question_bank import QUESTION_BANK
+from .personality_data import PERSONALITY_QUESTIONS
 from .security import hash_password
 
 
@@ -39,3 +40,15 @@ def seed_questions(db: Session) -> None:
 
     if changed:
         db.commit()
+
+
+def seed_personality_questions(db: Session) -> None:
+    """Initialize personality questions"""
+    existing_count = db.query(PersonalityQuestion).count()
+    if existing_count > 0:
+        return
+    
+    for item in PERSONALITY_QUESTIONS:
+        db.add(PersonalityQuestion(**item))
+    
+    db.commit()

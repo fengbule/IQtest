@@ -140,3 +140,90 @@ class AttemptDetailOut(ResultOut):
     email: str | None
     started_at: str
     submitted_at: str
+
+
+# Personality Test Schemas
+
+class PersonalityQuestionOut(BaseModel):
+    id: int
+    question: str
+    dimension: str
+
+
+class PersonalityStartOut(BaseModel):
+    attempt_id: int
+    started_at: str
+    questions: list[PersonalityQuestionOut]
+    note: str
+
+
+class PersonalityAnswerIn(BaseModel):
+    question_id: int
+    score: int = Field(ge=1, le=5)
+
+
+class PersonalitySubmitIn(BaseModel):
+    answers: list[PersonalityAnswerIn]
+    duration_seconds: int = Field(ge=0, le=1200)
+
+
+class HistoricalFigureOut(BaseModel):
+    id: int
+    name: str
+    dynasty: str
+    title: str
+    description: str
+    openness: float
+    conscientiousness: float
+    extraversion: float
+    agreeableness: float
+    neuroticism: float
+
+
+class PersonalityMatchOut(BaseModel):
+    figure_id: int
+    name: str
+    dynasty: str
+    title: str
+    description: str
+    similarity: float
+
+
+class DimensionScoreOut(BaseModel):
+    dimension: str
+    name: str
+    score: float
+    level: str
+    description: str
+
+
+class PersonalityResultOut(BaseModel):
+    attempt_id: int
+    duration_seconds: int
+    submitted_at: str | None
+    openness_score: float
+    conscientiousness_score: float
+    extraversion_score: float
+    agreeableness_score: float
+    neuroticism_score: float
+    dimension_breakdown: list[DimensionScoreOut]
+    top_match: PersonalityMatchOut
+    second_match: PersonalityMatchOut
+    third_match: PersonalityMatchOut
+    summary: str
+
+
+class PersonalityAttemptSummaryOut(BaseModel):
+    attempt_id: int
+    nickname: str
+    submitted_at: str | None
+    duration_seconds: int
+    top_match_name: str
+    top_match_similarity: float
+
+
+class PersonalityAttemptListOut(BaseModel):
+    page: int
+    page_size: int
+    total: int
+    items: list[PersonalityAttemptSummaryOut]

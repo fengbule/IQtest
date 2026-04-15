@@ -16,7 +16,7 @@ from sqlalchemy.orm import Session
 
 from .database import Base, SessionLocal, engine, get_db
 from .migrations import apply_lightweight_migrations
-from .models import AdminUser, AttemptAnswer, Question, TestAttempt
+from .models import AdminUser, AttemptAnswer, Question, TestAttempt, PersonalityQuestion, PersonalityAttempt, PersonalityAnswer
 from .question_selector import DIMENSIONS, QUESTION_PLAN, TIME_LIMIT_SECONDS, sample_questions
 from .schemas import (
     AdminLoginIn,
@@ -31,6 +31,12 @@ from .schemas import (
     StartAttemptIn,
     StartAttemptOut,
     SubmitAttemptIn,
+    PersonalityQuestionOut,
+    PersonalityStartOut,
+    PersonalitySubmitIn,
+    PersonalityResultOut,
+    PersonalityAttemptListOut,
+    PersonalityAttemptSummaryOut,
 )
 from .scoring import (
     CATEGORY_LABELS,
@@ -39,7 +45,9 @@ from .scoring import (
     score_attempt,
 )
 from .security import create_access_token, decode_access_token, verify_password
-from .seed import seed_admin, seed_questions
+from .seed import seed_admin, seed_questions, seed_personality_questions
+from .personality_scorer import calculate_personality_scores, find_top_matches, get_dimension_interpretation, generate_summary
+from .personality_data import HISTORICAL_FIGURES
 
 
 VALIDITY_LABELS = {
@@ -96,8 +104,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/iq", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")
-
 
 @app.on_event("startup")
 def startup_event() -> None:
@@ -107,13 +113,14 @@ def startup_event() -> None:
     try:
         seed_admin(db)
         seed_questions(db)
+        seed_personality_questions(db)
     finally:
         db.close()
 
 
 @app.get("/", include_in_schema=False)
 def index_redirect():
-    return RedirectResponse(url="/iq/")
+    return RedirectResponse(url="/portal.html")
 
 
 @app.get("/api/health")
@@ -543,3 +550,187 @@ def attempt_detail(attempt_id: int, _: str = Depends(get_current_admin), db: Ses
     if not attempt or attempt.submitted_at is None:
         raise HTTPException(status_code=404, detail="attempt not found")
     return build_attempt_detail(attempt)
+
+
+# ===== Personality Test API Routes =====
+
+@app.post("/api/personality/attempts", response_model=PersonalityStartOut)
+def start_personality_attempt(payload: StartAttemptIn, request: Request, db: Session = Depends(get_db)):
+    """Start a new personality test"""
+    # Create new attempt
+    attempt = PersonalityAttempt(
+        nickname=payload.nickname,
+        email=payload.email,
+        client_ip=request.client.host if request.client else None,
+        user_agent=request.headers.get("user-agent"),
+    )
+    db.add(attempt)
+    db.flush()
+    
+    # Get all personality questions
+    questions = db.query(PersonalityQuestion).order_by(PersonalityQuestion.position).all()
+    
+    question_payload = [
+        PersonalityQuestionOut(
+            id=q.id,
+            question=q.question,
+            dimension=q.dimension,
+        )
+        for q in questions
+    ]
+    
+    db.commit()
+    
+    return PersonalityStartOut(
+        attempt_id=attempt.id,
+        started_at=attempt.started_at.isoformat(),
+        questions=question_payload,
+        note="请根据自己的实际情况回答以下问题，没有完全正确或完全错误的答案。此测评基于Big Five人格模型，会展示你与8位历史人物的相似度。",
+    )
+
+
+@app.post("/api/personality/attempts/{attempt_id}/submit", response_model=PersonalityResultOut)
+def submit_personality_attempt(
+    attempt_id: int,
+    payload: PersonalitySubmitIn,
+    db: Session = Depends(get_db)
+):
+    """Submit personality test and get results"""
+    attempt = db.query(PersonalityAttempt).filter(PersonalityAttempt.id == attempt_id).first()
+    if not attempt:
+        raise HTTPException(status_code=404, detail="attempt not found")
+    if attempt.submitted_at is not None:
+        raise HTTPException(status_code=400, detail="attempt already submitted")
+    
+    # Save answers
+    answers_dict = {}
+    for answer in payload.answers:
+        pa = PersonalityAnswer(
+            attempt_id=attempt.id,
+            question_id=answer.question_id,
+            score=answer.score,
+        )
+        db.add(pa)
+        answers_dict[answer.question_id] = answer.score
+    
+    # Calculate scores
+    scores = calculate_personality_scores(answers_dict)
+    
+    # Find top matches
+    top_matches = find_top_matches(scores, limit=3)
+    
+    # Update attempt with results
+    attempt.submitted_at = datetime.utcnow()
+    attempt.duration_seconds = payload.duration_seconds
+    attempt.openness_score = scores["openness"]
+    attempt.conscientiousness_score = scores["conscientiousness"]
+    attempt.extraversion_score = scores["extraversion"]
+    attempt.agreeableness_score = scores["agreeableness"]
+    attempt.neuroticism_score = scores["neuroticism"]
+    
+    if top_matches:
+        attempt.top_match_id = top_matches[0]["figure_id"]
+        attempt.top_match_similarity = top_matches[0]["similarity"]
+    if len(top_matches) > 1:
+        attempt.second_match_id = top_matches[1]["figure_id"]
+        attempt.second_match_similarity = top_matches[1]["similarity"]
+    if len(top_matches) > 2:
+        attempt.third_match_id = top_matches[2]["figure_id"]
+        attempt.third_match_similarity = top_matches[2]["similarity"]
+    
+    attempt.summary = generate_summary(scores, top_matches)
+    
+    db.commit()
+    
+    # Build response
+    dimensions = []
+    for dim_key in ["openness", "conscientiousness", "extraversion", "agreeableness", "neuroticism"]:
+        dim_interp = get_dimension_interpretation(dim_key, scores[dim_key])
+        from .schemas import DimensionScoreOut
+        dimensions.append(DimensionScoreOut(**dim_interp))
+    
+    def get_figure(figure_id):
+        for fig in HISTORICAL_FIGURES:
+            if fig["id"] == figure_id:
+                return fig
+        return None
+    
+    # Build match figures
+    match_figures = []
+    for i, match in enumerate(top_matches):
+        fig = get_figure(match["figure_id"])
+        if fig:
+            from .schemas import PersonalityMatchOut
+            match_figures.append(PersonalityMatchOut(
+                figure_id=fig["id"],
+                name=fig["name"],
+                dynasty=fig["dynasty"],
+                title=fig["title"],
+                description=fig["description"],
+                similarity=match["similarity"],
+            ))
+    
+    # Ensure we have at least 3 matches
+    while len(match_figures) < 3:
+        match_figures.append(match_figures[-1] if match_figures else None)
+    
+    return PersonalityResultOut(
+        attempt_id=attempt.id,
+        duration_seconds=attempt.duration_seconds,
+        submitted_at=attempt.submitted_at.isoformat() if attempt.submitted_at else None,
+        openness_score=scores["openness"],
+        conscientiousness_score=scores["conscientiousness"],
+        extraversion_score=scores["extraversion"],
+        agreeableness_score=scores["agreeableness"],
+        neuroticism_score=scores["neuroticism"],
+        dimension_breakdown=dimensions,
+        top_match=match_figures[0],
+        second_match=match_figures[1],
+        third_match=match_figures[2],
+        summary=attempt.summary,
+    )
+
+
+@app.get("/api/personality/attempts", response_model=PersonalityAttemptListOut)
+def list_personality_attempts(
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
+    _: str = Depends(get_current_admin),
+    db: Session = Depends(get_db)
+):
+    """List all personality test attempts (admin only)"""
+    query = db.query(PersonalityAttempt).filter(PersonalityAttempt.submitted_at.isnot(None))
+    total = query.count()
+    
+    offset = (page - 1) * page_size
+    attempts = query.order_by(PersonalityAttempt.submitted_at.desc()).offset(offset).limit(page_size).all()
+    
+    items = []
+    for attempt in attempts:
+        top_figure = None
+        if attempt.top_match_id:
+            for fig in HISTORICAL_FIGURES:
+                if fig["id"] == attempt.top_match_id:
+                    top_figure = fig["name"]
+                    break
+        
+        items.append(PersonalityAttemptSummaryOut(
+            attempt_id=attempt.id,
+            nickname=attempt.nickname or "匿名用户",
+            submitted_at=attempt.submitted_at.isoformat() if attempt.submitted_at else None,
+            duration_seconds=attempt.duration_seconds,
+            top_match_name=top_figure or "未知",
+            top_match_similarity=attempt.top_match_similarity,
+        ))
+    
+    return PersonalityAttemptListOut(
+        page=page,
+        page_size=page_size,
+        total=total,
+        items=items,
+    )
+
+
+# Mount frontend files (must be after all API routes)
+app.mount("/iq", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="iq-frontend")
+app.mount("", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="root-frontend")

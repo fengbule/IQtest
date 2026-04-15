@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>历史人物性格匹配</title>
+  <link rel="stylesheet" href="/iq/styles.css?v=20260415-5" />
+  <style>
+    .personality-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .personality-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 12px;
+      color: white;
+    }
+
+    .personality-header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .personality-header p {
+      font-size: 1rem;
+      opacity: 0.95;
+      margin-bottom: 10px;
+    }
+
+    .dimension-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin: 3px;
+    }
+
+    .questions-container {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .question-item {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      border-left: 4px solid #10b981;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .question-item:hover {
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.15);
+    }
+
+    .question-item.answered {
+      border-left-color: #10b981;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.02), rgba(16, 185, 129, 0.05));
+    }
+
+    .question-number {
+      display: inline-block;
+      background: #10b981;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 32px;
+      font-weight: bold;
+      margin-right: 12px;
+      font-size: 0.9rem;
+    }
+
+    .question-text {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .likert-scale {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .likert-option {
+      flex: 1;
+      min-width: 100px;
+    }
+
+    .likert-label {
+      display: block;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #666;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .likert-input {
+      width: 100%;
+      aspect-ratio: 1;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: all 0.2s ease;
+      color: #666;
+    }
+
+    .likert-input:hover {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .likert-input:checked {
+      background: #10b981;
+      color: white;
+      border-color: #10b981;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #059669);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .test-footer {
+      display: flex;
+      gap: 15px;
+      margin-top: 40px;
+      justify-content: center;
+    }
+
+    .btn-back {
+      background: #6b7280;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-back:hover {
+      background: #4b5563;
+    }
+
+    .btn-submit {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 12px 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: #059669;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #welcome-section {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .notice-badge {
+      background: #f0fdf4;
+      border-left: 4px solid #10b981;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .notice-badge strong {
+      color: #059669;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="ambient ambient-left" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));"></div>
+    <div class="ambient ambient-right" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.1));"></div>
+
+    <main class="container personality-container">
+      <!-- 欢迎界面 -->
+      <section id="welcome-section" class="card">
+        <div class="section-head">
+          <div>
+            <h2>历史人物性格匹配测评</h2>
+            <p class="muted">发现你与哪位历史人物最相似</p>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>🧠 科学的性格模型</h3>
+            <p>基于Big Five人格模型，从五个维度评估你的性格特质。</p>
+          </article>
+          <article class="feature-card">
+            <h3>📚 8位历史人物</h3>
+            <p>孙子、李白、诸葛亮等历史名人，每人都有详细的性格档案。</p>
+          </article>
+          <article class="feature-card">
+            <h3>⚡ 快速高效</h3>
+            <p>只需50道题目，约10分钟完成，立即获得个性化的结果分析。</p>
+          </article>
+        </div>
+
+        <div class="notice-badge">
+          <strong>测评说明</strong>
+          <p>没有完全正确或完全错误的答案。请根据自己的真实情况回答，答案越真实，结果越准确。</p>
+        </div>
+
+        <div class="actions">
+          <button id="start-btn" class="button primary">开始测评</button>
+          <a href="/portal.html" class="button secondary">返回首页</a>
+        </div>
+      </section>
+
+      <!-- 答题界面 -->
+      <section id="test-section" class="hidden">
+        <div class="personality-header">
+          <h1>性格评估问卷</h1>
+          <p id="header-subtitle">请根据自己的真实情况回答以下问题</p>
+          <div id="dimension-display"></div>
+        </div>
+
+        <div class="progress-text">
+          <span id="progress-count">已答 0/50</span>
+        </div>
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+
+        <form id="questions-form" class="questions-container"></form>
+
+        <div class="test-footer">
+          <button id="back-btn" class="btn-back">返回</button>
+          <button id="submit-btn" class="btn-submit" disabled>提交答卷</button>
+        </div>
+      </section>
+
+      <!-- 结果界面 -->
+      <section id="result-section" class="hidden">
+        <section class="card result-overview">
+          <div class="result-hero">
+            <div>
+              <p class="eyebrow">PERSONALITY ASSESSMENT REPORT</p>
+              <h2 id="result-headline">你的性格评估报告</h2>
+              <p id="result-summary" class="lead"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 五大人格维度 -->
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h3>五大人格维度</h3>
+              <p class="muted">展示你在五个性格维度上的得分情况</p>
+            </div>
+          </div>
+          <div id="dimension-breakdown" class="dimension-grid"></div>
+        </section>
+
+        <!-- 匹配的历史人物 -->
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h3>性格匹配的历史人物</h3>
+              <p class="muted">相似度最高的3位历史人物</p>
+            </div>
+          </div>
+          <div id="match-list"></div>
+        </section>
+
+        <div class="actions">
+          <button id="restart-btn" class="button secondary">重新测评</button>
+          <a href="/portal.html" class="button primary">返回首页</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const API_BASE = '/api';
+    let currentAttemptId = null;
+    let allQuestions = [];
+    let answers = {};
+    const startTime = Date.now();
+
+    // DOM元素
+    const welcomeSection = document.getElementById('welcome-section');
+    const testSection = document.getElementById('test-section');
+    const resultSection = document.getElementById('result-section');
+    const startBtn = document.getElementById('start-btn');
+    const backBtn = document.getElementById('back-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const questionsForm = document.getElementById('questions-form');
+
+    // 开始测评
+    startBtn.addEventListener('click', async () => {
+      try {
+        const response = await fetch(`${API_BASE}/personality/attempts`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({}),
+        });
+
+        if (!response.ok) throw new Error('Failed to start attempt');
+        const data = await response.json();
+
+        currentAttemptId = data.attempt_id;
+        allQuestions = data.questions;
+        answers = {};
+
+        renderQuestions();
+        welcomeSection.classList.add('hidden');
+        testSection.classList.remove('hidden');
+      } catch (error) {
+        console.error('Error starting attempt:', error);
+        alert('启动测评失败，请重试');
+      }
+    });
+
+    // 渲染问题
+    function renderQuestions() {
+      questionsForm.innerHTML = '';
+
+      allQuestions.forEach((question, index) => {
+        const questionEl = document.createElement('div');
+        questionEl.className = 'question-item';
+        questionEl.id = `question-${question.id}`;
+
+        const likertOptions = [
+          { value: 1, label: '强烈不同意' },
+          { value: 2, label: '不同意' },
+          { value: 3, label: '中立' },
+          { value: 4, label: '同意' },
+          { value: 5, label: '强烈同意' },
+        ];
+
+        let optionsHtml = '<div class="likert-scale">';
+        likertOptions.forEach(opt => {
+          optionsHtml += `
+            <div class="likert-option">
+              <label class="likert-label">${opt.label}</label>
+              <input
+                type="radio"
+                name="question-${question.id}"
+                value="${opt.value}"
+                class="likert-input"
+                onchange="handleAnswer(${question.id}, ${opt.value})"
+              />
+            </div>
+          `;
+        });
+        optionsHtml += '</div>';
+
+        questionEl.innerHTML = `
+          <div style="display: flex; align-items: flex-start;">
+            <span class="question-number">${index + 1}</span>
+            <div style="flex: 1;">
+              <div class="question-text">${question.question}</div>
+              ${optionsHtml}
+            </div>
+          </div>
+        `;
+
+        questionsForm.appendChild(questionEl);
+      });
+    }
+
+    // 处理答案
+    function handleAnswer(questionId, score) {
+      answers[questionId] = score;
+      updateProgress();
+      updateQuestionItem(questionId);
+      checkAllAnswered();
+    }
+
+    // 更新问题项样式
+    function updateQuestionItem(questionId) {
+      const item = document.getElementById(`question-${questionId}`);
+      if (answers[questionId]) {
+        item.classList.add('answered');
+      }
+    }
+
+    // 更新进度
+    function updateProgress() {
+      const answered = Object.keys(answers).length;
+      const total = allQuestions.length;
+      document.getElementById('progress-count').textContent = `已答 ${answered}/${total}`;
+      document.getElementById('progress-fill').style.width = `${(answered / total) * 100}%`;
+    }
+
+    // 检查是否全部回答
+    function checkAllAnswered() {
+      const answered = Object.keys(answers).length;
+      const total = allQuestions.length;
+      submitBtn.disabled = answered < total;
+    }
+
+    // 返回按钮
+    backBtn.addEventListener('click', () => {
+      if (confirm('确定要返回？已填写的答案将丢失')) {
+        answers = {};
+        testSection.classList.add('hidden');
+        welcomeSection.classList.remove('hidden');
+      }
+    });
+
+    // 提交答卷
+    submitBtn.addEventListener('click', async () => {
+      const durationSeconds = Math.round((Date.now() - startTime) / 1000);
+
+      const payload = {
+        answers: allQuestions.map(q => ({
+          question_id: q.id,
+          score: answers[q.id],
+        })),
+        duration_seconds: durationSeconds,
+      };
+
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '提交中...';
+
+        const response = await fetch(`${API_BASE}/personality/attempts/${currentAttemptId}/submit`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error('Failed to submit');
+        const result = await response.json();
+
+        displayResult(result);
+        testSection.classList.add('hidden');
+        resultSection.classList.remove('hidden');
+      } catch (error) {
+        console.error('Error submitting:', error);
+        alert('提交失败，请重试');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '提交答卷';
+      }
+    });
+
+    // 显示结果
+    function displayResult(result) {
+      document.getElementById('result-headline').textContent = `你的性格评估报告`;
+      document.getElementById('result-summary').textContent = result.summary;
+
+      // 五大维度
+      const dimensionHtml = result.dimension_breakdown
+        .map(dim => `
+          <article class="feature-card">
+            <h3>${dim.name}</h3>
+            <div style="margin: 15px 0;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span>${dim.level}</span>
+                <strong style="color: #10b981;">${dim.score.toFixed(0)}</strong>
+              </div>
+              <div style="width: 100%; height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden;">
+                <div style="width: ${dim.score}%; height: 100%; background: #10b981;"></div>
+              </div>
+              <p style="font-size: 0.9rem; margin-top: 10px; color: #666;">${dim.description}</p>
+            </div>
+          </article>
+        `)
+        .join('');
+      document.getElementById('dimension-breakdown').innerHTML = dimensionHtml;
+
+      // 匹配的历史人物
+      const matchHtml = [result.top_match, result.second_match, result.third_match]
+        .map((match, index) => `
+          <article class="feature-card" style="border-top: 4px solid ${['#10b981', '#3b82f6', '#f59e0b'][index]};">
+            <h3 style="margin-bottom: 5px;">${match.name}</h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">${match.dynasty} · ${match.title}</p>
+            <div style="margin: 15px 0; padding: 10px; background: #f3f4f6; border-radius: 6px;">
+              <div style="font-weight: bold; color: ${['#10b981', '#3b82f6', '#f59e0b'][index]};">
+                相似度: ${match.similarity.toFixed(1)}%
+              </div>
+            </div>
+            <p style="font-size: 0.9rem; line-height: 1.6; margin-top: 10px; color: #555;">
+              ${match.description}
+            </p>
+          </article>
+        `)
+        .join('');
+      document.getElementById('match-list').innerHTML = matchHtml;
+    }
+
+    // 重新测评
+    restartBtn.addEventListener('click', () => {
+      currentAttemptId = null;
+      answers = {};
+      resultSection.classList.add('hidden');
+      welcomeSection.classList.remove('hidden');
+    });
+
+    // 初始化
+    checkAllAnswered();
+  </script>
+</body>
+</html>
