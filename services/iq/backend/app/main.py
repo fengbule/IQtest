@@ -9,7 +9,7 @@ from typing import Annotated
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse, StreamingResponse
+from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
@@ -732,5 +732,13 @@ def list_personality_attempts(
 
 
 # Mount frontend files (must be after all API routes)
+@app.get("/personality", include_in_schema=False)
+def personality_page():
+    return FileResponse(Path(FRONTEND_DIR) / "personality.html", media_type="text/html")
+
+@app.get("/personality/", include_in_schema=False)
+def personality_page_slash():
+    return FileResponse(Path(FRONTEND_DIR) / "personality.html", media_type="text/html")
+
 app.mount("/iq", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="iq-frontend")
 app.mount("", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="root-frontend")
