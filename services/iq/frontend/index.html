@@ -88,12 +88,20 @@
       </section>
 
       <section id="test-section" class="card hidden">
+        <div id="floating-timer-panel" class="floating-timer hidden" aria-live="polite">
+          <span class="floating-timer-label">剩余时间</span>
+          <strong id="floating-timer-value">25:00</strong>
+          <div class="floating-timer-track" aria-hidden="true">
+            <div id="floating-timer-progress" class="floating-timer-progress"></div>
+          </div>
+          <p id="floating-timer-tip" class="floating-timer-tip">倒计时会始终跟随答题进度，时间到后将自动交卷。</p>
+        </div>
         <div class="test-topbar">
           <div>
             <h2>答题中</h2>
             <p id="meta-text" class="muted">正在准备题目…</p>
           </div>
-          <div class="timer-box">
+          <div id="timer-box" class="timer-box">
             <span>剩余时间</span>
             <strong id="timer">25:00</strong>
           </div>

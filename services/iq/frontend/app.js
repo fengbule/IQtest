@@ -2,6 +2,7 @@ const state = {
   attemptId: null,
   questions: [],
   timerId: null,
+  timeLimitSeconds: 25 * 60,
   remainingSeconds: 25 * 60,
   startTimestamp: null,
   submitting: false,
@@ -11,10 +12,12 @@ const state = {
 };
 
 const el = (id) => document.getElementById(id);
+const defaultPageTitle = document.title;
 
 function formatTime(seconds) {
-  const minute = String(Math.floor(seconds / 60)).padStart(2, '0');
-  const second = String(seconds % 60).padStart(2, '0');
+  const safeSeconds = Math.max(0, Number(seconds) || 0);
+  const minute = String(Math.floor(safeSeconds / 60)).padStart(2, '0');
+  const second = String(safeSeconds % 60).padStart(2, '0');
   return `${minute}:${second}`;
 }
 
@@ -83,14 +86,71 @@ function collectAnswers() {
   });
 }
 
+function getTimerStatus(seconds) {
+  if (seconds <= 60) {
+    return {
+      tone: 'danger',
+      tip: '剩余不足 1 分钟，系统会在时间到后自动交卷。',
+    };
+  }
+  if (seconds <= 5 * 60) {
+    return {
+      tone: 'warning',
+      tip: '剩余不足 5 分钟，建议优先检查未作答题目。',
+    };
+  }
+  return {
+    tone: 'normal',
+    tip: '倒计时会始终跟随答题进度，时间到后将自动交卷。',
+  };
+}
+
+function renderTimerState() {
+  const safeSeconds = Math.max(0, state.remainingSeconds);
+  const timeText = formatTime(safeSeconds);
+  const status = getTimerStatus(safeSeconds);
+  const progressRatio = state.timeLimitSeconds
+    ? Math.max(0, Math.min(1, safeSeconds / state.timeLimitSeconds))
+    : 0;
+
+  el('timer').textContent = timeText;
+
+  const floatingValue = el('floating-timer-value');
+  const floatingProgress = el('floating-timer-progress');
+  const floatingTip = el('floating-timer-tip');
+  const timerBox = el('timer-box');
+  const floatingPanel = el('floating-timer-panel');
+
+  if (floatingValue) floatingValue.textContent = timeText;
+  if (floatingProgress) floatingProgress.style.width = `${progressRatio * 100}%`;
+  if (floatingTip) floatingTip.textContent = status.tip;
+
+  [timerBox, floatingPanel].forEach((node) => {
+    if (!node) return;
+    node.classList.toggle('is-warning', status.tone === 'warning');
+    node.classList.toggle('is-danger', status.tone === 'danger');
+  });
+
+  document.title = el('test-section')?.classList.contains('hidden')
+    ? defaultPageTitle
+    : `${timeText} | 在线智力测评平台`;
+}
+
+function clearTimer() {
+  if (!state.timerId) return;
+  window.clearInterval(state.timerId);
+  state.timerId = null;
+}
+
 function startTimer() {
-  el('timer').textContent = formatTime(state.remainingSeconds);
+  clearTimer();
+  renderTimerState();
   state.timerId = window.setInterval(() => {
-    state.remainingSeconds -= 1;
-    el('timer').textContent = formatTime(state.remainingSeconds);
+    state.remainingSeconds = Math.max(0, state.remainingSeconds - 1);
+    renderTimerState();
     if (state.remainingSeconds <= 0) {
-      clearInterval(state.timerId);
-      submitTest();
+      clearTimer();
+      submitTest({ autoSubmitted: true });
     }
   }, 1000);
 }
@@ -124,14 +184,19 @@ async function startTest() {
   const data = await response.json();
   state.attemptId = data.attempt_id;
   state.questions = data.questions;
+  state.timeLimitSeconds = data.time_limit_seconds;
   state.remainingSeconds = data.time_limit_seconds;
   state.startTimestamp = Date.now();
+  state.submitting = false;
   state.questionDurations = {};
   state.activeQuestionId = null;
   state.activeSince = null;
 
   el('welcome-section').classList.add('hidden');
   el('test-section').classList.remove('hidden');
+  el('floating-timer-panel').classList.remove('hidden');
+  el('submit-btn').disabled = false;
+  el('submit-btn').textContent = '提交并生成报告';
   el('meta-text').textContent = `共 ${data.questions.length} 题，建议在 ${Math.round(data.time_limit_seconds / 60)} 分钟内完成。`;
   renderQuestions();
   startTimer();
@@ -207,11 +272,21 @@ function fillResult(data) {
   renderReview(data.answer_review);
 }
 
-async function submitTest() {
+async function submitTest({ autoSubmitted = false } = {}) {
   if (!state.attemptId || state.submitting) return;
   state.submitting = true;
   syncActiveTiming();
-  if (state.timerId) clearInterval(state.timerId);
+  clearTimer();
+
+  const submitButton = el('submit-btn');
+  submitButton.disabled = true;
+  submitButton.textContent = autoSubmitted ? '时间到，正在自动交卷…' : '正在生成报告…';
+  if (autoSubmitted) {
+    const floatingTip = el('floating-timer-tip');
+    if (floatingTip) {
+      floatingTip.textContent = '时间已到，系统正在自动提交你的试卷。';
+    }
+  }
 
   const durationSeconds = Math.min(7200, Math.floor((Date.now() - state.startTimestamp) / 1000));
   const payload = {
@@ -219,21 +294,38 @@ async function submitTest() {
     duration_seconds: durationSeconds,
   };
 
-  const response = await fetch(`/api/attempts/${state.attemptId}/submit`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
+  let response;
+  try {
+    response = await fetch(`/api/attempts/${state.attemptId}/submit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch (_) {
+    state.submitting = false;
+    submitButton.disabled = false;
+    submitButton.textContent = '提交并生成报告';
+    renderTimerState();
+    if (state.remainingSeconds > 0) startTimer();
+    alert('网络异常，提交失败，请稍后重试。');
+    return;
+  }
 
   if (!response.ok) {
     state.submitting = false;
+    submitButton.disabled = false;
+    submitButton.textContent = '提交并生成报告';
+    renderTimerState();
+    if (state.remainingSeconds > 0) startTimer();
     alert('提交失败，请稍后重试。');
     return;
   }
 
   const data = await response.json();
+  el('floating-timer-panel').classList.add('hidden');
   el('test-section').classList.add('hidden');
   el('result-section').classList.remove('hidden');
+  document.title = defaultPageTitle;
   fillResult(data);
 }
 
