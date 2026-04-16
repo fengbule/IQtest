@@ -1,0 +1,156 @@
+{
+  "slug": "life-view-1min",
+  "title": "1分钟人生观测试",
+  "subtitle": "5道题看穿你的人生哲学",
+  "description": "用5道快问快答，看看你的底层人生观是什么。",
+  "cover_image": "/images_fun/life-view-1min/cover.png",
+  "theme_color": "#06b6d4",
+  "estimated_minutes": 1,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 5,
+  "result_count": 6,
+  "disclaimer": "本测验仅供娱乐，不代表真实人生选择。",
+  "sort_order": 11,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "人生最重要的是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "开心就好", "scores": {"hedonism": 3, "altruism": 1}},
+        {"value": "B", "label": "不留遗憾", "scores": {"adventure": 3, "stability": 1}},
+        {"value": "C", "label": "被人记住", "scores": {"legacy": 3, "hedonism": 1}},
+        {"value": "D", "label": "内心平静", "scores": {"inner_peace": 3, "legacy": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "如果明天是世界末日，你会？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "和家人朋友待在一起", "scores": {"altruism": 3, "inner_peace": 1}},
+        {"value": "B", "label": "去实现一直想做的事", "scores": {"adventure": 3, "legacy": 1}},
+        {"value": "C", "label": "疯狂消费享受最后一天", "scores": {"hedonism": 3, "stability": 1}},
+        {"value": "D", "label": "安静地回顾一生", "scores": {"inner_peace": 3, "legacy": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你更羡慕什么样的人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "一生平安顺遂的人", "scores": {"stability": 3, "inner_peace": 1}},
+        {"value": "B", "label": "活得精彩刺激的人", "scores": {"adventure": 3, "hedonism": 1}},
+        {"value": "C", "label": "对社会有贡献的人", "scores": {"altruism": 3, "legacy": 1}},
+        {"value": "D", "label": "内心永远平静的人", "scores": {"inner_peace": 3, "stability": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你更倾向于？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "稳妥的小确幸", "scores": {"stability": 3, "hedonism": 1}},
+        {"value": "B", "label": "刺激的大起大落", "scores": {"adventure": 3, "stability": 1}},
+        {"value": "C", "label": "帮助别人成就自己", "scores": {"altruism": 3, "adventure": 1}},
+        {"value": "D", "label": "留下些什么证明自己活过", "scores": {"legacy": 3, "altruism": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "你觉得自己更像哪种人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "活在当下派", "scores": {"hedonism": 3, "inner_peace": 1}},
+        {"value": "B", "label": "未来规划派", "scores": {"legacy": 3, "stability": 1}},
+        {"value": "C", "label": "现在挑战派", "scores": {"adventure": 3, "hedonism": 1}},
+        {"value": "D", "label": "无怨无悔派", "scores": {"inner_peace": 3, "altruism": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "hedonism",
+      "name": "及时行乐派",
+      "subtitle": "人生苦短，及时行乐",
+      "summary": "你是一个信奉及时行乐的人。",
+      "long_desc": "你觉得人生短暂，没必要委屈自己。你追求当下的快乐，不想为未来过度焦虑。你是朋友圈中的开心果，给周围人带来正能量。",
+      "poster_image": "/images_fun/life-view-1min/result_hedonism.png",
+      "share_title": "我是及时行乐派",
+      "share_subtitle": "人生苦短，及时行乐。",
+      "rule": {"type": "top_archetype", "key": "hedonism"},
+      "extra": {"tags": ["行乐", "活在当下", "乐观", "正能量"]}
+    },
+    {
+      "key": "adventure",
+      "name": "冒险挑战派",
+      "subtitle": "人生在于折腾",
+      "summary": "你是一个不安分、爱折腾的冒险家。",
+      "long_desc": "你觉得人生就是要折腾，不然跟咸鱼有什么区别。你喜欢挑战和刺激，不甘于平淡。你的人生经历往往比同龄人丰富得多。",
+      "poster_image": "/images_fun/life-view-1min/result_adventure.png",
+      "share_title": "我是冒险挑战派",
+      "share_subtitle": "人生在于折腾，不折腾不精彩。",
+      "rule": {"type": "top_archetype", "key": "adventure"},
+      "extra": {"tags": ["冒险", "折腾", "挑战", "不安分"]}
+    },
+    {
+      "key": "legacy",
+      "name": "留名青史派",
+      "subtitle": "总想留下些什么",
+      "summary": "你是一个希望留下痕迹的人。",
+      "long_desc": "你不甘心平庸地过完一生，总想给世界留下些什么。你有野心和目标，是一个目标导向的人。你的人生是不断追逐成就的过程。",
+      "poster_image": "/images_fun/life-view-1min/result_legacy.png",
+      "share_title": "我是留名青史派",
+      "share_subtitle": "总想给世界留下些什么。",
+      "rule": {"type": "top_archetype", "key": "legacy"},
+      "extra": {"tags": ["成就", "野心", "目标", "留下痕迹"]}
+    },
+    {
+      "key": "inner_peace",
+      "name": "内心平静派",
+      "subtitle": "平静是最大的幸福",
+      "summary": "你是一个追求内心平静的人。",
+      "long_desc": "你不太在意外界的评价，更注重内心的安宁。你不喜欢攀比和竞争，觉得平平淡淡才是真。你是一个很有智慧的人。",
+      "poster_image": "/images_fun/life-view-1min/result_inner_peace.png",
+      "share_title": "我是内心平静派",
+      "share_subtitle": "平静是最大的幸福。",
+      "rule": {"type": "top_archetype", "key": "inner_peace"},
+      "extra": {"tags": ["平静", "淡定", "智慧", "不攀比"]}
+    },
+    {
+      "key": "stability",
+      "name": "安稳生活派",
+      "subtitle": "平平淡淡才是真",
+      "summary": "你是一个追求安稳生活的人。",
+      "long_desc": "你觉得幸福就是老婆孩子热炕头，平平淡淡才是真。你不喜欢大起大落的生活，更看重稳定和安全。你是朋友圈中最踏实的那一个。",
+      "poster_image": "/images_fun/life-view-1min/result_stability.png",
+      "share_title": "我是安稳生活派",
+      "share_subtitle": "平平淡淡才是真，安安乐乐才是福。",
+      "rule": {"type": "top_archetype", "key": "stability"},
+      "extra": {"tags": ["安稳", "踏实", "平淡", "顾家"]}
+    },
+    {
+      "key": "altruism",
+      "name": "助人为乐派",
+      "subtitle": "帮助别人，快乐自己",
+      "summary": "你是一个以助人为乐的人。",
+      "long_desc": "你从帮助他人中获得满足感，觉得人生的价值在于奉献。你是一个有大爱的人，不会计较个人得失。你的人生是不断给予的过程。",
+      "poster_image": "/images_fun/life-view-1min/result_altruism.png",
+      "share_title": "我是助人为乐派",
+      "share_subtitle": "帮助别人，快乐自己。",
+      "rule": {"type": "top_archetype", "key": "altruism"},
+      "extra": {"tags": ["助人", "奉献", "大爱", "无私"]}
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "slug": "destined-travel",
+  "title": "命中注定的旅行目的地",
+  "subtitle": "8道题找到你灵魂最想去的远方",
+  "description": "每个人的心里都有一个远方，测测你命中注定的旅行目的地是哪里。",
+  "cover_image": "/images_fun/destined-travel/cover.png",
+  "theme_color": "#059669",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 8,
+  "result_count": 6,
+  "disclaimer": "本测验仅供娱乐，不代表真实旅行偏好。",
+  "sort_order": 12,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你更喜欢什么样的旅行节奏？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "紧凑充实的打卡之旅", "scores": {"city_explorer": 3, "culture_hunter": 1}},
+        {"value": "B", "label": "悠闲自在的慢旅行", "scores": {"beach_retreat": 3, "countryside": 1}},
+        {"value": "C", "label": "说走就走的冒险之旅", "scores": {"mountain_conqueror": 3, "road_tripper": 1}},
+        {"value": "D", "label": "有深度的文化之旅", "scores": {"ancient_ruins": 3, "culture_hunter": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "旅行时你更在意什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "美食和当地特色小吃", "scores": {"foodie_journey": 3, "city_explorer": 1}},
+        {"value": "B", "label": "风景和拍照效果", "scores": {"nature_lover": 3, "beach_retreat": 1}},
+        {"value": "C", "label": "历史和人文故事", "scores": {"culture_hunter": 3, "ancient_ruins": 1}},
+        {"value": "D", "label": "独特的体验和经历", "scores": {"adventure_seeker": 3, "mountain_conqueror": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你理想中的旅行伙伴是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "志同道合的朋友", "scores": {"road_tripper": 3, "city_explorer": 1}},
+        {"value": "B", "label": "独自一人，享受孤独", "scores": {"mountain_conqueror": 3, "ancient_ruins": 1}},
+        {"value": "C", "label": "最爱的人，一起浪漫", "scores": {"beach_retreat": 3, "countryside": 1}},
+        {"value": "D", "label": "家人，温馨的亲情之旅", "scores": {"foodie_journey": 3, "nature_lover": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你更向往什么样的风景？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "蔚蓝的大海和沙滩", "scores": {"beach_retreat": 3, "island_hopper": 1}},
+        {"value": "B", "label": "广阔的大草原和野生动物", "scores": {"safari_adventure": 3, "nature_lover": 1}},
+        {"value": "C", "label": "雄伟的高山和雪山", "scores": {"mountain_conqueror": 3, "road_tripper": 1}},
+        {"value": "D", "label": "古老神秘的历史遗迹", "scores": {"ancient_ruins": 3, "culture_hunter": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "旅行中你通常扮演什么角色？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "全程策划的领队", "scores": {"city_explorer": 3, "road_tripper": 1}},
+        {"value": "B", "label": "随机应变的探索者", "scores": {"adventure_seeker": 3, "mountain_conqueror": 1}},
+        {"value": "C", "label": "负责找美食的觅食官", "scores": {"foodie_journey": 3, "city_explorer": 1}},
+        {"value": "D", "label": "负责拍照的记录者", "scores": {"nature_lover": 3, "beach_retreat": 1}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "什么类型的旅行最吸引你？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "繁华大都市的买买买之旅", "scores": {"city_explorer": 3, "foodie_journey": 1}},
+        {"value": "B", "label": "海边度假村的躺平之旅", "scores": {"beach_retreat": 3, "island_hopper": 1}},
+        {"value": "C", "label": "徒步穿越自然的挑战之旅", "scores": {"mountain_conqueror": 3, "adventure_seeker": 1}},
+        {"value": "D", "label": "探访世界遗产的文化之旅", "scores": {"ancient_ruins": 3, "culture_hunter": 1}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你更想体验哪种文化？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "浪漫的欧洲古典文化", "scores": {"culture_hunter": 3, "city_explorer": 1}},
+        {"value": "B", "label": "神秘的东方古老文明", "scores": {"ancient_ruins": 3, "countryside": 1}},
+        {"value": "C", "label": "热情奔放的拉美文化", "scores": {"adventure_seeker": 3, "foodie_journey": 1}},
+        {"value": "D", "label": "原始纯净的原住民文化", "scores": {"nature_lover": 3, "mountain_conqueror": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "如果给你一次免费旅行机会，你会去？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "东京、巴黎、纽约这样的大都市", "scores": {"city_explorer": 3, "foodie_journey": 1}},
+        {"value": "B", "label": "马尔代夫、巴厘岛这样的海岛", "scores": {"beach_retreat": 3, "island_hopper": 1}},
+        {"value": "C", "label": "西藏、尼泊尔这样的高原圣地", "scores": {"mountain_conqueror": 3, "ancient_ruins": 1}},
+        {"value": "D", "label": "新疆、云南这样的国内秘境", "scores": {"countryside": 3, "nature_lover": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "city_explorer",
+      "name": "都市探索者",
+      "subtitle": "你的远方是繁华霓虹",
+      "summary": "你热爱大都市的繁华与便利，旅行对你来说是一场城市探险。",
+      "long_desc": "你喜欢shopping、尝遍美食、打卡地标景点。东京的潮流、巴黎的浪漫、纽约的多元都是你的心头好。",
+      "poster_image": "/images_fun/destined-travel/result_city.png",
+      "share_title": "我命中注定的旅行目的地是国际大都市",
+      "share_subtitle": "繁华霓虹才是我的诗和远方。",
+      "rule": {"type": "top_archetype", "key": "city_explorer"},
+      "extra": {"tags": ["都市", "购物", "美食", "多元"]}
+    },
+    {
+      "key": "beach_retreat",
+      "name": "海岛度假者",
+      "subtitle": "你的远方是碧海蓝天",
+      "summary": "你向往阳光沙滩和海浪，旅行是为了彻底放松身心。",
+      "long_desc": "你是一个追求生活品质的人，旅行就是为了远离喧嚣，在海边发呆、晒太阳、喝椰子水是你的理想度假方式。",
+      "poster_image": "/images_fun/destined-travel/result_beach.png",
+      "share_title": "我命中注定的旅行目的地是海岛天堂",
+      "share_subtitle": "碧海蓝天，阳光沙滩，这就是我向往的生活。",
+      "rule": {"type": "top_archetype", "key": "beach_retreat"},
+      "extra": {"tags": ["海岛", "度假", "放松", "阳光"]}
+    },
+    {
+      "key": "mountain_conqueror",
+      "name": "高山征服者",
+      "subtitle": "你的远方是云端之巅",
+      "summary": "你喜欢挑战自我，向往登高望远的那种征服感。",
+      "long_desc": "你是户外运动的爱好者，喜欢徒步、登山、呼吸山顶的新鲜空气。你相信最美的风景在最高处。",
+      "poster_image": "/images_fun/destined-travel/result_mountain.png",
+      "share_title": "我命中注定的旅行目的地是雪山之巅",
+      "share_subtitle": "会当凌绝顶，一览众山小。",
+      "rule": {"type": "top_archetype", "key": "mountain_conqueror"},
+      "extra": {"tags": ["高山", "徒步", "挑战", "自然"]}
+    },
+    {
+      "key": "ancient_ruins",
+      "name": "古迹追寻者",
+      "subtitle": "你的远方是千年以前",
+      "summary": "你对历史文化有深厚的兴趣，向往探访古老文明遗迹。",
+      "long_desc": "你喜欢有故事的地方，金字塔、长城、马丘比丘在你心中有着不可抗拒的魅力。每次旅行都是一次穿越时空的对话。",
+      "poster_image": "/images_fun/destined-travel/result_ancient.png",
+      "share_title": "我命中注定的旅行目的地是古老遗迹",
+      "share_subtitle": "我想要的诗和远方，都在千年的尘埃里。",
+      "rule": {"type": "top_archetype", "key": "ancient_ruins"},
+      "extra": {"tags": ["古迹", "历史", "文明", "探秘"]}
+    },
+    {
+      "key": "foodie_journey",
+      "name": "美食追寻者",
+      "subtitle": "你的远方是舌尖上的世界",
+      "summary": "你对美食有着无限热情，旅行就是一场味蕾的冒险。",
+      "long_desc": "你是朋友圈里的美食家，专门为了吃而出发。路边摊、米其林餐厅、街角小吃都是你探索的目标。",
+      "poster_image": "/images_fun/destined-travel/result_foodie.png",
+      "share_title": "我命中注定的旅行目的地是美食天堂",
+      "share_subtitle": "世间万物，唯有美食与旅行不可辜负。",
+      "rule": {"type": "top_archetype", "key": "foodie_journey"},
+      "extra": {"tags": ["美食", "吃货", "探索", "当地"]}
+    },
+    {
+      "key": "nature_lover",
+      "name": "自然爱好者",
+      "subtitle": "你的远方是天地之间",
+      "summary": "你热爱大自然，旅行是为了感受天地万物的美好。",
+      "long_desc": "你喜欢呼吸新鲜空气，欣赏日出日落、星空银河。在大自然面前，所有的烦恼都变得渺小。",
+      "poster_image": "/images_fun/destined-travel/result_nature.png",
+      "share_title": "我命中注定的旅行目的地是自然秘境",
+      "share_subtitle": "天地有大美而不言。",
+      "rule": {"type": "top_archetype", "key": "nature_lover"},
+      "extra": {"tags": ["自然", "生态", "宁静", "美景"]}
+    }
+  ]
+}

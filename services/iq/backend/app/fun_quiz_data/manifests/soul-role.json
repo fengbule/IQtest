@@ -1,0 +1,245 @@
+{
+  "slug": "soul-role",
+  "title": "你的灵魂在扮演什么角色",
+  "subtitle": "10道题看穿你的人生角色",
+  "description": "每个人都在人生舞台上扮演着不同角色，测测你的灵魂角色是什么。",
+  "cover_image": "/images_fun/soul-role/cover.png",
+  "theme_color": "#8b5cf6",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 10,
+  "result_count": 8,
+  "disclaimer": "本测验仅供娱乐，不代表真实人格判断。",
+  "sort_order": 13,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "朋友遇到困难时会先找谁？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "我，因为我会帮忙分析问题", "scores": {"mentor_guide": 3, "peace_maker": 1}},
+        {"value": "B", "label": "我，因为我人脉广能介绍资源", "scores": {"connector": 3, "mentor_guide": 1}},
+        {"value": "C", "label": "我，因为我总能让人开心起来", "scores": {"joy_bringer": 3, "protector": 1}},
+        {"value": "D", "label": "不好意思，我不会主动帮忙", "scores": {"lone_wolf": 3, "dreamer": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "你在团队中通常扮演什么角色？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "领袖，带着大家冲", "scores": {"leader": 3, "mentor_guide": 1}},
+        {"value": "B", "label": "协调者，让大家一起合作", "scores": {"peace_maker": 3, "connector": 1}},
+        {"value": "C", "label": "开心果，活跃气氛", "scores": {"joy_bringer": 3, "creator": 1}},
+        {"value": "D", "label": "幕后英雄，做好自己的事", "scores": {"expert": 3, "lone_wolf": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你最享受什么样的时光？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "和一群人热热闹闹", "scores": {"joy_bringer": 3, "connector": 1}},
+        {"value": "B", "label": "独自安静地做喜欢的事", "scores": {"dreamer": 3, "lone_wolf": 1}},
+        {"value": "C", "label": "和志同道合的人一起创作", "scores": {"creator": 3, "mentor_guide": 1}},
+        {"value": "D", "label": "帮助别人解决问题", "scores": {"protector": 3, "mentor_guide": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你更像是哪种人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "总能提出新想法的人", "scores": {"dreamer": 3, "creator": 1}},
+        {"value": "B", "label": "总是很乐观向上的人", "scores": {"joy_bringer": 3, "leader": 1}},
+        {"value": "C", "label": "能让你感到安心的人", "scores": {"protector": 3, "peace_maker": 1}},
+        {"value": "D", "label": "看起来很神秘的人", "scores": {"lone_wolf": 3, "dreamer": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "你更看重自己的什么能力？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "专业技术能力", "scores": {"expert": 3, "creator": 1}},
+        {"value": "B", "label": "人际交往能力", "scores": {"connector": 3, "peace_maker": 1}},
+        {"value": "C", "label": "创新能力", "scores": {"dreamer": 3, "creator": 1}},
+        {"value": "D", "label": "领导能力", "scores": {"leader": 3, "protector": 1}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "你不喜欢什么样的人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "总是抱怨负能量的人", "scores": {"joy_bringer": 3, "peace_maker": 1}},
+        {"value": "B", "label": "虚伪不真诚的人", "scores": {"lone_wolf": 3, "protector": 1}},
+        {"value": "C", "label": "能力差还自以为是的人", "scores": {"expert": 3, "leader": 1}},
+        {"value": "D", "label": "独断专行的人", "scores": {"peace_maker": 3, "connector": 1}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你在社交场合通常是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "主动发起话题的人", "scores": {"connector": 3, "joy_bringer": 1}},
+        {"value": "B", "label": "静静听别人说的人", "scores": {"lone_wolf": 3, "dreamer": 1}},
+        {"value": "C", "label": "照顾每个人的人", "scores": {"protector": 3, "peace_maker": 1}},
+        {"value": "D", "label": "提出独特见解的人", "scores": {"dreamer": 3, "expert": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "你觉得自己更像什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "照亮别人的太阳", "scores": {"joy_bringer": 3, "leader": 1}},
+        {"value": "B", "label": "保护别人的盾牌", "scores": {"protector": 3, "mentor_guide": 1}},
+        {"value": "C", "label": "连接他人的桥梁", "scores": {"connector": 3, "peace_maker": 1}},
+        {"value": "D", "label": "独自旋转的星球", "scores": {"lone_wolf": 3, "dreamer": 1}}
+      ]
+    },
+    {
+      "id": "q9",
+      "position": 9,
+      "type": "single_choice",
+      "text": "你更羡慕什么样的特质？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "能和任何人都聊得来", "scores": {"connector": 3, "joy_bringer": 1}},
+        {"value": "B", "label": "有一技之长的专家", "scores": {"expert": 3, "dreamer": 1}},
+        {"value": "C", "label": "走到哪都有人帮", "scores": {"protector": 3, "leader": 1}},
+        {"value": "D", "label": "内心永远平静", "scores": {"dreamer": 3, "peace_maker": 1}}
+      ]
+    },
+    {
+      "id": "q10",
+      "position": 10,
+      "type": "single_choice",
+      "text": "你更喜欢什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "成为关注的焦点", "scores": {"joy_bringer": 2, "leader": 2}},
+        {"value": "B", "label": "在幕后默默付出", "scores": {"protector": 3, "expert": 1}},
+        {"value": "C", "label": "和人建立深度连接", "scores": {"peace_maker": 3, "connector": 1}},
+        {"value": "D", "label": "保持独立思考", "scores": {"lone_wolf": 3, "dreamer": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "joy_bringer",
+      "name": "阳光照耀者",
+      "subtitle": "你就是朋友圈里的小太阳",
+      "summary": "你的存在总能给人带来快乐和正能量。",
+      "long_desc": "你是一个天生乐观的人，无论走到哪里都能带来欢乐。你是朋友圈里的开心果，在你身边大家都会感到轻松愉快。",
+      "poster_image": "/images_fun/soul-role/result_joy_bringer.png",
+      "share_title": "我的灵魂角色是阳光照耀者",
+      "share_subtitle": "我就是朋友圈里的小太阳，照亮每个人。",
+      "rule": {"type": "top_archetype", "key": "joy_bringer"},
+      "extra": {"tags": ["乐观", "正能量", "开心果", "温暖"]}
+    },
+    {
+      "key": "protector",
+      "name": "守护者",
+      "subtitle": "你总是在背后默默保护重要的人",
+      "summary": "你是一个默默守护的人，总是为身边人遮风挡雨。",
+      "long_desc": "你是一个很有责任感的人，对在乎的人会不惜一切代价去保护。你不求回报，是朋友中最可靠的后盾。",
+      "poster_image": "/images_fun/soul-role/result_protector.png",
+      "share_title": "我的灵魂角色是守护者",
+      "share_subtitle": "你岁月静好，是因为有我在守护。",
+      "rule": {"type": "top_archetype", "key": "protector"},
+      "extra": {"tags": ["守护", "可靠", "担当", "责任"]}
+    },
+    {
+      "key": "dreamer",
+      "name": "梦想家",
+      "subtitle": "你活在梦想和现实之间的缝隙里",
+      "summary": "你是一个充满想象力和创造力的人。",
+      "long_desc": "你是一个有梦想的人，脑子里装满了各种奇妙的想法。你可能看起来有点不切实际，但你的创造力是无价的。",
+      "poster_image": "/images_fun/soul-role/result_dreamer.png",
+      "share_title": "我的灵魂角色是梦想家",
+      "share_subtitle": "我的脑子里装满了宇宙星辰。",
+      "rule": {"type": "top_archetype", "key": "dreamer"},
+      "extra": {"tags": ["创意", "梦想", "想象", "独特"]}
+    },
+    {
+      "key": "connector",
+      "name": "连接者",
+      "subtitle": "你认识世界的每个人",
+      "summary": "你是一个天生的社交高手，能连接各种各样的人。",
+      "long_desc": "你善于与人交往，朋友圈广泛，是信息的集散地。你总能帮人牵线搭桥，是社交场合的中心人物。",
+      "poster_image": "/images_fun/soul-role/result_connector.png",
+      "share_title": "我的灵魂角色是连接者",
+      "share_subtitle": "我就是那个认识所有人的社交达人。",
+      "rule": {"type": "top_archetype", "key": "connector"},
+      "extra": {"tags": ["社交", "人脉", "信息", "中心"]}
+    },
+    {
+      "key": "lone_wolf",
+      "name": "独行侠",
+      "subtitle": "你享受独处，不需要太多人懂你",
+      "summary": "你是一个内心丰富但不喜欢喧嚣的人。",
+      "long_desc": "你独立自主，不随波逐流。你有自己的节奏和世界，不需要太多社交就能自洽。你是那种一旦被人了解就会让人惊艳的类型。",
+      "poster_image": "/images_fun/soul-role/result_lone_wolf.png",
+      "share_title": "我的灵魂角色是独行侠",
+      "share_subtitle": "我不是不合群，只是更享受独处。",
+      "rule": {"type": "top_archetype", "key": "lone_wolf"},
+      "extra": {"tags": ["独立", "独处", "自洽", "深度"]}
+    },
+    {
+      "key": "peace_maker",
+      "name": "和平使者",
+      "subtitle": "你走到哪里，哪里就和平了",
+      "summary": "你是天生的协调者，总能化解矛盾和冲突。",
+      "long_desc": "你善于体察他人情绪，能够在不同性格的人之间找到平衡点。你不争不抢，是朋友圈里的润滑剂。",
+      "poster_image": "/images_fun/soul-role/result_peace_maker.png",
+      "share_title": "我的灵魂角色是和平使者",
+      "share_subtitle": "我的存在就是让人感到和谐与安宁。",
+      "rule": {"type": "top_archetype", "key": "peace_maker"},
+      "extra": {"tags": ["和谐", "协调", "包容", "平衡"]}
+    },
+    {
+      "key": "mentor_guide",
+      "name": "引路人",
+      "subtitle": "你总能为迷茫的人指明方向",
+      "summary": "你是一个有大智慧的人，总能给他人指点迷津。",
+      "long_desc": "你经历丰富，有自己的一套人生哲学。你喜欢分享自己的经验教训，帮助他人少走弯路。你是朋友中的人生导师。",
+      "poster_image": "/images_fun/soul-role/result_mentor.png",
+      "share_title": "我的灵魂角色是引路人",
+      "share_subtitle": "走过的路比你多，所以能给你指路。",
+      "rule": {"type": "top_archetype", "key": "mentor_guide"},
+      "extra": {"tags": ["智慧", "导师", "指引", "分享"]}
+    },
+    {
+      "key": "expert",
+      "name": "专业达人",
+      "subtitle": "你是一个领域的专家",
+      "summary": "你在某个领域有深厚的专业积累。",
+      "long_desc": "你注重专业能力的提升，对某个领域有深入的研究。你不追求广度而是深度，是圈子里的技术担当。",
+      "poster_image": "/images_fun/soul-role/result_expert.png",
+      "share_title": "我的灵魂角色是专业达人",
+      "share_subtitle": "在某个领域，我是认真的。",
+      "rule": {"type": "top_archetype", "key": "expert"},
+      "extra": {"tags": ["专业", "深度", "技术", "钻研"]}
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "slug": "animal-mbti",
+  "title": "你的动物人格是什么",
+  "subtitle": "10道题看穿你的动物本能",
+  "description": "每个人内心都住着一只动物，测出你的动物人格是什么。",
+  "cover_image": "/images_fun/animal-mbti/cover.png",
+  "theme_color": "#22c55e",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 10,
+  "result_count": 8,
+  "disclaimer": "本测验仅供娱乐，不代表真实性格判断。",
+  "sort_order": 16,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你更像哪种人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "独来独往，不依赖任何人", "scores": {"tiger_alone": 3, "wolf_pack": 1}},
+        {"value": "B", "label": "喜欢成群结队", "scores": {"wolf_pack": 3, "deer_gentle": 1}},
+        {"value": "C", "label": "在团队中有自己的位置", "scores": {"wolf_pack": 2, "elephant_loyal": 2}},
+        {"value": "D", "label": "有自己的领地，边界感强", "scores": {"tiger_alone": 3, "bear_strong": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "你更像哪种人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "遇到危险会勇敢战斗", "scores": {"tiger_alone": 2, "bear_strong": 2}},
+        {"value": "B", "label": "第一时间跑为上计", "scores": {"deer_gentle": 3, "fox_clever": 1}},
+        {"value": "C", "label": "用计谋而不是蛮力", "scores": {"fox_clever": 3, "tiger_alone": 1}},
+        {"value": "D", "label": "保护同伴，义不容辞", "scores": {"elephant_loyal": 3, "wolf_pack": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你的社交模式是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "少量但深入的友谊", "scores": {"tiger_alone": 3, "wolf_pack": 1}},
+        {"value": "B", "label": "广泛社交，认识很多人", "scores": {"fox_clever": 3, "dolphin_playful": 1}},
+        {"value": "C", "label": "在大群体中很活跃", "scores": {"dolphin_playful": 3, "wolf_pack": 1}},
+        {"value": "D", "label": "和固定的小圈子亲密", "scores": {"elephant_loyal": 3, "wolf_pack": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你更像哪种人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "直接表达，爱恨分明", "scores": {"tiger_alone": 3, "bear_strong": 1}},
+        {"value": "B", "label": "温和委婉，不起冲突", "scores": {"deer_gentle": 3, "elephant_loyal": 1}},
+        {"value": "C", "label": "说话有技巧，让人舒服", "scores": {"fox_clever": 3, "dolphin_playful": 1}},
+        {"value": "D", "label": "沉默寡言，用行动说话", "scores": {"bear_strong": 3, "tiger_alone": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "你更看重什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "自由和独立", "scores": {"tiger_alone": 3, "eagle_noble": 1}},
+        {"value": "B", "label": "智慧和计谋", "scores": {"fox_clever": 3, "eagle_noble": 1}},
+        {"value": "C", "label": "力量和勇气", "scores": {"bear_strong": 3, "tiger_alone": 1}},
+        {"value": "D", "label": "团队和归属", "scores": {"wolf_pack": 3, "elephant_loyal": 1}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "你更像哪种人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "自信甚至有点傲慢", "scores": {"tiger_alone": 2, "eagle_noble": 2}},
+        {"value": "B", "label": "谦逊低调", "scores": {"deer_gentle": 3, "elephant_loyal": 1}},
+        {"value": "C", "label": "聪明但低调", "scores": {"fox_clever": 3, "bear_strong": 1}},
+        {"value": "D", "label": "乐观开朗", "scores": {"dolphin_playful": 3, "deer_gentle": 1}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "面对压力你会？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "独自承受，不麻烦别人", "scores": {"tiger_alone": 3, "bear_strong": 1}},
+        {"value": "B", "label": "找朋友倾诉", "scores": {"wolf_pack": 3, "deer_gentle": 1}},
+        {"value": "C", "label": "想计策解决问题", "scores": {"fox_clever": 3, "eagle_noble": 1}},
+        {"value": "D", "label": "出去运动发泄", "scores": {"eagle_noble": 3, "dolphin_playful": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "你更像是哪种人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "喜欢发号施令", "scores": {"tiger_alone": 2, "eagle_noble": 2}},
+        {"value": "B", "label": "跟随但有主见", "scores": {"wolf_pack": 2, "deer_gentle": 2}},
+        {"value": "C", "label": "默默配合团队", "scores": {"elephant_loyal": 3, "wolf_pack": 1}},
+        {"value": "D", "label": "协调各方利益", "scores": {"fox_clever": 3, "dolphin_playful": 1}}
+      ]
+    },
+    {
+      "id": "q9",
+      "position": 9,
+      "type": "single_choice",
+      "text": "你更喜欢？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "丛林法则的野性生活", "scores": {"tiger_alone": 3, "bear_strong": 1}},
+        {"value": "B", "label": "大海的宽广自由", "scores": {"dolphin_playful": 3, "eagle_noble": 1}},
+        {"value": "C", "label": "森林深处的宁静", "scores": {"deer_gentle": 3, "elephant_loyal": 1}},
+        {"value": "D", "label": "高山之巅的俯瞰", "scores": {"eagle_noble": 3, "tiger_alone": 1}}
+      ]
+    },
+    {
+      "id": "q10",
+      "position": 10,
+      "type": "single_choice",
+      "text": "你的领导风格是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "强势主导，说一不二", "scores": {"tiger_alone": 3, "bear_strong": 1}},
+        {"value": "B", "label": "民主协商，共同决策", "scores": {"wolf_pack": 3, "elephant_loyal": 1}},
+        {"value": "C", "label": "以身作则，带领团队", "scores": {"eagle_noble": 3, "wolf_pack": 1}},
+        {"value": "D", "label": "柔性管理，注重感受", "scores": {"deer_gentle": 3, "dolphin_playful": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "tiger_alone",
+      "name": "独行猛虎",
+      "subtitle": "孤独而强大，王者风范",
+      "summary": "你是一只孤独但强大的猛虎。",
+      "long_desc": "你独立自主，不依赖他人。有领导力和决断力，是一个天生的领袖。你有自己的原则和底线，不轻易妥协。",
+      "poster_image": "/images_fun/animal-mbti/result_tiger.png",
+      "share_title": "我的动物人格是独行猛虎",
+      "share_subtitle": "我不是不合群，只是更享受独处。",
+      "rule": {"type": "top_archetype", "key": "tiger_alone"},
+      "extra": {"tags": ["独立", "领导力", "决断", "王者"]}
+    },
+    {
+      "key": "wolf_pack",
+      "name": "狼群战术",
+      "subtitle": "团结协作，群体意识强",
+      "summary": "你是一只懂得团队协作的狼。",
+      "long_desc": "你重视群体利益，有强烈的团队意识。你懂得配合和协作，是天生的团队玩家。你忠诚度高，一旦认定团队就会全力以赴。",
+      "poster_image": "/images_fun/animal-mbti/result_wolf.png",
+      "share_title": "我的动物人格是狼",
+      "share_subtitle": "我们是一起的，一起去战斗！",
+      "rule": {"type": "top_archetype", "key": "wolf_pack"},
+      "extra": {"tags": ["团队", "协作", "忠诚", "配合"]}
+    },
+    {
+      "key": "fox_clever",
+      "name": "狡黠狐狸",
+      "subtitle": "聪明机敏，计谋多端",
+      "summary": "你是一只聪明狡黠的狐狸。",
+      "long_desc": "你头脑灵活，善于变通，能够巧妙地处理各种问题。你不靠蛮力而是靠智慧取胜，是一个有谋略的人。",
+      "poster_image": "/images_fun/animal-mbti/result_fox.png",
+      "share_title": "我的动物人格是狐狸",
+      "share_subtitle": "聪明的头脑才是最强的武器。",
+      "rule": {"type": "top_archetype", "key": "fox_clever"},
+      "extra": {"tags": ["聪明", "狡黠", "灵活", "谋略"]}
+    },
+    {
+      "key": "eagle_noble",
+      "name": "高傲雄鹰",
+      "subtitle": "视野开阔，志向高远",
+      "summary": "你是一只志向高远的雄鹰。",
+      "long_desc": "你有远大的目标和理想，不甘于平庸。你视野开阔，能够看到别人看不到的机会。你是一个有格局的人。",
+      "poster_image": "/images_fun/animal-mbti/result_eagle.png",
+      "share_title": "我的动物人格是雄鹰",
+      "share_subtitle": "我的目标是云端，不是树梢。",
+      "rule": {"type": "top_archetype", "key": "eagle_noble"},
+      "extra": {"tags": ["志向高远", "视野广", "有格局", "目标导向"]}
+    },
+    {
+      "key": "bear_strong",
+      "name": "憨厚棕熊",
+      "subtitle": "力量型选手，靠谱稳重",
+      "summary": "你是一只憨厚可靠的棕熊。",
+      "long_desc": "你是一个稳重可靠的人，给人安全感。你不善言辞但用行动说话，是一个值得信赖的伙伴。你的力量来自于内心的坚定。",
+      "poster_image": "/images_fun/animal-mbti/result_bear.png",
+      "share_title": "我的动物人格是棕熊",
+      "share_subtitle": "我不说话，但我一直在这里。",
+      "rule": {"type": "top_archetype", "key": "bear_strong"},
+      "extra": {"tags": ["稳重", "可靠", "力量", "安全感"]}
+    },
+    {
+      "key": "deer_gentle",
+      "name": "温柔鹿群",
+      "subtitle": "温和友善，人缘超好",
+      "summary": "你是一只温和友善的小鹿。",
+      "long_desc": "你性情温和，待人友善，是一个很好相处的人。你不喜欢冲突，宁愿退一步也不愿与人争执。你是朋友圈里的和平使者。",
+      "poster_image": "/images_fun/animal-mbti/result_deer.png",
+      "share_title": "我的动物人格是小鹿",
+      "share_subtitle": "温和我最大的武器。",
+      "rule": {"type": "top_archetype", "key": "deer_gentle"},
+      "extra": {"tags": ["温和", "友善", "和平", "好相处"]}
+    },
+    {
+      "key": "elephant_loyal",
+      "name": "忠义象群",
+      "subtitle": "忠诚护群，重情重义",
+      "summary": "你是一头忠诚重义的亚洲象。",
+      "long_desc": "你非常重视感情和义气，对家人朋友都会全力保护。你记忆力好，记得每一份恩情。你是朋友圈里最講義气的那个。",
+      "poster_image": "/images_fun/animal-mbti/result_elephant.png",
+      "share_title": "我的动物人格是大象",
+      "share_subtitle": "记着每一份情，保护每一个我爱的人。",
+      "rule": {"type": "top_archetype", "key": "elephant_loyal"},
+      "extra": {"tags": ["忠诚", "重义", "保护", "记恩"]}
+    },
+    {
+      "key": "dolphin_playful",
+      "name": "快乐海豚",
+      "subtitle": "聪明活泼，社交达人",
+      "summary": "你是一只聪明快乐的海豚。",
+      "long_desc": "你天生乐观开朗，是社交场合的焦点。你聪明有趣，跟你在一起永远不会无聊。你是朋友圈里的开心果。",
+      "poster_image": "/images_fun/animal-mbti/result_dolphin.png",
+      "share_title": "我的动物人格是海豚",
+      "share_subtitle": "一起开心一起嗨，我是派对小能手！",
+      "rule": {"type": "top_archetype", "key": "dolphin_playful"},
+      "extra": {"tags": ["开朗", "聪明", "社交达人", "开心果"]}
+    }
+  ]
+}

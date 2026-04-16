@@ -1,0 +1,209 @@
+{
+  "slug": "lunaverse-romance",
+  "title": "你在月球恋人是哪种类型",
+  "subtitle": "8道题测出你的理想恋爱星座",
+  "description": "如果让你在月球上谈恋爱，你会选择什么样的人？测出你内心深处的理想恋人类型。",
+  "cover_image": "/images_fun/lunaverse-romance/cover.png",
+  "theme_color": "#a855f7",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "scorecard",
+  "question_count": 8,
+  "result_count": 6,
+  "disclaimer": "本测验仅供娱乐，不代表真实的星座人格分析。",
+  "sort_order": 7,
+  "dimensions": [
+    {"key": "passion", "name": "热情度"},
+    {"key": "logic", "name": "理智度"},
+    {"key": "emotion", "name": "情感度"},
+    {"key": "loyalty", "name": "忠诚度"}
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你的恋人对未来有明确规划，你怎么看？",
+      "subtext": "选择最像你的反应",
+      "dimension_key": "logic",
+      "options": [
+        {"value": "A", "label": "很欣赏，有目标的人很有魅力", "scores": {"logic": 3, "passion": 1, "total": 3}},
+        {"value": "B", "label": "有点压力，不想被规划", "scores": {"passion": 2, "emotion": 1, "total": 2}},
+        {"value": "C", "label": "无所谓，有梦就一起追", "scores": {"emotion": 2, "passion": 1, "total": 2}},
+        {"value": "D", "label": "希望对方也能听听我的想法", "scores": {"loyalty": 2, "logic": 1, "total": 2}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "恋人工作很忙很少陪你，你会？",
+      "subtext": "选择最像你的反应",
+      "dimension_key": "emotion",
+      "options": [
+        {"value": "A", "label": "理解支持，默默等待", "scores": {"loyalty": 3, "emotion": 1, "total": 3}},
+        {"value": "B", "label": "主动沟通，表达需求", "scores": {"logic": 2, "emotion": 2, "total": 3}},
+        {"value": "C", "label": "有点失落但不说", "scores": {"emotion": 3, "total": 3}},
+        {"value": "D", "label": "给自己找事做，不粘人", "scores": {"passion": 2, "loyalty": 1, "total": 2}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你更喜欢恋人在感情中怎么表达？",
+      "subtext": "选择最像你的",
+      "dimension_key": "passion",
+      "options": [
+        {"value": "A", "label": "直接说出来，不要猜", "scores": {"passion": 3, "emotion": 1, "total": 3}},
+        {"value": "B", "label": "用行动表达，比如礼物", "scores": {"loyalty": 2, "emotion": 2, "total": 3}},
+        {"value": "C", "label": "细腻关心，日常点滴", "scores": {"emotion": 3, "passion": 1, "total": 3}},
+        {"value": "D", "label": "偶尔浪漫就行，平常正常就好", "scores": {"logic": 2, "loyalty": 1, "total": 2}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "吵架时你通常怎么反应？",
+      "subtext": "选择最像你的",
+      "dimension_key": "emotion",
+      "options": [
+        {"value": "A", "label": "冷静分析，讲道理", "scores": {"logic": 3, "total": 3}},
+        {"value": "B", "label": "先发泄情绪，再谈事", "scores": {"passion": 2, "emotion": 2, "total": 3}},
+        {"value": "C", "label": "不说话，等对方先道歉", "scores": {"loyalty": 2, "emotion": 2, "total": 3}},
+        {"value": "D", "label": "摔东西或冷战", "scores": {"passion": 2, "loyalty": 1, "total": 2}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "你对闪婚怎么看？",
+      "subtext": "选择最像你的",
+      "dimension_key": "passion",
+      "options": [
+        {"value": "A", "label": "如果是对的人，可以闪婚", "scores": {"passion": 3, "emotion": 2, "total": 3}},
+        {"value": "B", "label": "太草率了，需要时间考验", "scores": {"logic": 3, "loyalty": 1, "total": 3}},
+        {"value": "C", "label": "看情况，不反对也不支持", "scores": {"loyalty": 2, "logic": 1, "total": 2}},
+        {"value": "D", "label": "完全不接受，太冒险", "scores": {"logic": 2, "loyalty": 2, "total": 3}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "你的恋人很优秀但很忙，你会？",
+      "subtext": "选择最像你的",
+      "dimension_key": "loyalty",
+      "options": [
+        {"value": "A", "label": "默默支持，提升自己", "scores": {"loyalty": 3, "passion": 1, "total": 3}},
+        {"value": "B", "label": "希望对方多陪自己", "scores": {"emotion": 3, "total": 3}},
+        {"value": "C", "label": "接受现实，找到自己的节奏", "scores": {"logic": 2, "loyalty": 2, "total": 3}},
+        {"value": "D", "label": "感到不安，想要更多确定感", "scores": {"emotion": 2, "loyalty": 2, "total": 3}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你希望恋人有什么特质？",
+      "subtext": "选择最重要的",
+      "dimension_key": "loyalty",
+      "options": [
+        {"value": "A", "label": "专一忠诚，给我安全感", "scores": {"loyalty": 3, "total": 3}},
+        {"value": "B", "label": "有趣浪漫，让生活有激情", "scores": {"passion": 3, "emotion": 1, "total": 3}},
+        {"value": "C", "label": "聪明上进，一起成长", "scores": {"logic": 3, "passion": 1, "total": 3}},
+        {"value": "D", "label": "温柔体贴，懂我", "scores": {"emotion": 3, "loyalty": 1, "total": 3}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "你认为感情的最终目的是？",
+      "subtext": "选择最像你的",
+      "dimension_key": "passion",
+      "options": [
+        {"value": "A", "label": "找到一个能一起变老的人", "scores": {"loyalty": 3, "emotion": 2, "total": 3}},
+        {"value": "B", "label": "体验不同的人生精彩", "scores": {"passion": 3, "emotion": 1, "total": 3}},
+        {"value": "C", "label": "相互成就，成为更好的人", "scores": {"logic": 2, "passion": 2, "total": 3}},
+        {"value": "D", "label": "没有目的，顺其自然", "scores": {"logic": 2, "loyalty": 1, "total": 2}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "moon_lover_fire",
+      "name": "火星恋人",
+      "subtitle": "热烈燃烧型",
+      "summary": "你渴望激情四射的爱情，像一团火一样热烈。",
+      "long_desc": "你对爱情充满热情，喜欢浪漫和惊喜，需要伴侣不断地表达爱意。你不适合平淡如水的感情，需要火花和心动。",
+      "poster_image": "/images_fun/lunaverse-romance/result_fire.png",
+      "share_title": "我的月球恋人是火星恋人",
+      "share_subtitle": "爱情要热烈，心动要常在。",
+      "rule": {"type": "score_range", "min_total": 20, "max_total": 28},
+      "extra": {"tags": ["热情", "浪漫", "需要表达", "讨厌平淡"], "level": "A+"}
+    },
+    {
+      "key": "moon_lover_water",
+      "name": "水星恋人",
+      "subtitle": "温柔细腻型",
+      "summary": "你渴望温柔相伴的感情，像水一样温柔流淌。",
+      "long_desc": "你是一个很注重情感细腻度的人，需要伴侣能够懂你的小心思小情绪。你不喜欢直接的冲突，更倾向于用柔和的方式解决问题。",
+      "poster_image": "/images_fun/lunaverse-romance/result_water.png",
+      "share_title": "我的月球恋人是水星恋人",
+      "share_subtitle": "不需多言，一个眼神就懂。",
+      "rule": {"type": "score_range", "min_total": 16, "max_total": 22},
+      "extra": {"tags": ["温柔", "细腻", "懂人心", "敏感"], "level": "A"}
+    },
+    {
+      "key": "moon_lover_earth",
+      "name": "土星恋人",
+      "subtitle": "稳重可靠型",
+      "summary": "你渴望一段稳定踏实的感情，像土星一样可靠。",
+      "long_desc": "你对感情很认真，一旦确定关系就会全身心投入。你需要一个同样踏实的伴侣，不需要太多浪漫，稳定压倒一切。",
+      "poster_image": "/images_fun/lunaverse-romance/result_earth.png",
+      "share_title": "我的月球恋人是土星恋人",
+      "share_subtitle": "不需要轰轰烈烈，只想细水长流。",
+      "rule": {"type": "score_range", "min_total": 12, "max_total": 18},
+      "extra": {"tags": ["稳定", "踏实", "专一", "务实"], "level": "B+"}
+    },
+    {
+      "key": "moon_lover_sun",
+      "name": "太阳恋人",
+      "subtitle": "阳光活力型",
+      "summary": "你渴望充满阳光的爱情，和伴侣一起积极向上。",
+      "long_desc": "你是一个乐观积极的人，希望和伴侣一起成长一起嗨。你不喜欢情绪太重的伴侣，更喜欢能带你一起玩耍的人。",
+      "poster_image": "/images_fun/lunaverse-romance/result_sun.png",
+      "share_title": "我的月球恋人是太阳恋人",
+      "share_subtitle": "一起闪闪发光，照亮彼此的人生。",
+      "rule": {"type": "score_range", "min_total": 8, "max_total": 14},
+      "extra": {"tags": ["阳光", "乐观", "积极", "爱成长"], "level": "B"}
+    },
+    {
+      "key": "moon_lover_moon",
+      "name": "月亮恋人",
+      "subtitle": "月亮型恋人",
+      "summary": "你渴望一个懂你内在世界的灵魂伴侣。",
+      "long_desc": "你是一个内心世界丰富的人，需要伴侣能够理解你的想法和感受。你不看重表面的东西，更在意精神的契合。",
+      "poster_image": "/images_fun/lunaverse-romance/result_moon.png",
+      "share_title": "我的月球恋人是月亮恋人",
+      "share_subtitle": "懂我的奇奇怪怪，陪我可可爱爱。",
+      "rule": {"type": "score_range", "min_total": 15, "max_total": 20},
+      "extra": {"tags": ["灵魂伴侣", "懂你", "精神契合", "内向"], "level": "A"}
+    },
+    {
+      "key": "moon_lover_venus",
+      "name": "金星恋人",
+      "subtitle": "浪漫唯美型",
+      "summary": "你渴望浪漫唯美的爱情，像艺术品一样精致。",
+      "long_desc": "你对美有很高的追求，希望爱情像电影一样美好。你喜欢有仪式感的生活，需要伴侣配合你的浪漫节奏。",
+      "poster_image": "/images_fun/lunaverse-romance/result_venus.png",
+      "share_title": "我的月球恋人是金星恋人",
+      "share_subtitle": "爱情要有仪式感，生活要有美感。",
+      "rule": {"type": "score_range", "min_total": 6, "max_total": 12},
+      "extra": {"tags": ["浪漫", "唯美", "仪式感", "重美感"], "level": "B"}
+    }
+  ]
+}

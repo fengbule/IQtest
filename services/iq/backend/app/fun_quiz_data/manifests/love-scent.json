@@ -1,0 +1,195 @@
+{
+  "slug": "love-scent",
+  "title": "你的爱情闻起来是什么味道",
+  "subtitle": "8道题测出你的恋爱香气",
+  "description": "每段感情都有独特的气味，你的爱情闻起来是什么味道？",
+  "cover_image": "/images_fun/love-scent/cover.png",
+  "theme_color": "#ec4899",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 8,
+  "result_count": 6,
+  "disclaimer": "本测验仅供娱乐，不代表专业情感分析。",
+  "sort_order": 8,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你的恋爱更像是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "刚泡好的咖啡，苦中带香", "scores": {"coffee_bitterness": 3, "rose_fresh": 1}},
+        {"value": "B", "label": "刚切开的柠檬，清新带酸", "scores": {"lemon_sour": 3, "coffee_bitterness": 1}},
+        {"value": "C", "label": "浓郁的巧克力，甜到心里", "scores": {"chocolate_sweet": 3, "vanilla_soft": 1}},
+        {"value": "D", "label": "淡淡的绿茶，清幽淡雅", "scores": {"green_tea_mild": 3, "rose_fresh": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "你理想中的约会场所是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "环境优雅的餐厅", "scores": {"rose_fresh": 2, "vanilla_soft": 2}},
+        {"value": "B", "label": "热闹的酒吧或咖啡馆", "scores": {"coffee_bitterness": 2, "lemon_sour": 2}},
+        {"value": "C", "label": "户外公园或海边", "scores": {"green_tea_mild": 3, "rose_fresh": 1}},
+        {"value": "D", "label": "游乐园或演唱会", "scores": {"lemon_sour": 2, "chocolate_sweet": 2}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "吵架后你通常会？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "冷静一会儿再好好谈", "scores": {"green_tea_mild": 3, "rose_fresh": 1}},
+        {"value": "B", "label": "想立刻说清楚，不留隔阂", "scores": {"coffee_bitterness": 2, "lemon_sour": 2}},
+        {"value": "C", "label": "需要对方先来哄我", "scores": {"chocolate_sweet": 2, "vanilla_soft": 2}},
+        {"value": "D", "label": "默默流泪等对方发现", "scores": {"rose_fresh": 3, "vanilla_soft": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你更喜欢恋人的什么特质？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "成熟稳重，能带我成长", "scores": {"coffee_bitterness": 3, "green_tea_mild": 1}},
+        {"value": "B", "label": "活泼开朗，带我见世面", "scores": {"lemon_sour": 3, "chocolate_sweet": 1}},
+        {"value": "C", "label": "温柔体贴，懂我的小情绪", "scores": {"rose_fresh": 3, "vanilla_soft": 2}},
+        {"value": "D", "label": "独立自主，各有空间", "scores": {"green_tea_mild": 2, "coffee_bitterness": 2}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "热恋期过后，你更期待什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "细水长流的温情", "scores": {"green_tea_mild": 3, "vanilla_soft": 2}},
+        {"value": "B", "label": "偶尔的浪漫惊喜", "scores": {"rose_fresh": 2, "chocolate_sweet": 2}},
+        {"value": "C", "label": "一起奋斗事业", "scores": {"coffee_bitterness": 3, "lemon_sour": 1}},
+        {"value": "D", "label": "依然像热恋一样甜蜜", "scores": {"chocolate_sweet": 3, "rose_fresh": 2}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "你如何表达爱意？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "为对方做实事照顾对方", "scores": {"green_tea_mild": 2, "vanilla_soft": 2}},
+        {"value": "B", "label": "经常说甜蜜的话", "scores": {"chocolate_sweet": 3, "rose_fresh": 1}},
+        {"value": "C", "label": "送礼物制造惊喜", "scores": {"rose_fresh": 3, "lemon_sour": 1}},
+        {"value": "D", "label": "默默陪伴在身边", "scores": {"coffee_bitterness": 2, "green_tea_mild": 2}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你更看重恋人的什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "上进心和事业心", "scores": {"coffee_bitterness": 3, "lemon_sour": 1}},
+        {"value": "B", "label": "情绪稳定性格好", "scores": {"green_tea_mild": 3, "vanilla_soft": 1}},
+        {"value": "C", "label": "外表和身材", "scores": {"rose_fresh": 2, "lemon_sour": 2}},
+        {"value": "D", "label": "对我好不好", "scores": {"chocolate_sweet": 2, "vanilla_soft": 2}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "你理想的二人世界是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "一起看电影聊天", "scores": {"vanilla_soft": 3, "green_tea_mild": 1}},
+        {"value": "B", "label": "一起探索新地方旅行", "scores": {"lemon_sour": 3, "coffee_bitternes": 1}},
+        {"value": "C", "label": "在家做饭享受居家", "scores": {"green_tea_mild": 2, "vanilla_soft": 2}},
+        {"value": "D", "label": "一起参加社交活动", "scores": {"rose_fresh": 3, "lemon_sour": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "coffee_bitterness",
+      "name": "咖啡苦香型",
+      "subtitle": "苦中带香，越品越有味",
+      "summary": "你的恋爱像一杯精品咖啡，苦涩中带着迷人的香气。",
+      "long_desc": "你不是那种甜腻的类型，而是经历过沉淀的成熟感情。你的爱情有苦有甜，需要慢慢品味。这种感情更有深度，更让人回味。",
+      "poster_image": "/images_fun/love-scent/result_coffee.png",
+      "share_title": "我的恋爱闻起来是咖啡味",
+      "share_subtitle": "苦中带香，这才是有深度的爱情。",
+      "rule": {"type": "top_archetype", "key": "coffee_bitterness"},
+      "extra": {"tags": ["成熟", "有深度", "苦涩", "耐品"]}
+    },
+    {
+      "key": "chocolate_sweet",
+      "name": "巧克力甜香型",
+      "subtitle": "甜到心里，浓郁浪漫",
+      "summary": "你的恋爱像浓郁巧克力，甜蜜满分。",
+      "long_desc": "你是那种喜欢甜甜蜜蜜的人，需要浪漫和仪式感。你的恋爱像巧克力一样浓郁，甜到心里，让周围人都能感受到你们的幸福。",
+      "poster_image": "/images_fun/love-scent/result_chocolate.png",
+      "share_title": "我的恋爱闻起来是巧克力味",
+      "share_subtitle": "甜到心里，这就是爱情的味道。",
+      "rule": {"type": "top_archetype", "key": "chocolate_sweet"},
+      "extra": {"tags": ["甜蜜", "浪漫", "浓郁", "仪式感"]}
+    },
+    {
+      "key": "rose_fresh",
+      "name": "玫瑰清新型",
+      "subtitle": "玫瑰花香，优雅浪漫",
+      "summary": "你的恋爱像清晨的玫瑰花香，清新优雅。",
+      "long_desc": "你是一个注重品质的人，爱情也要有格调。你的恋爱像玫瑰花香一样优雅，不过分浓烈，却让人难忘。",
+      "poster_image": "/images_fun/love-scent/result_rose.png",
+      "share_title": "我的恋爱闻起来是玫瑰味",
+      "share_subtitle": "优雅浪漫，这就是我想要的爱情。",
+      "rule": {"type": "top_archetype", "key": "rose_fresh"},
+      "extra": {"tags": ["优雅", "浪漫", "小资", "清新"]}
+    },
+    {
+      "key": "green_tea_mild",
+      "name": "绿茶清幽型",
+      "subtitle": "清幽淡雅，回味悠长",
+      "summary": "你的恋爱像一杯清茶，不浓烈但回味无穷。",
+      "long_desc": "你是一个喜欢简单的人，感情不需要太轰轰烈烈。你的恋爱像绿茶一样清幽淡雅，但每一口都有不同的滋味。",
+      "poster_image": "/images_fun/love-scent/result_green_tea.png",
+      "share_title": "我的恋爱闻起来是绿茶味",
+      "share_subtitle": "清幽淡雅，这才是最长情的陪伴。",
+      "rule": {"type": "top_archetype", "key": "green_tea_mild"},
+      "extra": {"tags": ["淡雅", "长情", "简单", "耐品"]}
+    },
+    {
+      "key": "vanilla_soft",
+      "name": "香草柔和型",
+      "subtitle": "香草轻柔，温馨甜蜜",
+      "summary": "你的恋爱像香草一样柔和，温馨甜蜜。",
+      "long_desc": "你是那种给人温暖感觉的人，感情生活也比较平和温馨。你的恋爱像香草一样柔和，但却是生活中最不可或缺的调味。",
+      "poster_image": "/images_fun/love-scent/result_vanilla.png",
+      "share_title": "我的恋爱闻起来是香草味",
+      "share_subtitle": "温馨甜蜜，你是我的那抹甜。",
+      "rule": {"type": "top_archetype", "key": "vanilla_soft"},
+      "extra": {"tags": ["温馨", "柔和", "甜蜜", "居家"]}
+    },
+    {
+      "key": "lemon_sour",
+      "name": "柠檬清新酸甜型",
+      "subtitle": "酸酸甜甜，这就是恋爱的味道",
+      "summary": "你的恋爱像柠檬一样，酸酸甜甜有活力。",
+      "long_desc": "你是那种给生活带来活力的人，感情生活也充满情趣。你的恋爱像柠檬一样清新，酸酸甜甜让人上瘾。",
+      "poster_image": "/images_fun/love-scent/result_lemon.png",
+      "share_title": "我的恋爱闻起来是柠檬味",
+      "share_subtitle": "酸酸甜甜，这就是恋爱的味道。",
+      "rule": {"type": "top_archetype", "key": "lemon_sour"},
+      "extra": {"tags": ["清新", "活泼", "有情趣", "上头"]}
+    }
+  ]
+}
