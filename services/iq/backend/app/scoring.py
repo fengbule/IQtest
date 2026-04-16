@@ -3,6 +3,8 @@ from __future__ import annotations
 from collections import Counter, defaultdict
 from math import erf, sqrt
 
+from .dimension_mapping import normalize_dimension
+
 
 CATEGORY_LABELS = {
     "numerical": "数理推理",
@@ -168,7 +170,7 @@ def validity_from_scores(completion_score: float, quality_score: float, quality_
 def build_dimension_breakdown(answer_rows: list) -> list[dict]:
     grouped: dict[str, list] = defaultdict(list)
     for row in answer_rows:
-        grouped[row.question_dimension].append(row)
+        grouped[normalize_dimension(row.question_dimension)].append(row)
 
     breakdown = []
     for key, label in CATEGORY_LABELS.items():
@@ -208,7 +210,10 @@ def build_answer_review(answer_rows: list) -> list[dict]:
             {
                 "question_order": row.question_order,
                 "prompt": row.prompt_snapshot,
-                "dimension": CATEGORY_LABELS.get(row.question_dimension, row.question_dimension),
+                "dimension": CATEGORY_LABELS.get(
+                    normalize_dimension(row.question_dimension),
+                    normalize_dimension(row.question_dimension),
+                ),
                 "difficulty": DIFFICULTY_LABELS.get(row.question_difficulty, row.question_difficulty),
                 "selected_option": row.selected_option,
                 "correct_option": row.correct_answer_snapshot,

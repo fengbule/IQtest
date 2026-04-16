@@ -15,6 +15,7 @@ from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from .database import Base, SessionLocal, engine, get_db
+from .dimension_mapping import normalize_dimension
 from .migrations import apply_lightweight_migrations
 from .models import AdminUser, AttemptAnswer, Question, TestAttempt, PersonalityQuestion, PersonalityAttempt, PersonalityAnswer
 from .question_selector import DIMENSIONS, QUESTION_PLAN, TIME_LIMIT_SECONDS, sample_questions
@@ -279,7 +280,7 @@ def start_attempt(payload: StartAttemptIn, request: Request, db: Session = Depen
                 attempt_id=attempt.id,
                 question_id=question.id,
                 question_order=display_order,
-                question_dimension=question.category,
+                question_dimension=normalize_dimension(question.category),
                 question_difficulty=question.difficulty,
                 question_weight=question.difficulty_weight,
                 estimated_seconds=question.estimated_seconds,
@@ -296,7 +297,10 @@ def start_attempt(payload: StartAttemptIn, request: Request, db: Session = Depen
         QuestionOut(
             id=question.id,
             order_no=index,
-            category=CATEGORY_LABELS.get(question.category, question.category),
+            category=CATEGORY_LABELS.get(
+                normalize_dimension(question.category),
+                normalize_dimension(question.category),
+            ),
             difficulty=DIFFICULTY_LABELS.get(question.difficulty, question.difficulty),
             prompt=question.prompt,
             options={
@@ -408,7 +412,8 @@ def admin_dashboard(_: str = Depends(get_current_admin), db: Session = Depends(g
     dimension_rollup = {label: [0, 0] for label in CATEGORY_LABELS.values()}
     for attempt in completed:
         for row in attempt.answers:
-            label = CATEGORY_LABELS.get(row.question_dimension, row.question_dimension)
+            dimension = normalize_dimension(row.question_dimension)
+            label = CATEGORY_LABELS.get(dimension, dimension)
             dimension_rollup.setdefault(label, [0, 0])
             dimension_rollup[label][0] += int(row.is_correct)
             dimension_rollup[label][1] += 1
