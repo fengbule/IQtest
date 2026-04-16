@@ -1,0 +1,219 @@
+{
+  "slug": "future-elder",
+  "title": "未来的你会是哪一种老人",
+  "subtitle": "8题测出你的老后生活人设",
+  "description": "搭上时光机，看看未来的你会过上什么样的退休生活。",
+  "cover_image": "/images_fun/future-elder/cover.png",
+  "theme_color": "#10b981",
+  "estimated_minutes": 2,
+  "play_style": "story",
+  "scoring_mode": "archetype_sum",
+  "question_count": 8,
+  "result_count": 6,
+  "disclaimer": "本测验仅供娱乐，不代表真实养老规划。",
+  "sort_order": 2,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "退休后你最想先做什么？",
+      "subtext": "选择最符合你想法的",
+      "options": [
+        {"value": "A", "label": "去旅行，看看没去过的地方", "scores": {"travel_elder": 3, "gardener": 1}},
+        {"value": "B", "label": "在家躺着，什么都不想做", "scores": {"sleepy_elder": 3, "quiet_gardener": 1}},
+        {"value": "C", "label": "研究养生知识，调理身体", "scores": {"wellness_elder": 3, "quiet_gardener": 1}},
+        {"value": "D", "label": "找老朋友聊天叙旧", "scores": {"gossip_king": 2, "family_organizer": 2}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "你更想住哪种环境？",
+      "subtext": "选择最符合你想法的",
+      "options": [
+        {"value": "A", "label": "大城市，离子女近一点", "scores": {"family_organizer": 2, "gossip_king": 1}},
+        {"value": "B", "label": "郊区或农村，有个院子", "scores": {"quiet_gardener": 3, "gardener": 2}},
+        {"value": "C", "label": "海边的老年公寓", "scores": {"travel_elder": 2, "wellness_elder": 1}},
+        {"value": "D", "label": "有老年活动中心的大型社区", "scores": {"square_dancer": 3, "gossip_king": 2}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "如果孩子周末不回家看你，你会？",
+      "subtext": "选择最符合你反应的",
+      "options": [
+        {"value": "A", "label": "正好落得清静，自己安排", "scores": {"quiet_gardener": 2, "travel_elder": 1}},
+        {"value": "B", "label": "主动打电话问情况，顺便唠叨", "scores": {"family_organizer": 3, "gossip_king": 1}},
+        {"value": "C", "label": "有点失落但不说，转移注意力", "scores": {"wellness_elder": 2, "sleepy_elder": 2}},
+        {"value": "D", "label": "约上老伙计一起玩", "scores": {"square_dancer": 2, "gossip_king": 2}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "社区组织活动，你会参加吗？",
+      "subtext": "选择最符合你想法的",
+      "options": [
+        {"value": "A", "label": "看什么活动，有些还挺感兴趣", "scores": {"square_dancer": 2, "gossip_king": 1}},
+        {"value": "B", "label": "积极参加，结识新朋友", "scores": {"square_dancer": 3, "gossip_king": 2}},
+        {"value": "C", "label": "不参加，太吵了", "scores": {"quiet_gardener": 3, "sleepy_elder": 2}},
+        {"value": "D", "label": "看情况，可能在家里做点别的", "scores": {"gardener": 2, "wellness_elder": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "你更看重老年生活的哪一方面？",
+      "subtext": "选择最符合你想法的",
+      "options": [
+        {"value": "A", "label": "热闹，有人陪伴", "scores": {"square_dancer": 3, "family_organizer": 2}},
+        {"value": "B", "label": "健康，身体没毛病", "scores": {"wellness_elder": 3, "sleepy_elder": 1}},
+        {"value": "C", "label": "自由，想干嘛干嘛", "scores": {"travel_elder": 3, "quiet_gardener": 1}},
+        {"value": "D", "label": "平静，简单生活就好", "scores": {"quiet_gardener": 3, "gardener": 2}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "早上醒来，你更可能先做什么？",
+      "subtext": "选择最符合你习惯的",
+      "options": [
+        {"value": "A", "label": "去公园遛弯或跳广场舞", "scores": {"square_dancer": 3, "wellness_elder": 1}},
+        {"value": "B", "label": "看手机，了解一下新闻", "scores": {"gossip_king": 2, "sleepy_elder": 2}},
+        {"value": "C", "label": "泡杯茶，坐在阳台发呆", "scores": {"quiet_gardener": 3, "gardener": 1}},
+        {"value": "D", "label": "计划一下今天的行程", "scores": {"travel_elder": 2, "family_organizer": 2}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你愿意帮子女带孩子吗？",
+      "subtext": "选择最符合你想法的",
+      "options": [
+        {"value": "A", "label": "愿意，享受天伦之乐", "scores": {"family_organizer": 3, "square_dancer": 1}},
+        {"value": "B", "label": "偶尔可以，但不想全职带", "scores": {"gossip_king": 2, "wellness_elder": 1}},
+        {"value": "C", "label": "不太想，想过自己的生活", "scores": {"travel_elder": 2, "quiet_gardener": 2}},
+        {"value": "D", "label": "看身体情况，能帮就帮", "scores": {"wellness_elder": 2, "sleepy_elder": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "什么样的老年生活会让你觉得满足？",
+      "subtext": "选择最符合你想法的",
+      "options": [
+        {"value": "A", "label": "子女孝顺，子孙绕膝", "scores": {"family_organizer": 3, "square_dancer": 1}},
+        {"value": "B", "label": "身体健康，四处游玩", "scores": {"travel_elder": 3, "wellness_elder": 1}},
+        {"value": "C", "label": "有一两个知心老友，偶尔小聚", "scores": {"gossip_king": 2, "quiet_gardener": 2}},
+        {"value": "D", "label": "有自己的小爱好，岁月静好", "scores": {"gardener": 3, "quiet_gardener": 2}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "square_dancer",
+      "name": "广场舞战神",
+      "subtitle": "精力充沛的社交达人",
+      "summary": "退休后的你，依然是朋友圈里的活跃分子，每天准时出现在广场上。",
+      "long_desc": "你退休后的生活依然精彩！你喜欢热闹，热衷于各种社交活动，尤其是广场舞这种既能锻炼身体又能结识朋友的运动。你的存在让整个社区都充满活力，是大家眼中的开心果。",
+      "poster_image": "/images_fun/future-elder/result_square_dancer.png",
+      "share_title": "退休后我是广场舞战神",
+      "share_subtitle": "年龄只是数字，舞步永不停歇。",
+      "rule": {"type": "top_archetype", "key": "square_dancer"},
+      "extra": {
+        "tags": ["社交达人", "活力满满", "社区灵魂人物"],
+        "retiree_index": 95,
+        "recommended_skill": "舞蹈编排能力"
+      }
+    },
+    {
+      "key": "travel_elder",
+      "name": "旅行闲不住老人",
+      "subtitle": "走遍天下的终身旅行者",
+      "summary": "退休后的你，终于有时间实现环游世界的梦想了。",
+      "long_desc": "你是一只闲不住的旅行鸟，退休前可能没时间到处玩，退休后终于可以自由地到处跑了。你的手机里存满了各地的照片，你的心得游记比旅行攻略还实用。你觉得人生的意义就在于看更多的风景。",
+      "poster_image": "/images_fun/future-elder/result_travel_elder.png",
+      "share_title": "退休后我是旅行闲不住老人",
+      "share_subtitle": "世界那么大，我想去看看。",
+      "rule": {"type": "top_archetype", "key": "travel_elder"},
+      "extra": {
+        "tags": ["旅行达人", "热爱自由", "见多识广"],
+        "retiree_index": 88,
+        "recommended_skill": "摄影和写作"
+      }
+    },
+    {
+      "key": "wellness_elder",
+      "name": "养生泡脚老人",
+      "subtitle": "健康生活倡导者",
+      "summary": "你深信养生之道，退休后更是把健康放在第一位。",
+      "long_desc": "你是朋友圈里的养生专家，对各种养生知识如数家珍。你每天按时作息，泡脚、刮痧、喝养生茶是你的日常。虽然有时候会被朋友调侃，但你的身体状态确实让人羡慕。",
+      "poster_image": "/images_fun/future-elder/result_wellness_elder.png",
+      "share_title": "退休后我是养生泡脚老人",
+      "share_subtitle": "养生才是王道，健康是第一财富。",
+      "rule": {"type": "top_archetype", "key": "wellness_elder"},
+      "extra": {
+        "tags": ["养生专家", "注重健康", "生活规律"],
+        "retiree_index": 90,
+        "recommended_skill": "中医养生知识"
+      }
+    },
+    {
+      "key": "gossip_king",
+      "name": "社区八卦情报王",
+      "subtitle": "消息灵通的社交枢纽",
+      "summary": "没有什么八卦能逃过你的耳朵，你是社区里的情报中心。",
+      "long_desc": "你是社区里消息最灵通的人，谁家儿子结婚了、谁家闺女离婚了，你都第一个知道。虽然你有时候爱八卦，但你的人缘特别好，因为你知道的多，能帮上忙的地方也多。",
+      "poster_image": "/images_fun/future-elder/result_gossip_king.png",
+      "share_title": "退休后我是社区八卦情报王",
+      "share_subtitle": "我不是八卦，我只是消息灵通。",
+      "rule": {"type": "top_archetype", "key": "gossip_king"},
+      "extra": {
+        "tags": ["人脉广", "消息灵通", "社交高手"],
+        "retiree_index": 85,
+        "recommended_skill": "人际沟通能力"
+      }
+    },
+    {
+      "key": "family_organizer",
+      "name": "家庭聚餐组织者",
+      "subtitle": "维系家族情感的粘合剂",
+      "summary": "你是家族的主心骨，所有聚会都少不了你的操持。",
+      "long_desc": "你退休后依然忙碌，因为你是整个家族的粘合剂。节假日的大小聚会都是你在组织，虽然有时候会觉得累，但看到一家人其乐融融的样子，你觉得一切都值得。",
+      "poster_image": "/images_fun/future-elder/result_family_organizer.png",
+      "share_title": "退休后我是家庭聚餐组织者",
+      "share_subtitle": "家有一老如有一宝，我就是那宝。",
+      "rule": {"type": "top_archetype", "key": "family_organizer"},
+      "extra": {
+        "tags": ["家族核心", "善于组织", "重亲情"],
+        "retiree_index": 92,
+        "recommended_skill": "活动策划能力"
+      }
+    },
+    {
+      "key": "quiet_gardener",
+      "name": "安静种花老人",
+      "subtitle": "享受独处的慢生活家",
+      "summary": "你更喜欢安静的生活，在自家小院里莳花弄草。",
+      "long_desc": "你是朋友圈里最懂生活的人，退休后你找到了属于自己的节奏。养花、种菜、喝茶、看书，你把日子过成了诗。虽然看起来平淡，但你的内心比谁都充实。",
+      "poster_image": "/images_fun/future-elder/result_quiet_gardener.png",
+      "share_title": "退休后我是安静种花老人",
+      "share_subtitle": "岁月静好，简单生活就是幸福。",
+      "rule": {"type": "top_archetype", "key": "quiet_gardener"},
+      "extra": {
+        "tags": ["热爱生活", "内心平静", "生活有情趣"],
+        "retiree_index": 87,
+        "recommended_skill": "园艺和手工艺"
+      }
+    }
+  ]
+}

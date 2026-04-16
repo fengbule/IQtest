@@ -47,8 +47,10 @@ from .scoring import (
 )
 from .security import create_access_token, decode_access_token, verify_password
 from .seed import seed_admin, seed_questions, seed_personality_questions
+from .fun_quiz_seed import seed_fun_quizzes
 from .personality_scorer import calculate_personality_scores, find_top_matches, get_dimension_interpretation, generate_summary
 from .personality_data import HISTORICAL_FIGURES
+from .fun_quiz_routes import router as fun_quiz_router
 
 
 VALIDITY_LABELS = {
@@ -115,6 +117,7 @@ def startup_event() -> None:
         seed_admin(db)
         seed_questions(db)
         seed_personality_questions(db)
+        seed_fun_quizzes(db)
     finally:
         db.close()
 
@@ -754,6 +757,24 @@ def sbti_page():
 @app.get("/sbti/", include_in_schema=False)
 def sbti_page_slash():
     return FileResponse(Path(FRONTEND_DIR) / "sbti.html", media_type="text/html")
+
+app.include_router(fun_quiz_router)
+
+
+@app.get("/fun", include_in_schema=False)
+def fun_index():
+    return FileResponse(Path(FRONTEND_DIR) / "fun-index.html", media_type="text/html")
+
+
+@app.get("/fun/", include_in_schema=False)
+def fun_index_slash():
+    return FileResponse(Path(FRONTEND_DIR) / "fun-index.html", media_type="text/html")
+
+
+@app.get("/fun/play.html", include_in_schema=False)
+def fun_play_page():
+    return FileResponse(Path(FRONTEND_DIR) / "fun-play.html", media_type="text/html")
+
 
 app.mount("/iq", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="iq-frontend")
 app.mount("", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="root-frontend")

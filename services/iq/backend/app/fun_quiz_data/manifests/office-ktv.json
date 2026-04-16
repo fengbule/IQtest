@@ -1,0 +1,186 @@
+{
+  "slug": "office-ktv",
+  "title": "社畜有泪 KTV",
+  "subtitle": "5题测出你今天该点哪首社畜主题曲",
+  "description": "从你的疲惫来源、开会状态与下班愿望，测出你的社畜类型。",
+  "cover_image": "/images_fun/office-ktv/cover.png",
+  "theme_color": "#f59e0b",
+  "estimated_minutes": 1,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 5,
+  "result_count": 6,
+  "disclaimer": "本测验仅供娱乐，结果不构成职业建议。",
+  "sort_order": 4,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "今天最烦你的事情是什么？",
+      "subtext": "选择最符合今天的你的",
+      "options": [
+        {"value": "A", "label": "明明不是我的锅却甩给我", "scores": {"backpot_worker": 3, "surface_calm": 1}},
+        {"value": "B", "label": "开了很多会但什么都没推进", "scores": {"meeting_drain": 3, "numb_worker": 1}},
+        {"value": "C", "label": "困得要死还要假装精神", "scores": {"sleepy_worker": 3, "emotion_drain": 1}},
+        {"value": "D", "label": "琐碎的事情太多，忙到没时间做事", "scores": {"inner_mad_worker": 2, "backpot_worker": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "周一早上你最常见的状态是？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "不想起床，不想上班", "scores": {"sleepy_worker": 3, "numb_worker": 1}},
+        {"value": "B", "label": "强打精神处理周末积压的工作", "scores": {"emotion_drain": 2, "backpot_worker": 1}},
+        {"value": "C", "label": "焦虑周末没干完的活", "scores": {"inner_mad_worker": 2, "meeting_drain": 1}},
+        {"value": "D", "label": "周一就开始倒计时周五了", "scores": {"numb_worker": 2, "surface_calm": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "被甩锅时你会？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "当场反驳，保护自己", "scores": {"inner_mad_worker": 2, "backpot_worker": 1}},
+        {"value": "B", "label": "默默忍下，回头再算账", "scores": {"backpot_worker": 2, "surface_calm": 2}},
+        {"value": "C", "label": "想反驳但话到嘴边又咽下", "scores": {"emotion_drain": 2, "sleepy_worker": 1}},
+        {"value": "D", "label": "已经麻了，无所谓了", "scores": {"numb_worker": 3, "meeting_drain": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "开会时你真实内心是？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "这个会有意义吗，能解决什么问题", "scores": {"meeting_drain": 3, "inner_mad_worker": 1}},
+        {"value": "B", "label": "快点结束吧，还有别的事要干", "scores": {"numb_worker": 2, "sleepy_worker": 1}},
+        {"value": "C", "label": "努力装作在认真听", "scores": {"emotion_drain": 2, "surface_calm": 1}},
+        {"value": "D", "label": "已经完全放空，神游去了", "scores": {"sleepy_worker": 2, "inner_mad_worker": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "下班后你最想做什么？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "回家躺着，什么都不想做", "scores": {"sleepy_worker": 2, "numb_worker": 2}},
+        {"value": "B", "label": "喝酒或吃烧烤，发泄一下", "scores": {"inner_mad_worker": 2, "backpot_worker": 1}},
+        {"value": "C", "label": "运动出汗，把压力释放掉", "scores": {"emotion_drain": 2, "meeting_drain": 1}},
+        {"value": "D", "label": "加班把活干完，心里才踏实", "scores": {"surface_calm": 2, "backpot_worker": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "backpot_worker",
+      "name": "背锅型打工人",
+      "subtitle": "今天的你，工牌下面写着：我来扛",
+      "summary": "你最累的不是工作本身，而是别人留下的烂摊子。",
+      "long_desc": "你对责任感这件事有点过于认真，于是总在替别人兜底。明明不是你的问题，却要你来善后。你不是不会抱怨，只是觉得抱怨也没用，不如赶紧解决问题。",
+      "poster_image": "/images_fun/office-ktv/result_backpot.png",
+      "share_title": "我的社畜主题曲：背锅型打工人",
+      "share_subtitle": "活没少干，锅也没少背。",
+      "rule": {"type": "top_archetype", "key": "backpot_worker"},
+      "extra": {
+        "song_title": "《我太难了》",
+        "tags": ["替人收尾", "责任过重", "表面冷静"],
+        "tired_point": "心累",
+        "survival_tip": "今天下班后请拒绝一件不属于你的事"
+      }
+    },
+    {
+      "key": "sleepy_worker",
+      "name": "睡不醒打工人",
+      "subtitle": "永远缺觉，永远在犯困",
+      "summary": "你最大的敌人不是工作压力，而是永远不够的睡眠。",
+      "long_desc": "你是一个永远缺觉的打工er，早上不想起，晚上不想睡。你的身体里好像住着一只永远叫不醒的瞌睡虫，让你在白天只能靠咖啡续命。",
+      "poster_image": "/images_fun/office-ktv/result_sleepy.png",
+      "share_title": "我的社畜主题曲：睡不醒打工人",
+      "share_subtitle": "咖啡续命，困意难消。",
+      "rule": {"type": "top_archetype", "key": "sleepy_worker"},
+      "extra": {
+        "song_title": "《咖啡》",
+        "tags": ["永远犯困", "咖啡依赖", "缺觉"],
+        "tired_point": "身体累",
+        "survival_tip": "今晚早点睡，哪怕只是敷着面膜发呆"
+      }
+    },
+    {
+      "key": "emotion_drain",
+      "name": "情绪内耗型",
+      "subtitle": "每天都在内心上演小剧场",
+      "summary": "你的累不是身体上的，而是情绪上的消耗。",
+      "long_desc": "你是那种想很多的人，领导一句无心的话你能琢磨半天，同事一个眼神你能脑补出一部剧。你的内心每天都在上演各种小剧场，消耗着你大量的精力。",
+      "poster_image": "/images_fun/office-ktv/result_emotion_drain.png",
+      "share_title": "我的社畜主题曲：情绪内耗型",
+      "share_subtitle": "想太多累死，想太少也累。",
+      "rule": {"type": "top_archetype", "key": "emotion_drain"},
+      "extra": {
+        "song_title": "《想太多》",
+        "tags": ["内心戏多", "敏感", "容易焦虑"],
+        "tired_point": "心累",
+        "survival_tip": "下班后做一些需要专注的事，强迫自己不去想"
+      }
+    },
+    {
+      "key": "meeting_drain",
+      "name": "被会议榨干型",
+      "subtitle": "不是在开会，就是在开会的路上",
+      "summary": "你的工作时间都被各种会议占满了。",
+      "long_desc": "你是一个会议受害者，每天不是在开会就是在开会的路上。明明自己的活都没干完，却要花大量时间参加各种无效会议，还要装作在认真听。",
+      "poster_image": "/images_fun/office-ktv/result_meeting_drain.png",
+      "share_title": "我的社畜主题曲：被会议榨干型",
+      "share_subtitle": "不是在开会，就是在开会的路上。",
+      "rule": {"type": "top_archetype", "key": "meeting_drain"},
+      "extra": {
+        "song_title": "《会议循环》",
+        "tags": ["会议多", "效率低", "没时间干活"],
+        "tired_point": "精神疲惫",
+        "survival_tip": "试着在会议中做一些会议纪要，强迫自己专注"
+      }
+    },
+    {
+      "key": "inner_mad_worker",
+      "name": "表面稳定内心发疯型",
+      "subtitle": "外表岁月静好，内心已经发疯",
+      "summary": "你已经学会在崩溃边缘保持微笑。",
+      "long_desc": "你是那种表面看起来很稳定，但内心已经疯狂呐喊的打工人。你学会了在崩溃边缘保持微笑，在想骂人的时候依然客气礼貌。这种分裂感是你最大的消耗。",
+      "poster_image": "/images_fun/office-ktv/result_inner_mad.png",
+      "share_title": "我的社畜主题曲：表面稳定内心发疯型",
+      "share_subtitle": "内心已经发疯，表面依然微笑。",
+      "rule": {"type": "top_archetype", "key": "inner_mad_worker"},
+      "extra": {
+        "song_title": "《人间》",
+        "tags": ["内心崩溃", "演技派", "强撑"],
+        "tired_point": "精神分裂",
+        "survival_tip": "找到一种安全的发泄方式，比如跑步或唱歌"
+      }
+    },
+    {
+      "key": "numb_worker",
+      "name": "麻木但还能撑型",
+      "subtitle": "已经麻了，但还能再撑一下",
+      "summary": "你进入了\"差不多得了\"的阶段。",
+      "long_desc": "你是一只已经麻了的打工人，对很多事情都提不起兴趣，也不想计较。你进入了\"差不多得了\"的人生阶段，虽然没有什么激情，但还能继续撑下去。",
+      "poster_image": "/images_fun/office-ktv/result_numb.png",
+      "share_title": "我的社畜主题曲：麻木但还能撑型",
+      "share_subtitle": "已经麻了，但还能再撑一下。",
+      "rule": {"type": "top_archetype", "key": "numb_worker"},
+      "extra": {
+        "song_title": "《差不多先生》",
+        "tags": ["已经麻了", "低欲望", "还能撑"],
+        "tired_point": "心死",
+        "survival_tip": "试着找回一件让你有热情的事，哪怕只是养一盆花"
+      }
+    }
+  ]
+}

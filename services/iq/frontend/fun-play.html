@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>趣味心理测验</title>
+  <link rel="stylesheet" href="/styles.css?v=20260415-4" />
+  <link rel="stylesheet" href="/css/fun-quiz.css?v=20260415-1" />
+  <style>
+    :root {
+      --color-primary: #8b5cf6;
+      --color-bg: #f8fafc;
+      --color-card: #ffffff;
+      --color-text: #1f2937;
+      --color-text-light: #6b7280;
+      --radius: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+
+    .play-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .play-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: #e5e7eb;
+      border-radius: 2px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--color-primary);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .question-card {
+      background: var(--color-card);
+      border-radius: var(--radius);
+      padding: 30px 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .question-counter {
+      text-align: center;
+      color: var(--color-text-light);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .question-text {
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .question-subtext {
+      text-align: center;
+      color: var(--color-text-light);
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .option-btn {
+      padding: 16px 20px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      background: white;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .option-btn:hover {
+      border-color: var(--color-primary);
+      background: rgba(139, 92, 246, 0.05);
+    }
+
+    .option-btn.selected {
+      border-color: var(--color-primary);
+      background: rgba(139, 92, 246, 0.1);
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .option-btn.selected .option-letter {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .option-label {
+      flex: 1;
+      line-height: 1.4;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .nav-btn.prev {
+      background: #f3f4f6;
+      color: var(--color-text);
+    }
+
+    .nav-btn.prev:hover {
+      background: #e5e7eb;
+    }
+
+    .nav-btn.next {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .nav-btn.next:hover {
+      opacity: 0.9;
+    }
+
+    .nav-btn.next:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .nav-btn.submit {
+      background: #10b981;
+    }
+
+    .nav-btn.submit:hover {
+      opacity: 0.9;
+    }
+
+    .welcome-card {
+      background: var(--color-card);
+      border-radius: var(--radius);
+      padding: 40px 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .welcome-icon {
+      font-size: 5rem;
+      margin-bottom: 20px;
+    }
+
+    .welcome-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .welcome-subtitle {
+      color: var(--color-text-light);
+      font-size: 1rem;
+      margin-bottom: 30px;
+    }
+
+    .welcome-meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 30px;
+      color: var(--color-text-light);
+      font-size: 0.9rem;
+    }
+
+    .welcome-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .disclaimer {
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+      margin-bottom: 30px;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .start-btn {
+      padding: 16px 40px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      color: white;
+      transition: all 0.2s;
+    }
+
+    .result-card {
+      background: var(--color-card);
+      border-radius: var(--radius);
+      padding: 30px 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .result-header {
+      margin-bottom: 24px;
+    }
+
+    .result-subtitle {
+      color: var(--color-text-light);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .result-name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .result-tagline {
+      font-size: 1.1rem;
+      color: var(--color-primary);
+      margin-bottom: 20px;
+    }
+
+    .result-summary {
+      font-size: 1rem;
+      color: var(--color-text);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      padding: 16px;
+      background: #f9fafb;
+      border-radius: 12px;
+    }
+
+    .result-poster {
+      width: 100%;
+      max-width: 280px;
+      height: 200px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 12px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: white;
+    }
+
+    .result-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .result-tag {
+      padding: 6px 14px;
+      background: rgba(139, 92, 246, 0.1);
+      color: var(--color-primary);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .result-extra {
+      font-size: 0.95rem;
+      color: var(--color-text-light);
+      line-height: 1.6;
+      margin-bottom: 24px;
+      text-align: left;
+      padding: 16px;
+      background: #f9fafb;
+      border-radius: 12px;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .action-btn {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .action-btn.primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .action-btn.secondary {
+      background: #f3f4f6;
+      color: var(--color-text);
+    }
+
+    .dimension-section {
+      margin: 20px 0;
+      padding: 16px;
+      background: #f9fafb;
+      border-radius: 12px;
+    }
+
+    .dimension-title {
+      font-size: 0.9rem;
+      color: var(--color-text-light);
+      margin-bottom: 12px;
+    }
+
+    .dimension-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .dimension-name {
+      width: 70px;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    .dimension-track {
+      flex: 1;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .dimension-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .dimension-score {
+      width: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .loading-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-light);
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #e5e7eb;
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .error-card {
+      background: var(--color-card);
+      border-radius: var(--radius);
+      padding: 40px 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .error-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .error-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .error-message {
+      color: var(--color-text-light);
+      margin-bottom: 24px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 480px) {
+      .play-container {
+        padding: 16px;
+      }
+
+      .question-card {
+        padding: 24px 16px;
+      }
+
+      .question-text {
+        font-size: 1.1rem;
+      }
+
+      .option-btn {
+        padding: 14px 16px;
+      }
+
+      .welcome-title {
+        font-size: 1.5rem;
+      }
+
+      .result-name {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="play-container">
+    <div id="loading-state" class="loading-container">
+      <div class="spinner"></div>
+      <p>加载中...</p>
+    </div>
+
+    <div id="welcome-state" class="welcome-card hidden">
+      <div class="welcome-icon" id="quiz-icon">👾</div>
+      <h1 class="welcome-title" id="quiz-title">测验标题</h1>
+      <p class="welcome-subtitle" id="quiz-subtitle">测验副标题</p>
+      <div class="welcome-meta">
+        <span id="quiz-meta-questions">10题</span>
+        <span id="quiz-meta-time">约2分钟</span>
+      </div>
+      <p class="disclaimer" id="quiz-disclaimer">本测验仅供娱乐</p>
+      <button class="start-btn" id="start-btn" style="background: var(--color-primary)">
+        开始测验
+      </button>
+    </div>
+
+    <div id="question-state" class="question-card hidden">
+      <div class="play-header">
+        <a href="/fun/" class="back-btn">
+          <span>&#8592;</span> 返回
+        </a>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+
+      <p class="question-counter" id="question-counter">1/10</p>
+      <h2 class="question-text" id="question-text">题目内容</h2>
+      <p class="question-subtext" id="question-subtext">选择最像你的</p>
+
+      <div class="options-list" id="options-list"></div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn prev" id="prev-btn">上一题</button>
+        <button class="nav-btn next" id="next-btn" disabled>下一题</button>
+      </div>
+    </div>
+
+    <div id="result-state" class="result-card hidden">
+      <div class="result-header">
+        <p class="result-subtitle">你的测验结果</p>
+        <h1 class="result-name" id="result-name">结果名称</h1>
+        <p class="result-tagline" id="result-tagline">结果副标题</p>
+      </div>
+
+      <div class="result-poster" id="result-poster">👾</div>
+
+      <p class="result-summary" id="result-summary">结果总结</p>
+
+      <div class="result-tags" id="result-tags"></div>
+
+      <div class="dimension-section hidden" id="dimension-section">
+        <p class="dimension-title">各项能力得分</p>
+        <div id="dimension-bars"></div>
+      </div>
+
+      <div class="result-extra" id="result-extra"></div>
+
+      <div class="result-actions">
+        <button class="action-btn secondary" id="retry-btn">再测一次</button>
+        <a href="/fun/" class="action-btn primary">返回测验中心</a>
+      </div>
+    </div>
+
+    <div id="error-state" class="error-card hidden">
+      <div class="error-icon">😢</div>
+      <h2 class="error-title">测验不存在</h2>
+      <p class="error-message">抱歉，找不到这个测验</p>
+      <a href="/fun/" class="action-btn primary">返回测验中心</a>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '/api';
+
+    let currentQuiz = null;
+    let currentAttempt = null;
+    let currentQuestions = [];
+    let userAnswers = {};
+    let currentIndex = 0;
+
+    function getQuizSlug() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('quiz');
+    }
+
+    async function loadQuiz() {
+      const slug = getQuizSlug();
+      if (!slug) {
+        showError();
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/fun-quizzes/${slug}`);
+        if (!response.ok) {
+          if (response.status === 404) {
+            showError();
+          }
+          throw new Error('Failed to load quiz');
+        }
+        currentQuiz = await response.json();
+        showWelcome();
+      } catch (error) {
+        showError();
+      }
+    }
+
+    function showWelcome() {
+      document.getElementById('loading-state').classList.add('hidden');
+      document.getElementById('welcome-state').classList.remove('hidden');
+      document.getElementById('question-state').classList.add('hidden');
+      document.getElementById('result-state').classList.add('hidden');
+      document.getElementById('error-state').classList.add('hidden');
+
+      document.getElementById('quiz-icon').textContent = getQuizIcon(currentQuiz.slug);
+      document.getElementById('quiz-title').textContent = currentQuiz.title;
+      document.getElementById('quiz-subtitle').textContent = currentQuiz.subtitle || '';
+      document.getElementById('quiz-meta-questions').textContent = `${currentQuiz.question_count}题`;
+      document.getElementById('quiz-meta-time').textContent = `约${currentQuiz.estimated_minutes}分钟`;
+      document.getElementById('quiz-disclaimer').textContent = currentQuiz.disclaimer || '本测验仅供娱乐';
+      document.getElementById('start-btn').style.background = currentQuiz.theme_color || '#8b5cf6';
+    }
+
+    async function startQuiz() {
+      try {
+        const response = await fetch(`${API_BASE}/fun-quizzes/${currentQuiz.slug}/attempts`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nickname: null, email: null })
+        });
+
+        if (!response.ok) throw new Error('Failed to start quiz');
+
+        currentAttempt = await response.json();
+        currentQuestions = currentAttempt.questions;
+        userAnswers = {};
+        currentIndex = 0;
+
+        showQuestion();
+      } catch (error) {
+        alert('启动测验失败，请重试');
+      }
+    }
+
+    function showQuestion() {
+      document.getElementById('loading-state').classList.add('hidden');
+      document.getElementById('welcome-state').classList.add('hidden');
+      document.getElementById('question-state').classList.remove('hidden');
+      document.getElementById('result-state').classList.add('hidden');
+      document.getElementById('error-state').classList.add('hidden');
+
+      const question = currentQuestions[currentIndex];
+      const total = currentQuestions.length;
+      const progress = ((currentIndex) / total) * 100;
+
+      document.getElementById('progress-fill').style.width = `${progress}%`;
+      document.getElementById('question-counter').textContent = `${currentIndex + 1}/${total}`;
+      document.getElementById('question-text').textContent = question.text;
+      document.getElementById('question-subtext').textContent = question.subtext || '选择最像你的';
+
+      const optionsList = document.getElementById('options-list');
+      optionsList.innerHTML = question.options.map(opt => `
+        <button class="option-btn ${userAnswers[question.id] === opt.value ? 'selected' : ''}"
+                data-value="${opt.value}">
+          <span class="option-letter">${opt.value}</span>
+          <span class="option-label">${opt.label}</span>
+        </button>
+      `).join('');
+
+      optionsList.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectOption(question.id, btn.dataset.value));
+      });
+
+      document.getElementById('prev-btn').disabled = currentIndex === 0;
+      document.getElementById('next-btn').disabled = !userAnswers[question.id];
+      document.getElementById('next-btn').textContent = currentIndex === total - 1 ? '查看结果' : '下一题';
+      document.getElementById('next-btn').classList.toggle('submit', currentIndex === total - 1);
+    }
+
+    function selectOption(questionId, value) {
+      userAnswers[questionId] = value;
+      document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === value);
+      });
+      document.getElementById('next-btn').disabled = false;
+    }
+
+    function nextQuestion() {
+      if (currentIndex < currentQuestions.length - 1) {
+        currentIndex++;
+        showQuestion();
+      } else {
+        submitQuiz();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        showQuestion();
+      }
+    }
+
+    async function submitQuiz() {
+      const startTime = new Date(currentAttempt.started_at);
+      const durationSeconds = Math.round((Date.now() - startTime.getTime()) / 1000);
+
+      const answers = Object.entries(userAnswers).map(([question_id, selected_value]) => ({
+        question_id,
+        selected_value
+      }));
+
+      try {
+        const response = await fetch(
+          `${API_BASE}/fun-quizzes/${currentQuiz.slug}/attempts/${currentAttempt.attempt_id}/submit`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ duration_seconds: durationSeconds, answers })
+          }
+        );
+
+        if (!response.ok) throw new Error('Failed to submit quiz');
+
+        const result = await response.json();
+        showResult(result);
+      } catch (error) {
+        alert('提交失败，请重试');
+      }
+    }
+
+    function showResult(result) {
+      document.getElementById('loading-state').classList.add('hidden');
+      document.getElementById('welcome-state').classList.add('hidden');
+      document.getElementById('question-state').classList.add('hidden');
+      document.getElementById('result-state').classList.remove('hidden');
+      document.getElementById('error-state').classList.add('hidden');
+
+      const primary = result.primary_result;
+
+      document.getElementById('result-name').textContent = primary.name;
+      document.getElementById('result-tagline').textContent = primary.subtitle || '';
+      document.getElementById('result-summary').textContent = primary.summary;
+      document.getElementById('result-poster').textContent = getResultIcon(currentQuiz.slug);
+
+      const themeColor = currentQuiz.theme_color || '#8b5cf6';
+      document.getElementById('result-poster').style.background = `linear-gradient(135deg, ${themeColor}, ${adjustColor(themeColor, -20)})`;
+
+      const tags = primary.extra?.tags || [];
+      const tagsContainer = document.getElementById('result-tags');
+      tagsContainer.innerHTML = tags.map(tag => `<span class="result-tag">${tag}</span>`).join('');
+
+      if (result.dimension_breakdown && result.dimension_breakdown.length > 0) {
+        document.getElementById('dimension-section').classList.remove('hidden');
+        const barsContainer = document.getElementById('dimension-bars');
+        barsContainer.innerHTML = result.dimension_breakdown.map(dim => `
+          <div class="dimension-bar">
+            <span class="dimension-name">${dim.name}</span>
+            <div class="dimension-track">
+              <div class="dimension-fill" style="width: ${Math.min(dim.score * 10, 100)}%; background: ${themeColor}"></div>
+            </div>
+            <span class="dimension-score">${dim.score}</span>
+          </div>
+        `).join('');
+      } else {
+        document.getElementById('dimension-section').classList.add('hidden');
+      }
+
+      let extraHtml = '';
+      if (primary.extra?.song_title) {
+        extraHtml += `<p><strong>推荐歌曲：</strong>${primary.extra.song_title}</p>`;
+      }
+      if (primary.extra?.tired_point) {
+        extraHtml += `<p><strong>累点：</strong>${primary.extra.tired_point}</p>`;
+      }
+      if (primary.extra?.survival_tip) {
+        extraHtml += `<p><strong>续命建议：</strong>${primary.extra.survival_tip}</p>`;
+      }
+      if (primary.extra?.trigger_scene) {
+        extraHtml += `<p><strong>触发场景：</strong>${primary.extra.trigger_scene}</p>`;
+      }
+      if (primary.extra?.hidden_skill) {
+        extraHtml += `<p><strong>隐藏技能：</strong>${primary.extra.hidden_skill}</p>`;
+      }
+      if (primary.extra?.relief_tip) {
+        extraHtml += `<p><strong>缓解建议：</strong>${primary.extra.relief_tip}</p>`;
+      }
+      if (primary.extra?.level) {
+        extraHtml += `<p><strong>成绩等级：</strong>${primary.extra.level}</p>`;
+      }
+      if (primary.extra?.advice) {
+        extraHtml += `<p><strong>建议：</strong>${primary.extra.advice}</p>`;
+      }
+      if (primary.extra?.retiree_index) {
+        extraHtml += `<p><strong>幸福指数：</strong>${primary.extra.retiree_index}/100</p>`;
+      }
+      if (primary.extra?.recommended_skill) {
+        extraHtml += `<p><strong>推荐技能：</strong>${primary.extra.recommended_skill}</p>`;
+      }
+
+      document.getElementById('result-extra').innerHTML = extraHtml;
+      if (!extraHtml) {
+        document.getElementById('result-extra').style.display = 'none';
+      } else {
+        document.getElementById('result-extra').style.display = 'block';
+      }
+    }
+
+    function showError() {
+      document.getElementById('loading-state').classList.add('hidden');
+      document.getElementById('welcome-state').classList.add('hidden');
+      document.getElementById('question-state').classList.add('hidden');
+      document.getElementById('result-state').classList.add('hidden');
+      document.getElementById('error-state').classList.remove('hidden');
+    }
+
+    function getQuizIcon(slug) {
+      return '🎯';
+    }
+
+    function getResultIcon(slug) {
+      return '🎉';
+    }
+
+    function adjustColor(hex, amount) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const r = Math.min(255, Math.max(0, (num >> 16) + amount));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amount));
+      const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
+      return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
+    }
+
+    document.getElementById('start-btn').addEventListener('click', startQuiz);
+    document.getElementById('next-btn').addEventListener('click', nextQuestion);
+    document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+    document.getElementById('retry-btn').addEventListener('click', () => {
+      startQuiz();
+    });
+
+    loadQuiz();
+  </script>
+</body>
+</html>
