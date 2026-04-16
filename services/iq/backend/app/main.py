@@ -745,5 +745,15 @@ def personality_page():
 def personality_page_slash():
     return FileResponse(Path(FRONTEND_DIR) / "personality.html", media_type="text/html")
 
+
+@app.get("/sbti", include_in_schema=False)
+def sbti_page():
+    return FileResponse(Path(FRONTEND_DIR) / "sbti.html", media_type="text/html")
+
+
+@app.get("/sbti/", include_in_schema=False)
+def sbti_page_slash():
+    return FileResponse(Path(FRONTEND_DIR) / "sbti.html", media_type="text/html")
+
 app.mount("/iq", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="iq-frontend")
 app.mount("", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="root-frontend")
