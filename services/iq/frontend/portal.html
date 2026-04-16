@@ -103,6 +103,15 @@
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02));
     }
 
+    .test-card.sbti {
+      border-top-color: var(--color-tertiary);
+    }
+
+    .test-card.sbti:hover {
+      border-top-color: var(--color-tertiary);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.02));
+    }
+
     .card-icon {
       font-size: 3rem;
       margin-bottom: 15px;
@@ -175,6 +184,16 @@
     .card-button.personality:hover {
       background: #059669;
       box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .card-button.sbti {
+      background: var(--color-tertiary);
+      color: white;
+    }
+
+    .card-button.sbti:hover {
+      background: #d97706;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
     }
 
     .portal-footer {
@@ -265,6 +284,20 @@
           <li>约10分钟</li>
         </ul>
         <button class="card-button personality">进入测试</button>
+      </a>
+
+      <!-- SBTI人格测试卡片 -->
+      <a href="/sbti/" class="test-card sbti">
+        <div class="card-icon">🎭</div>
+        <h2 class="card-title">SBTI 人格测试</h2>
+        <p class="card-description">基于十五维度的人格测试，挖掘你最真实的人格类型，包含28种独特人格画像。</p>
+        <ul class="card-features">
+          <li>31道趣味题目</li>
+          <li>十五维度评分</li>
+          <li>28种人格类型</li>
+          <li>约5-10分钟</li>
+        </ul>
+        <button class="card-button sbti">进入测试</button>
       </a>
     </div>
 
