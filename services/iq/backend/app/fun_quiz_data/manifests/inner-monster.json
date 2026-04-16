@@ -1,0 +1,285 @@
+{
+  "slug": "inner-monster",
+  "title": "你内心住着什么小怪物？",
+  "subtitle": "10道题，测出你的暗黑特质分布",
+  "description": "每个人心里都藏着一点点不那么光明的角落，来看看最像你的那只小怪物。",
+  "cover_image": "/images_fun/inner-monster/cover.png",
+  "theme_color": "#8b5cf6",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 10,
+  "result_count": 8,
+  "disclaimer": "本测验仅供娱乐，不代表专业人格分析。",
+  "sort_order": 1,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "朋友放你鸽子，你第一反应是？",
+      "subtext": "选择你最像的反应",
+      "options": [
+        {"value": "A", "label": "没关系，反正我也有事", "scores": {"night_yaw": 1, "shadow": 0}},
+        {"value": "B", "label": "算了，下次再约吧", "scores": {"glass_heart": 2, "fawn": 1}},
+        {"value": "C", "label": "心里记下了，以后找机会还回去", "scores": {"revenge_fox": 3, "shadow": 2}},
+        {"value": "D", "label": "疯狂追问原因，非要搞清楚", "scores": {"cold_cat": 2, "spider": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "聊天被已读不回，你会？",
+      "subtext": "选择你最像的反应",
+      "options": [
+        {"value": "A", "label": "继续发，表现出若无其事", "scores": {"fawn": 2, "night_yaw": 0}},
+        {"value": "B", "label": "把对话框删掉，假装没发生过", "scores": {"glass_heart": 2, "shadow": 1}},
+        {"value": "C", "label": "等三天后冷不丁回一句", "scores": {"revenge_fox": 3, "spider": 1}},
+        {"value": "D", "label": "分析对方的心理活动，写小作文", "scores": {"cold_cat": 1, "night_yaw": 2}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "有人当众开你玩笑，你会？",
+      "subtext": "选择你最像的反应",
+      "options": [
+        {"value": "A", "label": "笑着反击，把场面圆回来", "scores": {"spider": 3, "cold_cat": 1}},
+        {"value": "B", "label": "表面笑嘻嘻，内心记仇小本本", "scores": {"revenge_fox": 3, "glass_heart": 1}},
+        {"value": "C", "label": "假装没听懂，让对方尴尬", "scores": {"shadow": 2, "night_yaw": 1}},
+        {"value": "D", "label": "直接黑脸，说我不喜欢这样", "scores": {"fire_dragon": 2, "glass_heart": 2}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "同事/同学抢你功劳，你会？",
+      "subtext": "选择你最像的反应",
+      "options": [
+        {"value": "A", "label": "私下找对方聊清楚", "scores": {"spider": 2, "cold_cat": 2}},
+        {"value": "B", "label": "直接当面拆穿，不给面子", "scores": {"fire_dragon": 3, "revenge_fox": 1}},
+        {"value": "C", "label": "默默记下，以后合作时留一手", "scores": {"shadow": 3, "revenge_fox": 2}},
+        {"value": "D", "label": "算了，吃亏是福", "scores": {"fawn": 3, "glass_heart": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "深夜回想旧事时，你最常想到？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "那些我本可以做得更好的事", "scores": {"glass_heart": 3, "night_yaw": 1}},
+        {"value": "B", "label": "谁曾经伤害过我", "scores": {"revenge_fox": 2, "shadow": 3}},
+        {"value": "C", "label": "觉得自己哪里做得不对", "scores": {"fawn": 2, "glass_heart": 2}},
+        {"value": "D", "label": "复盘所有套路和话术", "scores": {"spider": 3, "cold_cat": 2}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "你更喜欢和什么样的人待在一起？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "能带我吃喝玩乐的朋友", "scores": {"fire_dragon": 1, "fawn": 1}},
+        {"value": "B", "label": "能让我有安全感的人", "scores": {"glass_heart": 2, "shadow": 1}},
+        {"value": "C", "label": "能让我学习到东西的人", "scores": {"spider": 2, "cold_cat": 2}},
+        {"value": "D", "label": "独处，不想跟人待着", "scores": {"night_yaw": 3, "cold_cat": 2}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你觉得自己在社交中更像？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "气氛组，永远在调动气氛", "scores": {"fire_dragon": 3, "fawn": 2}},
+        {"value": "B", "label": "旁观者，在角落里观察所有人", "scores": {"shadow": 3, "cold_cat": 2}},
+        {"value": "C", "label": "协调者，总在平衡各方关系", "scores": {"spider": 3, "glass_heart": 1}},
+        {"value": "D", "label": "吐槽担当，负责输出金句", "scores": {"revenge_fox": 2, "night_yaw": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "当别人向你倾诉烦恼时，你通常会？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "认真倾听并给予安慰", "scores": {"fawn": 3, "glass_heart": 2}},
+        {"value": "B", "label": "分析问题，给出解决方案", "scores": {"spider": 2, "cold_cat": 2}},
+        {"value": "C", "label": "表面安慰，心里在想别的事", "scores": {"shadow": 2, "night_yaw": 1}},
+        {"value": "D", "label": "告诉他这算啥，我的经历更惨", "scores": {"revenge_fox": 2, "fire_dragon": 1}}
+      ]
+    },
+    {
+      "id": "q9",
+      "position": 9,
+      "type": "single_choice",
+      "text": "你更倾向于如何处理负面情绪？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "找朋友倾诉，释放出来", "scores": {"fawn": 2, "fire_dragon": 1}},
+        {"value": "B", "label": "一个人待着，慢慢消化", "scores": {"shadow": 2, "cold_cat": 3}},
+        {"value": "C", "label": "转移注意力，比如刷手机", "scores": {"glass_heart": 2, "night_yaw": 1}},
+        {"value": "D", "label": "记在备忘录里，以后算账", "scores": {"revenge_fox": 3, "spider": 2}}
+      ]
+    },
+    {
+      "id": "q10",
+      "position": 10,
+      "type": "single_choice",
+      "text": "你的生活里最离不开什么？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "手机和网络", "scores": {"glass_heart": 2, "night_yaw": 1}},
+        {"value": "B", "label": "美食和旅行", "scores": {"fire_dragon": 2, "fawn": 1}},
+        {"value": "C", "label": "掌控感和计划性", "scores": {"spider": 3, "cold_cat": 2}},
+        {"value": "D", "label": "安静不被打扰", "scores": {"shadow": 3, "night_yaw": 2}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "night_yaw",
+      "name": "夜鸦怪",
+      "subtitle": "独来独往的暗夜观察者",
+      "summary": "你喜欢在暗处观察，保持距离感。你不喜欢过多社交，但内心其实很敏感。",
+      "long_desc": "你是一只喜欢在夜晚出没的夜鸦，习惯站在高处观察这个世界。你不需要太多社交，但一旦认定某人，会非常忠诚。你的冷漠只是保护色，内心其实很容易受伤。",
+      "poster_image": "/images_fun/inner-monster/result_night_yaw.png",
+      "share_title": "我内心住着夜鸦怪",
+      "share_subtitle": "独来独往，但心里什么都懂。",
+      "rule": {"type": "top_archetype", "key": "night_yaw"},
+      "extra": {
+        "tags": ["独处爱好者", "高冷但忠诚", "观察力强"],
+        "trigger_scene": "社交场合人多的地方",
+        "hidden_skill": "一眼看穿人心的能力",
+        "relief_tip": "偶尔主动联系一下老朋友"
+      }
+    },
+    {
+      "key": "glass_heart",
+      "name": "玻璃心兽",
+      "subtitle": "外表坚强内心柔软的矛盾体",
+      "summary": "你看起来很坚强，但内心其实很容易受伤。",
+      "long_desc": "你是一只外表坚硬内心柔软的玻璃心兽。你习惯把脆弱藏起来，不让别人看到。但有时候一个小小的举动就能让你破防。你需要的不是更多的坚强，而是学会接受自己的脆弱。",
+      "poster_image": "/images_fun/inner-monster/result_glass_heart.png",
+      "share_title": "我内心住着玻璃心兽",
+      "share_subtitle": "外表强硬，内心柔软得一塌糊涂。",
+      "rule": {"type": "top_archetype", "key": "glass_heart"},
+      "extra": {
+        "tags": ["外表坚强", "内心柔软", "容易受伤"],
+        "trigger_scene": "被重要的人忽视或批评",
+        "hidden_skill": "感同身受的理解力",
+        "relief_tip": "写日记，把情绪写下来"
+      }
+    },
+    {
+      "key": "revenge_fox",
+      "name": "记仇狐",
+      "subtitle": "表面不计较，背后记小本本",
+      "summary": "你看起来很大度，但其实什么都记得，只是时机未到。",
+      "long_desc": "你是一只狡黠的记仇狐，别人对你的好你不一定记得，但伤害过你的事却能记很久。你不是真的记仇，而是追求一种心理平衡。当你觉得扯平了，这件事才算真的翻篇。",
+      "poster_image": "/images_fun/inner-monster/result_revenge_fox.png",
+      "share_title": "我内心住着记仇狐",
+      "share_subtitle": "我不是记仇，我只是记性好。",
+      "rule": {"type": "top_archetype", "key": "revenge_fox"},
+      "extra": {
+        "tags": ["记性好", "有仇必报", "心理平衡感"],
+        "trigger_scene": "被人占便宜或被冤枉",
+        "hidden_skill": "精准把握人性的弱点",
+        "relief_tip": "试着放下，你会发现轻松很多"
+      }
+    },
+    {
+      "key": "cold_cat",
+      "name": "冷面猫妖",
+      "subtitle": "高冷面具下藏着一颗挑剔的心",
+      "summary": "你看似冷漠，但只对真正感兴趣的事物上心。",
+      "long_desc": "你是一只高冷的猫妖，对大多数人爱答不理，但对真正感兴趣的事会全身心投入。你的冷漠不是无情，而是一种筛选方式。你觉得低质量的社交不如高质量的独处。",
+      "poster_image": "/images_fun/inner-monster/result_cold_cat.png",
+      "share_title": "我内心住着冷面猫妖",
+      "share_subtitle": "不是高冷，只是懒得对你热情。",
+      "rule": {"type": "top_archetype", "key": "cold_cat"},
+      "extra": {
+        "tags": ["高冷", "挑剔", "选择性投入"],
+        "trigger_scene": "被强迫社交或不感兴趣的场合",
+        "hidden_skill": "精准判断的能力",
+        "relief_tip": "偶尔主动一下，可能会有惊喜"
+      }
+    },
+    {
+      "key": "spider",
+      "name": "控场蜘蛛",
+      "subtitle": "天生的协调者，喜欢掌控局面",
+      "summary": "你有一种天赋，总能在复杂局面中找到平衡点。",
+      "long_desc": "你是一只擅长织网的蜘蛛，喜欢在各种关系中扮演协调者的角色。你总能在看似不可调和的矛盾中找到平衡点，让各方都满意。这是你的天赋，但有时候也会让你很累。",
+      "poster_image": "/images_fun/inner-monster/result_spider.png",
+      "share_title": "我内心住着控场蜘蛛",
+      "share_subtitle": "我不是控制狂，我只是想让事情顺利。",
+      "rule": {"type": "top_archetype", "key": "spider"},
+      "extra": {
+        "tags": ["协调能力强", "有谋略", "追求平衡"],
+        "trigger_scene": "团队合作或家庭聚会",
+        "hidden_skill": "全局观和预判能力",
+        "relief_tip": "学会放手，有些事管不了"
+      }
+    },
+    {
+      "key": "fawn",
+      "name": "讨好小鬼",
+      "subtitle": "下意识取悦他人，忽略自己的需求",
+      "summary": "你习惯把别人的需求放在第一位，但有时候会忘了自己。",
+      "long_desc": "你是一只总是讨好别人的小鬼，你很难对别人说不，害怕冲突，希望所有人都喜欢你。但长期下来，你可能会觉得疲惫和委屈。学会适当地拒绝，是你这只小鬼需要成长的课题。",
+      "poster_image": "/images_fun/inner-monster/result_fawn.png",
+      "share_title": "我内心住着讨好小鬼",
+      "share_subtitle": "我不是没主见，我只是在乎你的感受。",
+      "rule": {"type": "top_archetype", "key": "fawn"},
+      "extra": {
+        "tags": ["善解人意", "害怕冲突", "过度付出"],
+        "trigger_scene": "被人请求帮忙或提出要求",
+        "hidden_skill": "敏锐的共情能力",
+        "relief_tip": "先满足自己，再考虑别人"
+      }
+    },
+    {
+      "key": "fire_dragon",
+      "name": "暴走火灵",
+      "subtitle": "情绪来得快去得也快的急性子",
+      "summary": "你是一个有火气就发出来的人，不喜欢憋着。",
+      "long_desc": "你是一只情绪热烈的火灵，有火就发，从不憋着。你讨厌虚伪和拐弯抹角，喜欢直接沟通。虽然有时候会炸毛，但炸完就完了，不会记仇。你的坦率是你最可爱的地方。",
+      "poster_image": "/images_fun/inner-monster/result_fire_dragon.png",
+      "share_title": "我内心住着暴走火灵",
+      "share_subtitle": "我不是脾气差，我只是不喜欢憋着。",
+      "rule": {"type": "top_archetype", "key": "fire_dragon"},
+      "extra": {
+        "tags": ["直来直去", "暴脾气但坦率", "不记仇"],
+        "trigger_scene": "被人绕弯子或被误解",
+        "hidden_skill": "快速解决问题的能力",
+        "relief_tip": "发脾气前深呼吸，冷静一下"
+      }
+    },
+    {
+      "key": "shadow",
+      "name": "隐身影子怪",
+      "subtitle": "善于隐藏自己，在暗处行动",
+      "summary": "你习惯隐藏自己的真实想法，在背后默默努力。",
+      "long_desc": "你是一只喜欢躲在暗处的影子怪，你不喜欢成为焦点，习惯在背后默默做事。你有很强的执行力和耐心，能够在别人不注意的时候完成很多工作。但有时候你可能会觉得自己没有被看见。",
+      "poster_image": "/images_fun/inner-monster/result_shadow.png",
+      "share_title": "我内心住着隐身影子怪",
+      "share_subtitle": "我不是透明人，我只是喜欢安静。",
+      "rule": {"type": "top_archetype", "key": "shadow"},
+      "extra": {
+        "tags": ["低调", "执行力强", "耐得住寂寞"],
+        "trigger_scene": "需要公开演讲或表现自己的场合",
+        "hidden_skill": "强大的执行力和专注力",
+        "relief_tip": "适时展示自己，让别人看到你的价值"
+      }
+    }
+  ]
+}

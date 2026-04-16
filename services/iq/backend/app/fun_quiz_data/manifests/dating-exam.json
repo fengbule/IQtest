@@ -1,0 +1,252 @@
+{
+  "slug": "dating-exam",
+  "title": "全国脱单能力考试",
+  "subtitle": "10题测出你的恋爱能力成绩单",
+  "description": "从约会、聊天、审美、共情和鉴别红旗五个方面，快速测出你的脱单能力。",
+  "cover_image": "/images_fun/dating-exam/cover.png",
+  "theme_color": "#ec4899",
+  "estimated_minutes": 2,
+  "play_style": "scorecard",
+  "scoring_mode": "scorecard",
+  "question_count": 10,
+  "result_count": 6,
+  "disclaimer": "本测验仅供娱乐，不代表专业心理诊断或恋爱评估。",
+  "sort_order": 3,
+  "dimensions": [
+    {"key": "date_skill", "name": "约会力"},
+    {"key": "chat_skill", "name": "聊天力"},
+    {"key": "emotion", "name": "共情力"},
+    {"key": "taste", "name": "审美感"},
+    {"key": "red_flag_detection", "name": "鉴渣力"}
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "第一次约会迟到了10分钟，你会？",
+      "subtext": "选择你最像的反应",
+      "dimension_key": "date_skill",
+      "options": [
+        {"value": "A", "label": "先解释原因再道歉", "scores": {"date_skill": 2, "emotion": 1, "total": 2}},
+        {"value": "B", "label": "装作没事直接开始聊天", "scores": {"date_skill": 0, "emotion": -1, "total": 0}},
+        {"value": "C", "label": "疯狂道歉并请喝饮料", "scores": {"date_skill": 1, "emotion": 2, "total": 2}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "对方说\"随便吃什么都行\"，你会？",
+      "subtext": "选择你最像的反应",
+      "dimension_key": "date_skill",
+      "options": [
+        {"value": "A", "label": "选一个自己有把握的餐厅", "scores": {"date_skill": 2, "taste": 1, "total": 2}},
+        {"value": "B", "label": "继续问对方直到问出答案", "scores": {"date_skill": 0, "chat_skill": 1, "total": 1}},
+        {"value": "C", "label": "带TA去你喜欢的店并介绍特色", "scores": {"date_skill": 1, "taste": 2, "total": 2}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "聊天聊到一半突然冷场，你会？",
+      "subtext": "选择你最像的反应",
+      "dimension_key": "chat_skill",
+      "options": [
+        {"value": "A", "label": "抛出新话题，避免尴尬", "scores": {"chat_skill": 2, "emotion": 1, "total": 2}},
+        {"value": "B", "label": "用幽默化解僵局", "scores": {"chat_skill": 2, "emotion": 2, "total": 2}},
+        {"value": "C", "label": "继续沉默，等对方找话题", "scores": {"chat_skill": 0, "emotion": 0, "total": 0}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你发现对方连续三次都在敷衍回复，你会？",
+      "subtext": "选择你最像的反应",
+      "dimension_key": "red_flag_detection",
+      "options": [
+        {"value": "A", "label": "直接问对方是不是在忙", "scores": {"chat_skill": 2, "red_flag_detection": 1, "total": 2}},
+        {"value": "B", "label": "降低聊天频率，不再主动找话题", "scores": {"red_flag_detection": 2, "emotion": 1, "total": 2}},
+        {"value": "C", "label": "假装没发现，继续热情聊天", "scores": {"red_flag_detection": 0, "chat_skill": 0, "total": 0}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "节日快到了，对方没有主动约你，你会？",
+      "subtext": "选择你最像的反应",
+      "dimension_key": "date_skill",
+      "options": [
+        {"value": "A", "label": "主动约对方，创造惊喜", "scores": {"date_skill": 3, "chat_skill": 1, "total": 3}},
+        {"value": "B", "label": "等对方主动，看对方表现", "scores": {"date_skill": 1, "emotion": 1, "total": 1}},
+        {"value": "C", "label": "在心里默默扣分", "scores": {"red_flag_detection": 2, "emotion": 1, "total": 2}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "对方讲了一段自己最近很烦恼的事，你会？",
+      "subtext": "选择你最像的反应",
+      "dimension_key": "emotion",
+      "options": [
+        {"value": "A", "label": "认真倾听并共情，然后给建议", "scores": {"emotion": 3, "chat_skill": 1, "total": 3}},
+        {"value": "B", "label": "讲自己类似的经历来安慰对方", "scores": {"emotion": 1, "chat_skill": 2, "total": 2}},
+        {"value": "C", "label": "说\"别想太多，会好的\"然后转移话题", "scores": {"emotion": 0, "chat_skill": 0, "total": 0}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你发现你们审美差很多，你会？",
+      "subtext": "选择你最像的反应",
+      "dimension_key": "taste",
+      "options": [
+        {"value": "A", "label": "尊重差异，寻找共同审美点", "scores": {"taste": 2, "emotion": 2, "total": 2}},
+        {"value": "B", "label": "试图影响对方接受自己的审美", "scores": {"taste": 1, "chat_skill": 1, "total": 1}},
+        {"value": "C", "label": "觉得三观不合，开始冷淡", "scores": {"taste": 0, "red_flag_detection": 1, "total": 0}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "第三次见面，对方还总让你决定全部安排，你会？",
+      "subtext": "选择你最像的反应",
+      "dimension_key": "date_skill",
+      "options": [
+        {"value": "A", "label": "温柔地引导对方参与决策", "scores": {"date_skill": 2, "chat_skill": 2, "total": 2}},
+        {"value": "B", "label": "继续任劳任怨地安排一切", "scores": {"date_skill": 1, "emotion": 0, "total": 1}},
+        {"value": "C", "label": "用行动暗示不满，看对方反应", "scores": {"red_flag_detection": 2, "chat_skill": 1, "total": 2}}
+      ]
+    },
+    {
+      "id": "q9",
+      "position": 9,
+      "type": "single_choice",
+      "text": "你发现对方朋友圈对很多异性都很暧昧，你会？",
+      "subtext": "选择你最像的反应",
+      "dimension_key": "red_flag_detection",
+      "options": [
+        {"value": "A", "label": "直接沟通，表达自己的感受", "scores": {"red_flag_detection": 3, "chat_skill": 1, "total": 3}},
+        {"value": "B", "label": "在心里记下，观察对方的后续行为", "scores": {"red_flag_detection": 2, "emotion": 1, "total": 2}},
+        {"value": "C", "label": "装作没看见，继续相处", "scores": {"red_flag_detection": 0, "emotion": 0, "total": 0}}
+      ]
+    },
+    {
+      "id": "q10",
+      "position": 10,
+      "type": "single_choice",
+      "text": "你更像哪种人？",
+      "subtext": "选择最符合你的",
+      "dimension_key": "taste",
+      "options": [
+        {"value": "A", "label": "恋爱经验丰富，知道怎么哄人开心", "scores": {"date_skill": 2, "chat_skill": 2, "taste": 1, "total": 3}},
+        {"value": "B", "label": "恋爱小白，但学习能力很强", "scores": {"emotion": 2, "date_skill": 1, "chat_skill": 1, "total": 2}},
+        {"value": "C", "label": "凭直觉行事，喜欢就是喜欢", "scores": {"taste": 2, "emotion": 2, "date_skill": 0, "total": 2}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "romance_top_student",
+      "name": "高分恋爱生",
+      "subtitle": "脱单只是时间问题",
+      "summary": "你不是不会谈恋爱，你只是还没遇到对的人。",
+      "long_desc": "你的共情、表达与礼仪都在线，整体属于容易给人好感的类型。只要多给自己一些机会，脱单对你来说不是难题。",
+      "poster_image": "/images_fun/dating-exam/result_top_student.png",
+      "share_title": "我的脱单能力成绩单：高分恋爱生",
+      "share_subtitle": "你不是不会，是还没轮到你。",
+      "rule": {"type": "score_range", "min_total": 22, "max_total": 30},
+      "extra": {
+        "tags": ["会聊天", "有边界感", "容易被喜欢"],
+        "level": "A+",
+        "advice": "保持现状，等待缘分主动敲门"
+      }
+    },
+    {
+      "key": "potential_stock",
+      "name": "潜力股选手",
+      "subtitle": "基础不错，稍加修炼就是王者",
+      "summary": "你的恋爱基础不错，只是还需要一些练习。",
+      "long_desc": "你的共情能力不错，只是在表达和约会技巧上还需要多加练习。多积累一些经验，你会成为很会谈恋爱的人。",
+      "poster_image": "/images_fun/dating-exam/result_potential_stock.png",
+      "share_title": "我的脱单能力成绩单：潜力股选手",
+      "share_subtitle": "基础不错，稍加修炼就是王者。",
+      "rule": {"type": "score_range", "min_total": 16, "max_total": 21},
+      "extra": {
+        "tags": ["有潜力", "学习能力强", "需要练习"],
+        "level": "B+",
+        "advice": "主动一些，多积累约会经验"
+      }
+    },
+    {
+      "key": "heart_flutter_silent",
+      "name": "会心动不会表达型",
+      "subtitle": "心里有戏，嘴上说不出",
+      "summary": "你可能是一个内心戏很多但表达力不足的人。",
+      "long_desc": "你内心其实很丰富，但往往词不达意或者不敢表达。建议你多练习表达，把内心的想法说出来，对方才能看到你的好。",
+      "poster_image": "/images_fun/dating-exam/result_heart_flutter.png",
+      "share_title": "我的脱单能力成绩单：会心动不会表达型",
+      "share_subtitle": "不是不想说，是真的说不出口。",
+      "rule": {"type": "score_range", "min_total": 12, "max_total": 15},
+      "extra": {
+        "tags": ["内心戏多", "表达力不足", "需要突破"],
+        "level": "B",
+        "advice": "勇敢表达，哪怕说错也比不说强"
+      }
+    },
+    {
+      "key": "good_cond_no_push",
+      "name": "条件不错但不会推进型",
+      "subtitle": "一手好牌，不会出牌",
+      "summary": "你自身条件不错，但不知道怎么处理恋爱关系。",
+      "long_desc": "你可能是那种条件不错但恋爱经验不足的人，不懂得如何推进关系。建议你多观察身边情侣的相处模式，学习如何表达好感。",
+      "poster_image": "/images_fun/dating-exam/result_good_cond.png",
+      "share_title": "我的脱单能力成绩单：条件不错但不会推进型",
+      "share_subtitle": "好牌不会打，也是白搭。",
+      "rule": {"type": "score_range", "min_total": 8, "max_total": 11},
+      "extra": {
+        "tags": ["条件好", "经验不足", "需要引导"],
+        "level": "C+",
+        "advice": "主动释放信号，别让缘分白白溜走"
+      }
+    },
+    {
+      "key": "love_fool",
+      "name": "恋爱小迷糊",
+      "subtitle": "智商高，情商还需要充值",
+      "summary": "你在恋爱中可能经常踩坑，需要多学习。",
+      "long_desc": "你可能是个恋爱小白，或者在恋爱中容易犯糊涂。不是你不够好，而是你还需要学习怎么在感情中保护自己。",
+      "poster_image": "/images_fun/dating-exam/result_love_fool.png",
+      "share_title": "我的脱单能力成绩单：恋爱小迷糊",
+      "share_subtitle": "恋爱这门课，你还需要补考。",
+      "rule": {"type": "score_range", "min_total": 4, "max_total": 7},
+      "extra": {
+        "tags": ["需要学习", "容易踩坑", "保持清醒"],
+        "level": "C",
+        "advice": "放慢脚步，多观察再行动"
+      }
+    },
+    {
+      "key": "need_makeup_class",
+      "name": "建议补课型",
+      "subtitle": "革命尚未成功，同志仍需努力",
+      "summary": "你的恋爱能力还需要大幅提升。",
+      "long_desc": "别灰心，恋爱能力是可以学习的。也许你之前没有太多经验，但只要愿意学习，你也能成为恋爱高手。",
+      "poster_image": "/images_fun/dating-exam/result_need_makeup.png",
+      "share_title": "我的脱单能力成绩单：建议补课型",
+      "share_subtitle": "没关系，这门课可以重修。",
+      "rule": {"type": "score_range", "min_total": 0, "max_total": 3},
+      "extra": {
+        "tags": ["需要补课", "保持积极", "还有希望"],
+        "level": "D",
+        "advice": "从基础开始，学习沟通和共情技巧"
+      }
+    }
+  ]
+}

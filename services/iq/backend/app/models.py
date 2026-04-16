@@ -153,3 +153,119 @@ class PersonalityAnswer(Base):
     score: Mapped[int] = mapped_column(Integer, nullable=False)  # 1-5
 
     attempt: Mapped[PersonalityAttempt] = relationship("PersonalityAttempt", back_populates="answers")
+
+
+class FunQuizDefinition(Base):
+    __tablename__ = "fun_quiz_definitions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    slug: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    subtitle: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    cover_image: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    theme_color: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    estimated_minutes: Mapped[int] = mapped_column(Integer, default=2)
+    play_style: Mapped[str] = mapped_column(String(32), default="quick")
+    scoring_mode: Mapped[str] = mapped_column(String(32), default="archetype_sum")
+    question_count: Mapped[int] = mapped_column(Integer, default=0)
+    result_count: Mapped[int] = mapped_column(Integer, default=0)
+    disclaimer: Mapped[str | None] = mapped_column(Text, nullable=True)
+    sort_order: Mapped[int] = mapped_column(Integer, default=0)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    questions: Mapped[list["FunQuizQuestion"]] = relationship(
+        "FunQuizQuestion",
+        back_populates="quiz",
+        cascade="all, delete-orphan",
+    )
+    results: Mapped[list["FunQuizResult"]] = relationship(
+        "FunQuizResult",
+        back_populates="quiz",
+        cascade="all, delete-orphan",
+    )
+    attempts: Mapped[list["FunQuizAttempt"]] = relationship(
+        "FunQuizAttempt",
+        back_populates="quiz",
+    )
+
+
+class FunQuizQuestion(Base):
+    __tablename__ = "fun_quiz_questions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    quiz_id: Mapped[int] = mapped_column(ForeignKey("fun_quiz_definitions.id"), nullable=False)
+    question_key: Mapped[str] = mapped_column(String(50), nullable=False)
+    position: Mapped[int] = mapped_column(Integer, nullable=False)
+    question_text: Mapped[str] = mapped_column(Text, nullable=False)
+    question_subtext: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    question_type: Mapped[str] = mapped_column(String(32), default="single_choice")
+    scene_text: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    dimension_key: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    option_payload_json: Mapped[str] = mapped_column(Text, nullable=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+
+    quiz: Mapped[FunQuizDefinition] = relationship("FunQuizDefinition", back_populates="questions")
+    answers: Mapped[list["FunQuizAnswer"]] = relationship(
+        "FunQuizAnswer",
+        back_populates="question",
+        cascade="all, delete-orphan",
+    )
+
+
+class FunQuizResult(Base):
+    __tablename__ = "fun_quiz_results"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    quiz_id: Mapped[int] = mapped_column(ForeignKey("fun_quiz_definitions.id"), nullable=False)
+    result_key: Mapped[str] = mapped_column(String(50), nullable=False)
+    result_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    result_subtitle: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    result_summary: Mapped[str] = mapped_column(Text, default="")
+    result_long_desc: Mapped[str | None] = mapped_column(Text, nullable=True)
+    poster_image: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    share_title: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    share_subtitle: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    extra_payload_json: Mapped[str] = mapped_column(Text, default="{}")
+
+    quiz: Mapped[FunQuizDefinition] = relationship("FunQuizDefinition", back_populates="results")
+
+
+class FunQuizAttempt(Base):
+    __tablename__ = "fun_quiz_attempts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    quiz_id: Mapped[int] = mapped_column(ForeignKey("fun_quiz_definitions.id"), nullable=False)
+    nickname: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    email: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    started_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    submitted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    duration_seconds: Mapped[int] = mapped_column(Integer, default=0)
+    top_result_key: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    secondary_result_key: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    score_payload_json: Mapped[str] = mapped_column(Text, default="{}")
+    client_ip: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    user_agent: Mapped[str | None] = mapped_column(String(255), nullable=True)
+
+    quiz: Mapped[FunQuizDefinition] = relationship("FunQuizDefinition", back_populates="attempts")
+    answers: Mapped[list["FunQuizAnswer"]] = relationship(
+        "FunQuizAnswer",
+        back_populates="attempt",
+        cascade="all, delete-orphan",
+    )
+
+
+class FunQuizAnswer(Base):
+    __tablename__ = "fun_quiz_answers"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    attempt_id: Mapped[int] = mapped_column(ForeignKey("fun_quiz_attempts.id"), nullable=False)
+    question_id: Mapped[int] = mapped_column(ForeignKey("fun_quiz_questions.id"), nullable=False)
+    selected_value: Mapped[str] = mapped_column(String(10), nullable=False)
+    selected_label: Mapped[str] = mapped_column(String(255), nullable=False)
+    score_payload_json: Mapped[str] = mapped_column(Text, default="{}")
+
+    attempt: Mapped[FunQuizAttempt] = relationship("FunQuizAttempt", back_populates="answers")
+    question: Mapped[FunQuizQuestion] = relationship("FunQuizQuestion", back_populates="answers")
