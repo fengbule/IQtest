@@ -1,0 +1,245 @@
+{
+  "slug": "cat-mbti",
+  "title": "你是哪种猫系人格",
+  "subtitle": "10道题测出你的猫咪性格",
+  "description": "喵星人来袭！测测你在猫星球上是哪种猫。",
+  "cover_image": "/images_fun/cat-mbti/cover.png",
+  "theme_color": "#f59e0b",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 10,
+  "result_count": 8,
+  "disclaimer": "本测验仅供娱乐，不代替真正的MBTI测试。",
+  "sort_order": 10,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你更喜欢？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "安静地待着，享受独处", "scores": {"lazy_cat": 3, "elegant_cat": 1}},
+        {"value": "B", "label": "偶尔撒娇求摸摸", "scores": {"cute_cat": 3, "lazy_cat": 1}},
+        {"value": "C", "label": "到处探索新领域", "scores": {"wild_cat": 3, "elegant_cat": 1}},
+        {"value": "D", "label": "安静观察周围一切", "scores": {"mystic_cat": 3, "wild_cat": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "你生气时会？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "生闷气不理人", "scores": {"mystic_cat": 3, "lazy_cat": 1}},
+        {"value": "B", "label": "直接吼出来", "scores": {"wild_cat": 3, "angry_cat": 1}},
+        {"value": "C", "label": "委屈巴巴求安慰", "scores": {"cute_cat": 3, "clingy_cat": 1}},
+        {"value": "D", "label": "默默走开冷静", "scores": {"elegant_cat": 3, "mystic_cat": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "陌生人觉得你第一印象是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "高冷不好接近", "scores": {"elegant_cat": 2, "mystic_cat": 2}},
+        {"value": "B", "label": "可爱想rua", "scores": {"cute_cat": 3, "clingy_cat": 1}},
+        {"value": "C", "label": "有点凶但很酷", "scores": {"wild_cat": 3, "angry_cat": 1}},
+        {"value": "D", "label": "神秘有灵气", "scores": {"mystic_cat": 3, "elegant_cat": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你更享受哪种时光？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "躺在阳光下午睡", "scores": {"lazy_cat": 3, "cute_cat": 1}},
+        {"value": "B", "label": "和主人一起玩逗猫棒", "scores": {"playful_cat": 3, "wild_cat": 1}},
+        {"value": "C", "label": "蹲在窗台看小鸟", "scores": {"mystic_cat": 3, "elegant_cat": 1}},
+        {"value": "D", "label": "霸占键盘不让你工作", "scores": {"clingy_cat": 3, "angry_cat": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "你更在意？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "有饭吃就行", "scores": {"lazy_cat": 3, "foodie_cat": 1}},
+        {"value": "B", "label": "要有自由的空间", "scores": {"wild_cat": 3, "elegant_cat": 1}},
+        {"value": "C", "label": "主人要爱我", "scores": {"clingy_cat": 3, "cute_cat": 1}},
+        {"value": "D", "label": "要有仪式感", "scores": {"elegant_cat": 3, "mystic_cat": 1}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "你和朋友的相处模式是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "偶尔出现，关系稳定", "scores": {"elegant_cat": 3, "lazy_cat": 1}},
+        {"value": "B", "label": "天天黏在一起", "scores": {"clingy_cat": 3, "cute_cat": 1}},
+        {"value": "C", "label": "各玩各的，偶尔互动", "scores": {"wild_cat": 3, "mystic_cat": 1}},
+        {"value": "D", "label": "我主动大家都喜欢我", "scores": {"playful_cat": 3, "cute_cat": 1}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你更想住在哪里？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "大房子有自己的猫爬架", "scores": {"elegant_cat": 3, "lazy_cat": 1}},
+        {"value": "B", "label": "有院子能到处跑", "scores": {"wild_cat": 3, "playful_cat": 1}},
+        {"value": "C", "label": "和主人一起睡床上", "scores": {"clingy_cat": 3, "cute_cat": 1}},
+        {"value": "D", "label": "安静的角落不受打扰", "scores": {"mystic_cat": 3, "lazy_cat": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "你对食物的态度是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "定时定量，健康饮食", "scores": {"elegant_cat": 3, "foodie_cat": 1}},
+        {"value": "B", "label": "什么都想吃，贪吃", "scores": {"foodie_cat": 3, "cute_cat": 1}},
+        {"value": "C", "label": "心情好才吃", "scores": {"mystic_cat": 3, "lazy_cat": 1}},
+        {"value": "D", "label": "看到小鱼干就失控", "scores": {"playful_cat": 3, "foodie_cat": 1}}
+      ]
+    },
+    {
+      "id": "q9",
+      "position": 9,
+      "type": "single_choice",
+      "text": "你的口头禅是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "本喵心情好才理你", "scores": {"elegant_cat": 3, "mystic_cat": 1}},
+        {"value": "B", "label": "抱抱我摸摸我", "scores": {"clingy_cat": 3, "cute_cat": 2}},
+        {"value": "C", "label": "让本喵静静", "scores": {"mystic_cat": 3, "lazy_cat": 1}},
+        {"value": "D", "label": "我要出去玩！", "scores": {"wild_cat": 3, "playful_cat": 1}}
+      ]
+    },
+    {
+      "id": "q10",
+      "position": 10,
+      "type": "single_choice",
+      "text": "你更像是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "安静的美男子", "scores": {"elegant_cat": 3, "mystic_cat": 1}},
+        {"value": "B", "label": "黏人的小可爱", "scores": {"cute_cat": 3, "clingy_cat": 2}},
+        {"value": "C", "label": "傲娇的小公主", "scores": {"angry_cat": 2, "elegant_cat": 2}},
+        {"value": "D", "label": "放荡不羁爱自由", "scores": {"wild_cat": 3, "playful_cat": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "elegant_cat",
+      "name": "优雅贵族猫",
+      "subtitle": "优雅从容，猫中贵族",
+      "summary": "你是猫中的优雅贵族，举止从容有度。",
+      "long_desc": "你举止优雅，有品位，是朋友圈中的高冷美人。你不是不爱社交，而是只和喜欢的人社交。你有自己的一套规则，不轻易被他人影响。",
+      "poster_image": "/images_fun/cat-mbti/result_elegant.png",
+      "share_title": "我是优雅贵族猫",
+      "share_subtitle": "优雅从容，猫中贵族就是我。",
+      "rule": {"type": "top_archetype", "key": "elegant_cat"},
+      "extra": {"tags": ["优雅", "高冷", "有品位", "从容"]}
+    },
+    {
+      "key": "cute_cat",
+      "name": "软萌可爱猫",
+      "subtitle": "人见人爱的撒娇鬼",
+      "summary": "你是人见人爱的软萌小可爱。",
+      "long_desc": "你是一个充满魅力的人，让人忍不住想要保护你。你的撒娇总是恰到好处，既不做作又很自然。你是朋友圈中的团宠。",
+      "poster_image": "/images_fun/cat-mbti/result_cute.png",
+      "share_title": "我是软萌可爱猫",
+      "share_subtitle": "撒娇卖萌我最在行，人见人爱就是我。",
+      "rule": {"type": "top_archetype", "key": "cute_cat"},
+      "extra": {"tags": ["可爱", "撒娇", "软萌", "团宠"]}
+    },
+    {
+      "key": "wild_cat",
+      "name": "野性自由猫",
+      "subtitle": "向往自由，不受约束",
+      "summary": "你是向往野性的自由灵魂。",
+      "long_desc": "你不喜欢被束缚嚲，喜欢无拘无束的生活。你有冒险精神，对世界充满好奇。你不适合朝九晚五的工作，更适合创业或自由职业。",
+      "poster_image": "/images_fun/cat-mbti/result_wild.png",
+      "share_title": "我是野性自由猫",
+      "share_subtitle": "嚲嚲嚲嚲嚲，自由的灵魂不需要解释。",
+      "rule": {"type": "top_archetype", "key": "wild_cat"},
+      "extra": {"tags": ["自由", "冒险", "好奇", "独立"]}
+    },
+    {
+      "key": "mystic_cat",
+      "name": "神秘高冷猫",
+      "subtitle": "神秘莫测，难以揣测",
+      "summary": "你是让人琢磨不透的神秘猫。",
+      "long_desc": "你是一个有深度的人，喜欢思考人生和宇宙。你不轻易表达自己的想法，给人高深莫测的感觉。你是那种一旦了解就会让人惊艳的类型。",
+      "poster_image": "/images_fun/cat-mbti/result_mystic.png",
+      "share_title": "我是神秘高冷猫",
+      "share_subtitle": "神秘莫测，不是我不想理你，是我想法太深。",
+      "rule": {"type": "top_archetype", "key": "mystic_cat"},
+      "extra": {"tags": ["神秘", "有深度", "高冷", "思考者"]}
+    },
+    {
+      "key": "lazy_cat",
+      "name": "慵懒享受猫",
+      "subtitle": "能躺着绝不坐着",
+      "summary": "你是猫如其名的慵懒达人。",
+      "long_desc": "你是一个注重生活品质的人，懂得享受生活。你不喜欢瞎折腾，偏向简单的生活方式。你是那种能躺着绝不坐着的类型。",
+      "poster_image": "/images_fun/cat-mbti/result_lazy.png",
+      "share_title": "我是慵懒享受猫",
+      "share_subtitle": "能躺着绝不坐着，能不吃力绝不瞎折腾。",
+      "rule": {"type": "top_archetype", "key": "lazy_cat"},
+      "extra": {"tags": ["慵懒", "享受", "简单", "品质"]}
+    },
+    {
+      "key": "clingy_cat",
+      "name": "黏人小妖精猫",
+      "subtitle": "你就是我的全世界",
+      "summary": "你是超级黏人的小妖精。",
+      "long_desc": "你是一个重感情的人，一旦认定就会全身心投入。你需要伴侣的陪伴，也是一个很依赖的人。你不喜欢一个人独处，更喜欢有人陪在身边。",
+      "poster_image": "/images_fun/cat-mbti/result_clingy.png",
+      "share_title": "我是黏人小妖精猫",
+      "share_subtitle": "你就是我的全世界，没有你我该怎么办啊。",
+      "rule": {"type": "top_archetype", "key": "clingy_cat"},
+      "extra": {"tags": ["黏人", "依赖", "重感情", "需要陪伴"]}
+    },
+    {
+      "key": "angry_cat",
+      "name": "傲娇小辣椒猫",
+      "subtitle": "嘴硬心软的小傲娇",
+      "summary": "你是一只嘴硬心软的傲娇小辣椒。",
+      "long_desc": "你嘴巴厉害但内心柔软，是个典型的傲娇。你不善于直接表达感情，但其实心里很在乎。你是那种越熟越嘴硬的人。",
+      "poster_image": "/images_fun/cat-mbti/result_angry.png",
+      "share_title": "我是傲娇小辣椒猫",
+      "share_subtitle": "哼，我才不在乎你呢！（其实超级在乎）",
+      "rule": {"type": "top_archetype", "key": "angry_cat"},
+      "extra": {"tags": ["傲娇", "嘴硬", "心软", "口是心非"]}
+    },
+    {
+      "key": "foodie_cat",
+      "name": "吃货本货猫",
+      "subtitle": "为了一口吃的，什么都愿意做",
+      "summary": "你是一个对食物充满热情的吃货猫。",
+      "long_desc": "你对食物有执念，是个标准的美食爱好者。为了好吃的，你愿意做任何事。你对生活的追求很纯粹，就是吃好喝好。",
+      "poster_image": "/images_fun/cat-mbti/result_foodie.png",
+      "share_title": "我是吃货本货猫",
+      "share_subtitle": "为了一口好吃的，什么都愿意做。",
+      "rule": {"type": "top_archetype", "key": "foodie_cat"},
+      "extra": {"tags": ["吃货", "美食", "单纯", "执着"]}
+    }
+  ]
+}

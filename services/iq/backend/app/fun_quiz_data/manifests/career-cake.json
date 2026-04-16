@@ -1,0 +1,250 @@
+{
+  "slug": "career-cake",
+  "title": "你的人生蛋糕长什么样",
+  "subtitle": "10道题画出你的人生事业轮廓",
+  "description": "每个人的人生蛋糕都不同，有的甜蜜，有的苦涩，有的层次丰富。通过这个测验看看你的人生蛋糕是什么样子。",
+  "cover_image": "/images_fun/career-cake/cover.png",
+  "theme_color": "#f97316",
+  "estimated_minutes": 2,
+  "play_style": "scorecard",
+  "scoring_mode": "scorecard",
+  "question_count": 10,
+  "result_count": 7,
+  "disclaimer": "本测验仅供娱乐，不代表真实职业规划建议。",
+  "sort_order": 6,
+  "dimensions": [
+    {"key": "creativity", "name": "创造力"},
+    {"key": "leadership", "name": "领导力"},
+    {"key": "stability", "name": "稳定性"},
+    {"key": "freedom", "name": "自由度"},
+    {"key": "impact", "name": "影响力"}
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你理想中的工作环境是？",
+      "subtext": "选择最像你的",
+      "dimension_key": "stability",
+      "options": [
+        {"value": "A", "label": "大公司，制度完善，晋升清晰", "scores": {"stability": 3, "leadership": 1, "total": 3}},
+        {"value": "B", "label": "创业公司，充满挑战和可能", "scores": {"creativity": 2, "freedom": 3, "total": 3}},
+        {"value": "C", "label": "自由职业，在家办公", "scores": {"freedom": 3, "creativity": 2, "total": 3}},
+        {"value": "D", "label": "能影响很多人的平台", "scores": {"impact": 3, "leadership": 2, "total": 3}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "你最看重工作中的什么？",
+      "subtext": "选择最像你的",
+      "dimension_key": "creativity",
+      "options": [
+        {"value": "A", "label": "稳定的收入和福利", "scores": {"stability": 3, "total": 3}},
+        {"value": "B", "label": "能做有创意的事", "scores": {"creativity": 3, "freedom": 1, "total": 3}},
+        {"value": "C", "label": "带领团队完成目标", "scores": {"leadership": 3, "impact": 2, "total": 3}},
+        {"value": "D", "label": "能帮到很多人", "scores": {"impact": 3, "creativity": 1, "total": 3}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你更喜欢哪种工作方式？",
+      "subtext": "选择最像你的",
+      "dimension_key": "freedom",
+      "options": [
+        {"value": "A", "label": "按部就班，完成分配的任务", "scores": {"stability": 3, "total": 3}},
+        {"value": "B", "label": "自己规划，自主安排", "scores": {"freedom": 3, "creativity": 2, "total": 3}},
+        {"value": "C", "label": "和团队一起头脑风暴", "scores": {"creativity": 2, "leadership": 2, "total": 3}},
+        {"value": "D", "label": "一对一解决客户问题", "scores": {"impact": 2, "stability": 1, "total": 3}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "如果给你一笔钱，你会怎么用？",
+      "subtext": "选择最像你的",
+      "dimension_key": "stability",
+      "options": [
+        {"value": "A", "label": "存银行，买稳定的理财产品", "scores": {"stability": 3, "total": 3}},
+        {"value": "B", "label": "辞职去旅行一段时间", "scores": {"freedom": 3, "creativity": 1, "total": 3}},
+        {"value": "C", "label": "投资自己，学新技能", "scores": {"creativity": 2, "leadership": 1, "total": 3}},
+        {"value": "D", "label": "创业或投资一个有前景的项目", "scores": {"impact": 2, "leadership": 2, "total": 3}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "你更愿意和什么样的人合作？",
+      "subtext": "选择最像你的",
+      "dimension_key": "leadership",
+      "options": [
+        {"value": "A", "label": "比我厉害的人，能带我成长", "scores": {"leadership": 2, "creativity": 1, "total": 2}},
+        {"value": "B", "label": "和我互补的人，各展所长", "scores": {"leadership": 3, "impact": 1, "total": 3}},
+        {"value": "C", "label": "听我指挥的团队成员", "scores": {"leadership": 2, "stability": 1, "total": 2}},
+        {"value": "D", "label": "独立自主，大家平等合作", "scores": {"freedom": 3, "creativity": 1, "total": 3}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "你觉得自己最擅长什么？",
+      "subtext": "选择最像你的",
+      "dimension_key": "creativity",
+      "options": [
+        {"value": "A", "label": "执行和落地，把事做成", "scores": {"stability": 2, "leadership": 1, "total": 2}},
+        {"value": "B", "label": "创意和点子，总有新想法", "scores": {"creativity": 3, "freedom": 1, "total": 3}},
+        {"value": "C", "label": "协调和沟通，平衡各方", "scores": {"leadership": 3, "impact": 1, "total": 3}},
+        {"value": "D", "label": "分析和决策，选择最优解", "scores": {"impact": 2, "stability": 1, "total": 2}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你希望你的工作能带来什么？",
+      "subtext": "选择最像你的",
+      "dimension_key": "impact",
+      "options": [
+        {"value": "A", "label": "稳定的收入和生活", "scores": {"stability": 3, "total": 3}},
+        {"value": "B", "label": "成长和能力的提升", "scores": {"creativity": 2, "freedom": 1, "total": 2}},
+        {"value": "C", "label": "社会地位和影响力", "scores": {"impact": 3, "leadership": 2, "total": 3}},
+        {"value": "D", "label": "帮助他人的成就感", "scores": {"impact": 3, "creativity": 1, "total": 3}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "面对职场压力，你通常会？",
+      "subtext": "选择最像你的",
+      "dimension_key": "stability",
+      "options": [
+        {"value": "A", "label": "咬牙坚持，相信能扛过去", "scores": {"stability": 3, "leadership": 1, "total": 3}},
+        {"value": "B", "label": "寻找新的机会或方向", "scores": {"freedom": 3, "creativity": 2, "total": 3}},
+        {"value": "C", "label": "和上级沟通，争取资源", "scores": {"leadership": 3, "impact": 1, "total": 3}},
+        {"value": "D", "label": "暂时放下休息一下", "scores": {"freedom": 2, "creativity": 1, "total": 2}}
+      ]
+    },
+    {
+      "id": "q9",
+      "position": 9,
+      "type": "single_choice",
+      "text": "你理想中的成功是什么样的？",
+      "subtext": "选择最像你的",
+      "dimension_key": "impact",
+      "options": [
+        {"value": "A", "label": "有房有车，生活无忧", "scores": {"stability": 3, "total": 3}},
+        {"value": "B", "label": "做自己喜欢的事财务自由", "scores": {"freedom": 3, "creativity": 2, "total": 3}},
+        {"value": "C", "label": "成为一个有影响力的人", "scores": {"impact": 3, "leadership": 3, "total": 4}},
+        {"value": "D", "label": "帮助了很多人改变命运", "scores": {"impact": 3, "total": 3}}
+      ]
+    },
+    {
+      "id": "q10",
+      "position": 10,
+      "type": "single_choice",
+      "text": "五年后，你更可能在哪里？",
+      "subtext": "选择最像你的",
+      "dimension_key": "freedom",
+      "options": [
+        {"value": "A", "label": "同一家公司，晋升了", "scores": {"stability": 3, "leadership": 1, "total": 3}},
+        {"value": "B", "label": "自由职业者，做自己的事", "scores": {"freedom": 3, "creativity": 2, "total": 3}},
+        {"value": "C", "label": "创业，有自己的公司", "scores": {"impact": 2, "leadership": 3, "total": 3}},
+        {"value": "D", "label": "转行了，做完全不同的方向", "scores": {"creativity": 3, "freedom": 2, "total": 3}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "cake_creator",
+      "name": "创业蛋糕",
+      "subtitle": "你的蛋糕是一块创意无限的慕斯",
+      "summary": "你不满足于按部就班，渴望创造属于自己的事业。",
+      "long_desc": "你有强烈的创业精神和创造力，不怕风险，勇于尝试。你的人生蛋糕是一块充满惊喜的慕斯蛋糕，每一口都有不同的味道。",
+      "poster_image": "/images_fun/career-cake/result_creator.png",
+      "share_title": "我的人生蛋糕是创业蛋糕",
+      "share_subtitle": "不满足于平庸，我要创造属于自己的事业。",
+      "rule": {"type": "score_range", "min_total": 28, "max_total": 40},
+      "extra": {"tags": ["创业", "创新", "敢闯", "有魄力"], "level": "A+"}
+    },
+    {
+      "key": "cake_leader",
+      "name": "领导蛋糕",
+      "subtitle": "你的蛋糕是一块层次分明的千层",
+      "summary": "你有领导天赋，渴望带领团队达成目标。",
+      "long_desc": "你善于协调资源，有全局观，能够带领团队克服困难达成目标。你的人生蛋糕是一块精致的千层蛋糕，每一层都有不同的精彩。",
+      "poster_image": "/images_fun/career-cake/result_leader.png",
+      "share_title": "我的人生蛋糕是领导蛋糕",
+      "share_subtitle": "不是一个人在战斗，是带领大家一起冲。",
+      "rule": {"type": "score_range", "min_total": 22, "max_total": 27},
+      "extra": {"tags": ["领导力", "协调力", "有全局观", "善激励"], "level": "A"}
+    },
+    {
+      "key": "cake_expert",
+      "name": "专家蛋糕",
+      "subtitle": "你的蛋糕是一块细腻的芝士蛋糕",
+      "summary": "你追求专业深度，想要成为某个领域的专家。",
+      "long_desc": "你注重专业能力的提升，喜欢深耕某个领域。你的人生蛋糕是一块细腻绵密的芝士蛋糕，越嚼越有味道。",
+      "poster_image": "/images_fun/career-cake/result_expert.png",
+      "share_title": "我的人生蛋糕是专家蛋糕",
+      "share_subtitle": "不求全，但求深。",
+      "rule": {"type": "score_range", "min_total": 16, "max_total": 21},
+      "extra": {"tags": ["专业", "深度", "匠心", "专注"], "level": "B+"}
+    },
+    {
+      "key": "cake_free",
+      "name": "自由蛋糕",
+      "subtitle": "你的蛋糕是一块轻盈的提拉米苏",
+      "summary": "你追求自由，不想被束缚在工作岗位上。",
+      "long_desc": "你向往自由职业或远程办公的生活，不想被固定的上班时间束缚。你的人生蛋糕是一块轻盈的提拉米苏，随性而美味。",
+      "poster_image": "/images_fun/career-cake/result_free.png",
+      "share_title": "我的人生蛋糕是自由蛋糕",
+      "share_subtitle": "不想打卡的人生，才是向往的人生。",
+      "rule": {"type": "score_range", "min_total": 12, "max_total": 15},
+      "extra": {"tags": ["自由", "随性", "热爱生活", "不将就"], "level": "B"}
+    },
+    {
+      "key": "cake_stable",
+      "name": "安稳蛋糕",
+      "subtitle": "你的蛋糕是一块经典的海绵蛋糕",
+      "summary": "你追求稳定的生活，安安乐乐就是福。",
+      "long_desc": "你是一个脚踏实地的人，不喜欢冒险，更看重长期稳定。你的人生蛋糕是一块经典的海绵蛋糕，简单但耐吃。",
+      "poster_image": "/images_fun/career-cake/result_stable.png",
+      "share_title": "我的人生蛋糕是安稳蛋糕",
+      "share_subtitle": "平平淡淡才是真，安安乐乐才是福。",
+      "rule": {"type": "score_range", "min_total": 8, "max_total": 11},
+      "extra": {"tags": ["稳定", "踏实", "靠谱", "懂生活"], "level": "B"}
+    },
+    {
+      "key": "cake_impact",
+      "name": "影响力蛋糕",
+      "subtitle": "你的蛋糕是一块华丽的翻糖蛋糕",
+      "summary": "你渴望成功和影响力，想要被更多人看见。",
+      "long_desc": "你有野心，有目标，渴望在某个领域做出成绩获得认可。你的人生蛋糕是一块华丽的翻糖蛋糕，既好看又有实力。",
+      "poster_image": "/images_fun/career-cake/result_impact.png",
+      "share_title": "我的人生蛋糕是影响力蛋糕",
+      "share_subtitle": "不是我要出名，是我要做出改变世界的事。",
+      "rule": {"type": "score_range", "min_total": 18, "max_total": 25},
+      "extra": {"tags": ["有野心", "追求成功", "影响力", "敢拼搏"], "level": "A"}
+    },
+    {
+      "key": "cake_balanced",
+      "name": "平衡蛋糕",
+      "subtitle": "你的蛋糕是一块太极图案的蛋糕",
+      "summary": "你追求工作与生活的平衡，不愿为了事业牺牲一切。",
+      "long_desc": "你明白人生不只是工作，还有家人和生活。你的人生蛋糕是一块太极图案的蛋糕，阴阳平衡，圆润和谐。",
+      "poster_image": "/images_fun/career-cake/result_balanced.png",
+      "share_title": "我的人生蛋糕是平衡蛋糕",
+      "share_subtitle": "工作是为了更好地生活，而不是生活为了工作。",
+      "rule": {"type": "score_range", "min_total": 0, "max_total": 7},
+      "extra": {"tags": ["平衡", "智慧", "懂取舍", "生活家"], "level": "A+"}
+    }
+  ]
+}

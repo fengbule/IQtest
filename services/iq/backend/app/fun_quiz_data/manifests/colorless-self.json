@@ -1,0 +1,195 @@
+{
+  "slug": "colorless-self",
+  "title": "测测你的色彩人格",
+  "subtitle": "8道题看穿你的隐藏性格色彩",
+  "description": "每个人都有自己的性格底色，通过这个测验看看你最本质的颜色是什么。",
+  "cover_image": "/images_fun/colorless-self/cover.png",
+  "theme_color": "#6366f1",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 8,
+  "result_count": 6,
+  "disclaimer": "本测验仅供娱乐，不代表专业心理评估。",
+  "sort_order": 5,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你更倾向于哪种生活方式？",
+      "subtext": "选择最符合你的",
+      "options": [
+        {"value": "A", "label": "规律稳定，每天按计划行事", "scores": {"blue_stable": 3, "green_calm": 1}},
+        {"value": "B", "label": "随性自在，不想被约束", "scores": {"yellow_bright": 3, "orange_warm": 1}},
+        {"value": "C", "label": "充满挑战，喜欢新鲜事物", "scores": {"red_passion": 3, "yellow_bright": 1}},
+        {"value": "D", "label": "追求深度，喜欢思考人生", "scores": {"purple_mystery": 3, "blue_stable": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "在朋友眼里，你通常是？",
+      "subtext": "选择最符合的",
+      "options": [
+        {"value": "A", "label": "那个永远靠谱的人", "scores": {"blue_stable": 3, "green_calm": 1}},
+        {"value": "B", "label": "那个总能带来欢乐的人", "scores": {"yellow_bright": 3, "orange_warm": 2}},
+        {"value": "C", "label": "那个很有主见的人", "scores": {"red_passion": 2, "purple_mystery": 2}},
+        {"value": "D", "label": "那个很有内涵的人", "scores": {"purple_mystery": 3, "blue_stable": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你更喜欢什么样的环境？",
+      "subtext": "选择最符合的",
+      "options": [
+        {"value": "A", "label": "安静舒适的角落", "scores": {"blue_stable": 2, "green_calm": 3}},
+        {"value": "B", "label": "热闹有活力的场所", "scores": {"yellow_bright": 3, "orange_warm": 2}},
+        {"value": "C", "label": "充满艺术感的地方", "scores": {"purple_mystery": 3, "red_passion": 1}},
+        {"value": "D", "label": "大自然的环境", "scores": {"green_calm": 3, "blue_stable": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "当你压力大时，你会？",
+      "subtext": "选择最像你的",
+      "options": [
+        {"value": "A", "label": "一个人静静待着", "scores": {"blue_stable": 2, "purple_mystery": 2}},
+        {"value": "B", "label": "找朋友倾诉或逛街", "scores": {"orange_warm": 3, "yellow_bright": 1}},
+        {"value": "C", "label": "去运动或吃东西发泄", "scores": {"red_passion": 3, "orange_warm": 1}},
+        {"value": "D", "label": "写日记或冥想", "scores": {"green_calm": 3, "purple_mystery": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "你更注重生活中的什么？",
+      "subtext": "选择最符合的",
+      "options": [
+        {"value": "A", "label": "安全感和稳定", "scores": {"blue_stable": 3, "green_calm": 2}},
+        {"value": "B", "label": "自由和新鲜感", "scores": {"yellow_bright": 3, "red_passion": 1}},
+        {"value": "C", "label": "激情和成就", "scores": {"red_passion": 3, "orange_warm": 1}},
+        {"value": "D", "label": "内在的成长", "scores": {"purple_mystery": 3, "green_calm": 1}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "你最喜欢什么颜色？",
+      "subtext": "凭直觉选一个",
+      "options": [
+        {"value": "A", "label": "蓝色系", "scores": {"blue_stable": 3}},
+        {"value": "B", "label": "黄色系", "scores": {"yellow_bright": 3}},
+        {"value": "C", "label": "红色系", "scores": {"red_passion": 3}},
+        {"value": "D", "label": "绿色或紫色系", "scores": {"green_calm": 2, "purple_mystery": 2}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "在团队中，你通常扮演什么角色？",
+      "subtext": "选择最像你的",
+      "options": [
+        {"value": "A", "label": "稳定军心的那个人", "scores": {"blue_stable": 3, "green_calm": 1}},
+        {"value": "B", "label": "活跃气氛的那个人", "scores": {"yellow_bright": 3, "orange_warm": 2}},
+        {"value": "C", "label": "冲在前面的那个人", "scores": {"red_passion": 3, "yellow_bright": 1}},
+        {"value": "D", "label": "出谋划策的那个人", "scores": {"purple_mystery": 3, "blue_stable": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "你理想中的周末是？",
+      "subtext": "选择最像你的",
+      "options": [
+        {"value": "A", "label": "在家安静休息", "scores": {"blue_stable": 2, "green_calm": 2}},
+        {"value": "B", "label": "和朋友出去浪", "scores": {"yellow_bright": 3, "orange_warm": 2}},
+        {"value": "C", "label": "去探索新地方", "scores": {"red_passion": 3, "yellow_bright": 1}},
+        {"value": "D", "label": "独自看书或看电影", "scores": {"purple_mystery": 3, "green_calm": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "blue_stable",
+      "name": "蓝色沉稳型",
+      "subtitle": "你是一杯静水深流的湖水",
+      "summary": "你性格沉稳，追求稳定和安全感，是一个值得信赖的人。",
+      "long_desc": "蓝色代表沉稳和深邃。你做事踏实，重视承诺，一旦答应了什么就会尽全力做到。你不喜欢变化太快的生活，更倾向于在一个稳定的环境里慢慢积累。",
+      "poster_image": "/images_fun/colorless-self/result_blue.png",
+      "share_title": "我的性格底色是蓝色",
+      "share_subtitle": "静水深流，沉稳有力。",
+      "rule": {"type": "top_archetype", "key": "blue_stable"},
+      "extra": {"tags": ["沉稳", "靠谱", "值得信赖", "内敛"]}
+    },
+    {
+      "key": "yellow_bright",
+      "name": "黄色明亮型",
+      "subtitle": "你是一束灿烂的阳光",
+      "summary": "你性格开朗乐观，总能给周围人带来正能量。",
+      "long_desc": "黄色代表明亮和活力。你天生乐观，很少被负面情绪困扰太久。你喜欢社交，喜欢新鲜事物，总是能发现生活中的乐趣。",
+      "poster_image": "/images_fun/colorless-self/result_yellow.png",
+      "share_title": "我的性格底色是黄色",
+      "share_subtitle": "阳光开朗，走到哪都是晴天。",
+      "rule": {"type": "top_archetype", "key": "yellow_bright"},
+      "extra": {"tags": ["开朗", "乐观", "有活力", "社交达人"]}
+    },
+    {
+      "key": "red_passion",
+      "name": "红色热烈型",
+      "subtitle": "你是一团燃烧的火焰",
+      "summary": "你充满热情和动力，追求挑战和成就。",
+      "long_desc": "红色代表热情和力量。你是一个行动派，一旦决定了什么就会全力以赴。你有很强的竞争意识，喜欢在各个领域证明自己。",
+      "poster_image": "/images_fun/colorless-self/result_red.png",
+      "share_title": "我的性格底色是红色",
+      "share_subtitle": "热血燃烧，永不服输。",
+      "rule": {"type": "top_archetype", "key": "red_passion"},
+      "extra": {"tags": ["热情", "行动派", "有竞争力", "不服输"]}
+    },
+    {
+      "key": "green_calm",
+      "name": "绿色平静型",
+      "subtitle": "你是一棵安然生长的大树",
+      "summary": "你性格温和，追求内心的平静与和谐。",
+      "long_desc": "绿色代表平静和生长。你是一个非常温和的人，很少与人发生冲突。你注重健康和环保，喜欢简单自然的生活方式。",
+      "poster_image": "/images_fun/colorless-self/result_green.png",
+      "share_title": "我的性格底色是绿色",
+      "share_subtitle": "内心平静，万物皆安。",
+      "rule": {"type": "top_archetype", "key": "green_calm"},
+      "extra": {"tags": ["温和", "平静", "追求和谐", "接地气"]}
+    },
+    {
+      "key": "purple_mystery",
+      "name": "紫色神秘型",
+      "subtitle": "你是一片深邃的星空",
+      "summary": "你有着丰富的内心世界，喜欢思考和探索。",
+      "long_desc": "紫色代表神秘和智慧。你是一个喜欢独处的人，有丰富的想象力和创造力。你对精神层面的追求很高，喜欢哲学和艺术。",
+      "poster_image": "/images_fun/colorless-self/result_purple.png",
+      "share_title": "我的性格底色是紫色",
+      "share_subtitle": "神秘深邃，智慧内敛。",
+      "rule": {"type": "top_archetype", "key": "purple_mystery"},
+      "extra": {"tags": ["神秘", "有内涵", "善于思考", "有灵气"]}
+    },
+    {
+      "key": "orange_warm",
+      "name": "橙色温暖型",
+      "subtitle": "你是一团温暖的炉火",
+      "summary": "你待人热情真诚，是朋友圈里的温暖担当。",
+      "long_desc": "橙色代表温暖和友好。你是一个非常重感情的人，对朋友和家人都很上心。你善于照顾他人的情绪，是朋友圈里的粘合剂。",
+      "poster_image": "/images_fun/colorless-self/result_orange.png",
+      "share_title": "我的性格底色是橙色",
+      "share_subtitle": "温暖如光，治愈人心。",
+      "rule": {"type": "top_archetype", "key": "orange_warm"},
+      "extra": {"tags": ["温暖", "重感情", "会照顾人", "有耐心"]}
+    }
+  ]
+}

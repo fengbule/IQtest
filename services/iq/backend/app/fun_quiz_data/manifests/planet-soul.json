@@ -1,0 +1,195 @@
+{
+  "slug": "planet-soul",
+  "title": "你的灵魂属于哪颗星球",
+  "subtitle": "8道题探索你的灵魂星球",
+  "description": "每个人都是宇宙中独一无二的存在，测测你的灵魂属于哪颗星球。",
+  "cover_image": "/images_fun/planet-soul/cover.png",
+  "theme_color": "#7c3aed",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 8,
+  "result_count": 6,
+  "disclaimer": "本测验仅供娱乐，不代表真实人格判断。",
+  "sort_order": 17,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你在人群中更像是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "发光发热的小太阳", "scores": {"sun_planet": 3, "mercury_planet": 1}},
+        {"value": "B", "label": "安静但有存在感的月亮", "scores": {"moon_planet": 3, "neptune_planet": 1}},
+        {"value": "C", "label": "充满神秘感的冥王星", "scores": {"pluto_planet": 3, "uranus_planet": 1}},
+        {"value": "D", "label": "温润如玉的金星", "scores": {"venus_planet": 3, "earth_planet": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "你更喜欢什么样的环境？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "热闹活泼的社交场合", "scores": {"sun_planet": 3, "venus_planet": 1}},
+        {"value": "B", "label": "安静独处的个人空间", "scores": {"moon_planet": 3, "pluto_planet": 1}},
+        {"value": "C", "label": "大自然的广阔天地", "scores": {"earth_planet": 3, "saturn_planet": 1}},
+        {"value": "D", "label": "充满未知的冒险旅途", "scores": {"pluto_planet": 3, "uranus_planet": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你对待感情的态度是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "热烈奔放，全情投入", "scores": {"sun_planet": 3, "venus_planet": 1}},
+        {"value": "B", "label": "深沉内敛，默默守护", "scores": {"moon_planet": 3, "saturn_planet": 1}},
+        {"value": "C", "label": "理性冷静，保持距离", "scores": {"uranus_planet": 3, "pluto_planet": 1}},
+        {"value": "D", "label": "温柔体贴，细水长流", "scores": {"neptune_planet": 3, "earth_planet": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你更向往什么样的生活方式？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "站在聚光灯下，成为焦点", "scores": {"sun_planet": 3, "venus_planet": 1}},
+        {"value": "B", "label": "有秩序、有目标的前进", "scores": {"saturn_planet": 3, "mercury_planet": 1}},
+        {"value": "C", "label": "随心所欲，自由自在", "scores": {"uranus_planet": 3, "neptune_planet": 1}},
+        {"value": "D", "label": "安稳平静，享受当下", "scores": {"earth_planet": 3, "moon_planet": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "你觉得自己更像什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "永不熄灭的火焰", "scores": {"sun_planet": 3, "venus_planet": 1}},
+        {"value": "B", "label": "深邃神秘的黑洞", "scores": {"pluto_planet": 3, "neptune_planet": 1}},
+        {"value": "C", "label": "有美丽光环的星球", "scores": {"saturn_planet": 3, "uranus_planet": 1}},
+        {"value": "D", "label": "充满生机的蓝色星球", "scores": {"earth_planet": 3, "moon_planet": 1}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "面对困难时你通常会？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "迎难而上，全力以赴", "scores": {"sun_planet": 3, "mercury_planet": 1}},
+        {"value": "B", "label": "冷静分析，寻找突破口", "scores": {"uranus_planet": 3, "saturn_planet": 1}},
+        {"value": "C", "label": "等待时机，顺势而为", "scores": {"neptune_planet": 3, "moon_planet": 1}},
+        {"value": "D", "label": "独自承受，慢慢消化", "scores": {"pluto_planet": 3, "earth_planet": 1}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你在朋友眼中是个什么样的人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "充满活力的小太阳", "scores": {"sun_planet": 3, "venus_planet": 1}},
+        {"value": "B", "label": "温柔可靠的月亮", "scores": {"moon_planet": 3, "neptune_planet": 1}},
+        {"value": "C", "label": "才华横溢的彗星", "scores": {"uranus_planet": 3, "mercury_planet": 1}},
+        {"value": "D", "label": "神秘莫测的冥王星", "scores": {"pluto_planet": 3, "saturn_planet": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "你更欣赏哪种美？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "热烈张扬的美", "scores": {"sun_planet": 3, "venus_planet": 1}},
+        {"value": "B", "label": "温柔含蓄的美", "scores": {"moon_planet": 3, "neptune_planet": 1}},
+        {"value": "C", "label": "独特叛逆的美", "scores": {"uranus_planet": 3, "pluto_planet": 1}},
+        {"value": "D", "label": "沉稳厚重的美", "scores": {"saturn_planet": 3, "earth_planet": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "sun_planet",
+      "name": "太阳星球",
+      "subtitle": "你是永恒的光与热",
+      "summary": "你是人群中的小太阳，永远充满能量和热情。",
+      "long_desc": "你是一个天生自带光芒的人，无论走到哪里都能照亮周围。你热情洋溢、活力四射，是朋友圈里的能量担当。",
+      "poster_image": "/images_fun/planet-soul/result_sun.png",
+      "share_title": "我的灵魂星球是太阳",
+      "share_subtitle": "我就是永恒燃烧的光与热。",
+      "rule": {"type": "top_archetype", "key": "sun_planet"},
+      "extra": {"tags": ["热情", "活力", "光芒", "领袖"]}
+    },
+    {
+      "key": "moon_planet",
+      "name": "月亮星球",
+      "subtitle": "你是夜晚最温柔的光",
+      "summary": "你是安静而深沉的存在，给人以安心和温暖。",
+      "long_desc": "你是一个内心丰富、情感细腻的人。你不善言辞但善解人意，在黑暗中总能给人最温柔的陪伴。",
+      "poster_image": "/images_fun/planet-soul/result_moon.png",
+      "share_title": "我的灵魂星球是月亮",
+      "share_subtitle": "我就是夜晚最温柔的那道光。",
+      "rule": {"type": "top_archetype", "key": "moon_planet"},
+      "extra": {"tags": ["温柔", "细腻", "安静", "守护"]}
+    },
+    {
+      "key": "pluto_planet",
+      "name": "冥王星球",
+      "subtitle": "你神秘而深邃，是被低估的强者",
+      "summary": "你是一个充满深度和神秘感的人，不随波逐流。",
+      "long_desc": "你是一个特立独行、很有深度的人。你不追求大众认同，有自己独特的价值观和人生哲学。",
+      "poster_image": "/images_fun/planet-soul/result_pluto.png",
+      "share_title": "我的灵魂星球是冥王星",
+      "share_subtitle": "我就是神秘深邃的宇宙边缘。",
+      "rule": {"type": "top_archetype", "key": "pluto_planet"},
+      "extra": {"tags": ["神秘", "深邃", "独特", "深刻"]}
+    },
+    {
+      "key": "uranus_planet",
+      "name": "天王星球",
+      "subtitle": "你是最独特的存在，叛逆而自由",
+      "summary": "你是一个充满创意和不走寻常路的人。",
+      "long_desc": "你思维独特、创意无限，总能想到别人想不到的点子。你追求自由，不被传统束缚。",
+      "poster_image": "/images_fun/planet-soul/result_uranus.png",
+      "share_title": "我的灵魂星球是天王星",
+      "share_subtitle": "我就是宇宙中最叛逆的那颗星。",
+      "rule": {"type": "top_archetype", "key": "uranus_planet"},
+      "extra": {"tags": ["独特", "叛逆", "创意", "自由"]}
+    },
+    {
+      "key": "saturn_planet",
+      "name": "土星星球",
+      "subtitle": "你有最美的光环，也最懂得责任",
+      "summary": "你是一个稳重可靠、有责任感的人。",
+      "long_desc": "你脚踏实地、稳扎稳打，是一个值得托付的人。你有强大的自律能力，懂得为长远目标付出努力。",
+      "poster_image": "/images_fun/planet-soul/result_saturn.png",
+      "share_title": "我的灵魂星球是土星",
+      "share_subtitle": "我就是那颗有最美光环的星球。",
+      "rule": {"type": "top_archetype", "key": "saturn_planet"},
+      "extra": {"tags": ["稳重", "责任", "自律", "可靠"]}
+    },
+    {
+      "key": "neptune_planet",
+      "name": "海王星球",
+      "subtitle": "你属于最深邃的宇宙",
+      "summary": "你是一个充满想象力和艺术气质的人。",
+      "long_desc": "你有着丰富的内心世界和超强的想象力。你适合艺术创作，总能触及人心最柔软的地方。",
+      "poster_image": "/images_fun/planet-soul/result_neptune.png",
+      "share_title": "我的灵魂星球是海王星",
+      "share_subtitle": "我就是宇宙中最梦幻的那颗蓝星。",
+      "rule": {"type": "top_archetype", "key": "neptune_planet"},
+      "extra": {"tags": ["梦幻", "想象", "艺术", "敏感"]}
+    }
+  ]
+}

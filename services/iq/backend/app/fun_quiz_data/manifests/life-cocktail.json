@@ -1,0 +1,207 @@
+{
+  "slug": "life-cocktail",
+  "title": "你的人生是一杯什么鸡尾酒",
+  "subtitle": "8道题调出你的人生配方",
+  "description": "每种鸡尾酒都有独特的配方，你的人生配方是什么样的？",
+  "cover_image": "/images_fun/life-cocktail/cover.png",
+  "theme_color": "#ef4444",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 8,
+  "result_count": 7,
+  "disclaimer": "本测验仅供娱乐，不代表真实性格判断。",
+  "sort_order": 15,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你更像是哪种人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "外冷内热", "scores": {"long_island": 3, "margarita": 1}},
+        {"value": "B", "label": "从里到外都热情", "scores": {"margarita": 3, "mojito": 1}},
+        {"value": "C", "label": "低调但有内涵", "scores": {"old_fashioned": 3, "martini": 1}},
+        {"value": "D", "label": "神秘难以捉摸", "scores": {"martini": 3, "long_island": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "你更喜欢什么样的聚会？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "热闹的大型派对", "scores": {"margarita": 3, "mojito": 1}},
+        {"value": "B", "label": "精致的小型酒会", "scores": {"martini": 3, "old_fashioned": 1}},
+        {"value": "C", "label": "和三五好友的深夜局", "scores": {"long_island": 3, "old_fashioned": 1}},
+        {"value": "D", "label": "一个人静静喝酒", "scores": {"whiskey_sour": 3, "martini": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你的性格更接近？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "直接激烈，爱恨分明", "scores": {"margarita": 3, "long_island": 1}},
+        {"value": "B", "label": "温和包容，适应力强", "scores": {"mojito": 3, "whiskey_sour": 1}},
+        {"value": "C", "label": "经典稳重，不随波逐流", "scores": {"old_fashioned": 3, "martini": 1}},
+        {"value": "D", "label": "优雅高冷，有距离感", "scores": {"martini": 3, "old_fashioned": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你更看重什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "刺激和新鲜感", "scores": {"long_island": 3, "margarita": 1}},
+        {"value": "B", "label": "舒适和放松", "scores": {"mojito": 3, "whiskey_sour": 1}},
+        {"value": "C", "label": "品质和格调", "scores": {"martini": 3, "old_fashioned": 1}},
+        {"value": "D", "label": "深度和故事", "scores": {"whiskey_sour": 3, "old_fashioned": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "你更倾向于？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "外表张扬，存在感强", "scores": {"long_island": 3, "margarita": 1}},
+        {"value": "B", "label": "外表清新，亲切可人", "scores": {"mojito": 3, "margarita": 1}},
+        {"value": "C", "label": "外表简约，内在丰富", "scores": {"martini": 3, "whiskey_sour": 1}},
+        {"value": "D", "label": "外表传统，内在醇厚", "scores": {"old_fashioned": 3, "whiskey_sour": 1}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "你更喜欢什么样的音乐？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "节奏感强的电子乐", "scores": {"long_island": 3, "margarita": 1}},
+        {"value": "B", "label": "轻松愉快的流行乐", "scores": {"mojito": 3, "margarita": 1}},
+        {"value": "C", "label": "优雅的爵士乐", "scores": {"martini": 3, "old_fashioned": 1}},
+        {"value": "D", "label": "有故事的民谣或摇滚", "scores": {"whiskey_sour": 3, "old_fashioned": 1}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "别人觉得你是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "派对动物，超级能嗨", "scores": {"margarita": 3, "long_island": 1}},
+        {"value": "B", "label": "很好相处，随和亲切", "scores": {"mojito": 3, "whiskey_sour": 1}},
+        {"value": "C", "label": "有品味，有格调", "scores": {"martini": 3, "old_fashioned": 1}},
+        {"value": "D", "label": "低调有内涵，越品越有味", "scores": {"old_fashioned": 3, "whiskey_sour": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "你的人生观是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "人生苦短，及时行乐", "scores": {"long_island": 3, "margarita": 1}},
+        {"value": "B", "label": "简单生活，快乐就好", "scores": {"mojito": 3, "margarita": 1}},
+        {"value": "C", "label": "追求品质，活得精致", "scores": {"martini": 3, "old_fashioned": 1}},
+        {"value": "D", "label": "历经沧桑，醇厚绵长", "scores": {"whiskey_sour": 3, "old_fashioned": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "long_island",
+      "name": "长岛冰茶",
+      "subtitle": "外表普通，内里浓烈",
+      "summary": "你是一杯看起来无害但后劲十足的长岛冰茶。",
+      "long_desc": "你外表可能看起来很随和，但内心有着强烈的情感和执念。你是一个有故事的人，不熟的人不了解你，一旦深交就会被你的魅力吸引。",
+      "poster_image": "/images_fun/life-cocktail/result_long_island.png",
+      "share_title": "我的人生是一杯长岛冰茶",
+      "share_subtitle": "看起来像冰茶，其实是烈酒。",
+      "rule": {"type": "top_archetype", "key": "long_island"},
+      "extra": {"tags": ["外冷内热", "后劲足", "有故事", "深交才懂"]}
+    },
+    {
+      "key": "margarita",
+      "name": "玛格丽特",
+      "subtitle": "清爽热烈，派对必备",
+      "summary": "你是一杯充满活力和热情的玛格丽特。",
+      "long_desc": "你是一个阳光开朗的人，是朋友圈里的气氛担当。你走到哪里，哪里就有欢笑。你的人生是五颜六色的派对。",
+      "poster_image": "/images_fun/life-cocktail/result_margarita.png",
+      "share_title": "我的人生是一杯玛格丽特",
+      "share_subtitle": "清爽热烈，我就是派对的灵魂！",
+      "rule": {"type": "top_archetype", "key": "margarita"},
+      "extra": {"tags": ["热情", "活泼", "派对", "气氛担当"]}
+    },
+    {
+      "key": "martini",
+      "name": "马天尼",
+      "subtitle": "优雅高冷，经典永恒",
+      "summary": "你是一杯优雅简洁的马天尼。",
+      "long_desc": "你是一个有品位的人，追求精致的生活。你不随波逐流，有自己独特的审美和生活方式。你是朋友圈里的格调担当。",
+      "poster_image": "/images_fun/life-cocktail/result_martini.png",
+      "share_title": "我的人生是一杯马天尼",
+      "share_subtitle": "简约不简单，优雅永恒。",
+      "rule": {"type": "top_archetype", "key": "martini"},
+      "extra": {"tags": ["优雅", "高冷", "有格调", "简约"]}
+    },
+    {
+      "key": "mojito",
+      "name": "莫吉托",
+      "subtitle": "清新自然，舒适宜人",
+      "summary": "你是一杯清新舒适的莫吉托。",
+      "long_desc": "你是一个随和亲切的人，跟你在一起让人感到轻松自在。你不追求奢华，更注重内心的舒适。你的人生是简单而美好的。",
+      "poster_image": "/images_fun/life-cocktail/result_mojito.png",
+      "share_title": "我的人生是一杯莫吉托",
+      "share_subtitle": "清新自然，和你在一起很舒服。",
+      "rule": {"type": "top_archetype", "key": "mojito"},
+      "extra": {"tags": ["清新", "舒适", "亲切", "简单"]}
+    },
+    {
+      "key": "old_fashioned",
+      "name": "古典鸡尾酒",
+      "subtitle": "经典传承，低调奢华",
+      "summary": "你是一杯经典永不过时的古典鸡尾酒。",
+      "long_desc": "你是一个稳重可靠的人，重视传统和传承。你不追求流行，有自己坚持的东西。你的人生虽然不张扬，但底蕴深厚。",
+      "poster_image": "/images_fun/life-cocktail/result_old_fashioned.png",
+      "share_title": "我的人生是一杯古典鸡尾酒",
+      "share_subtitle": "经典永不过时，低调奢华有内涵。",
+      "rule": {"type": "top_archetype", "key": "old_fashioned"},
+      "extra": {"tags": ["经典", "稳重", "传承", "低调有内涵"]}
+    },
+    {
+      "key": "whiskey_sour",
+      "name": "威士忌酸",
+      "subtitle": "酸中带甜，回味悠长",
+      "summary": "你是一杯酸中带甜的威士忌酸。",
+      "long_desc": "你是一个有故事的人，人生有甜有苦，但最终都能化为回味悠长的美好。你经历过风雨，但依然热爱生活。",
+      "poster_image": "/images_fun/life-cocktail/result_whiskey_sour.png",
+      "share_title": "我的人生是一杯威士忌酸",
+      "share_subtitle": "酸中带甜，回味悠长，这就是人生。",
+      "rule": {"type": "top_archetype", "key": "whiskey_sour"},
+      "extra": {"tags": ["有故事", "回味悠长", "历尽风雨", "热爱生活"]}
+    },
+    {
+      "key": "cosmopolitan",
+      "name": "大都会",
+      "subtitle": "粉红时尚，都市丽人",
+      "summary": "你是一杯时尚靓丽的粉红都市鸡尾酒。",
+      "long_desc": "你是一个走在时尚前沿的人，注重生活品质和外表。你是朋友圈里的时尚达人，总是光鲜亮丽地出现在大家面前。",
+      "poster_image": "/images_fun/life-cocktail/result_cosmopolitan.png",
+      "share_title": "我的人生是一杯大都会",
+      "share_subtitle": "时尚时尚最时尚，我就是都市丽人！",
+      "rule": {"type": "top_archetype", "key": "cosmopolitan"},
+      "extra": {"tags": ["时尚", "都市", "精致", "光鲜"]}
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "slug": "mountain-soul",
+  "title": "你的灵魂住在哪座山里",
+  "subtitle": "10道题看穿你的灵魂山居",
+  "description": "每个人心中都有一座属于自己的山，测测你的灵魂住在哪种山里。",
+  "cover_image": "/images_fun/mountain-soul/cover.png",
+  "theme_color": "#22c55e",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 10,
+  "result_count": 7,
+  "disclaimer": "本测验仅供娱乐，不代表真实性格判断。",
+  "sort_order": 9,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你更喜欢什么环境？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "高耸入云的雪山", "scores": {"snow_mountain": 3, "mist_mountain": 1}},
+        {"value": "B", "label": "云雾缭绕的神秘山峰", "scores": {"mist_mountain": 3, "forest_mountain": 1}},
+        {"value": "C", "label": "郁郁葱葱的青山", "scores": {"forest_mountain": 3, "red_rock_mountain": 1}},
+        {"value": "D", "label": "险峻嶙峋的石山", "scores": {"red_rock_mountain": 3, "snow_mountain": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "你更看重什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "物质的稳定和安全", "scores": {"red_rock_mountain": 2, "forest_mountain": 1}},
+        {"value": "B", "label": "精神的自由和超脱", "scores": {"mist_mountain": 3, "snow_mountain": 1}},
+        {"value": "C", "label": "与自然的和谐共生", "scores": {"forest_mountain": 3, "grass_mountain": 1}},
+        {"value": "D", "label": "挑战自我突破极限", "scores": {"snow_mountain": 3, "red_rock_mountain": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你的处事风格更像是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "稳重谨慎，三思而后行", "scores": {"red_rock_mountain": 3, "grass_mountain": 1}},
+        {"value": "B", "label": "随遇而安，顺其自然", "scores": {"grass_mountain": 3, "forest_mountain": 1}},
+        {"value": "C", "label": "充满好奇心，探索未知", "scores": {"mist_mountain": 3, "snow_mountain": 1}},
+        {"value": "D", "label": "直面困难，勇往直前", "scores": {"snow_mountain": 3, "red_rock_mountain": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你更欣赏哪种人？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "脚踏实地的人", "scores": {"grass_mountain": 3, "red_rock_mountain": 1}},
+        {"value": "B", "label": "有思想深度的人", "scores": {"mist_mountain": 3, "snow_mountain": 1}},
+        {"value": "C", "label": "热爱自然的人", "scores": {"forest_mountain": 3, "grass_mountain": 1}},
+        {"value": "D", "label": "敢于冒险的人", "scores": {"snow_mountain": 3, "red_rock_mountain": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "独处时你通常会？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "看书学习提升自己", "scores": {"mist_mountain": 3, "snow_mountain": 1}},
+        {"value": "B", "label": "发呆放空思考人生", "scores": {"grass_mountain": 3, "forest_mountain": 1}},
+        {"value": "C", "label": "去户外亲近大自然", "scores": {"forest_mountain": 3, "grass_mountain": 1}},
+        {"value": "D", "label": "运动健身挑战自我", "scores": {"snow_mountain": 3, "red_rock_mountain": 1}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "你最喜欢哪种天气？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "阳光明媚的晴天", "scores": {"grass_mountain": 3, "red_rock_mountain": 1}},
+        {"value": "B", "label": "云雾缭绕的阴天", "scores": {"mist_mountain": 3, "forest_mountain": 1}},
+        {"value": "C", "label": "飘雪的冬日", "scores": {"snow_mountain": 3, "mist_mountain": 1}},
+        {"value": "D", "label": "雨后的清新", "scores": {"forest_mountain": 3, "grass_mountain": 1}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你更想拥有什么能力？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "看透人心的智慧", "scores": {"mist_mountain": 3, "snow_mountain": 1}},
+        {"value": "B", "label": "强大的意志力", "scores": {"snow_mountain": 3, "red_rock_mountain": 1}},
+        {"value": "C", "label": "与万物沟通的能力", "scores": {"forest_mountain": 3, "grass_mountain": 1}},
+        {"value": "D", "label": "创造美好生活的能力", "scores": {"grass_mountain": 3, "red_rock_mountain": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "你更享受什么样的旅行？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "挑战高海拔山峰", "scores": {"snow_mountain": 3, "red_rock_mountain": 1}},
+        {"value": "B", "label": "探索神秘的古道", "scores": {"mist_mountain": 3, "forest_mountain": 1}},
+        {"value": "C", "label": "徒步穿越森林", "scores": {"forest_mountain": 3, "grass_mountain": 1}},
+        {"value": "D", "label": "草原上骑马奔驰", "scores": {"grass_mountain": 3, "red_rock_mountain": 1}}
+      ]
+    },
+    {
+      "id": "q9",
+      "position": 9,
+      "type": "single_choice",
+      "text": "面对压力时你更像是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "像雪山一样冷静", "scores": {"snow_mountain": 3, "mist_mountain": 1}},
+        {"value": "B", "label": "像岩石一样坚定", "scores": {"red_rock_mountain": 3, "grass_mountain": 1}},
+        {"value": "C", "label": "像森林一样包容", "scores": {"forest_mountain": 3, "grass_mountain": 1}},
+        {"value": "D", "label": "像云雾一样洒脱", "scores": {"mist_mountain": 3, "snow_mountain": 1}}
+      ]
+    },
+    {
+      "id": "q10",
+      "position": 10,
+      "type": "single_choice",
+      "text": "你觉得自己更像什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "一座沉默的高山", "scores": {"snow_mountain": 2, "red_rock_mountain": 2}},
+        {"value": "B", "label": "一片神秘的白云", "scores": {"mist_mountain": 3, "snow_mountain": 1}},
+        {"value": "C", "label": "一棵独立的老树", "scores": {"forest_mountain": 3, "red_rock_mountain": 1}},
+        {"value": "D", "label": "一片广袤的草原", "scores": {"grass_mountain": 3, "forest_mountain": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "snow_mountain",
+      "name": "雪山之魂",
+      "subtitle": "冷峻高远的精神追求者",
+      "summary": "你的灵魂住在高耸的雪山上，冷峻而高远。",
+      "long_desc": "你是一个追求卓越的人，不甘于平庸。你有坚定的意志和清晰的目标，像雪山一样屹立不倒。你不害怕孤独，反而能在独处中找到力量。",
+      "poster_image": "/images_fun/mountain-soul/result_snow.png",
+      "share_title": "我的灵魂住在雪山上",
+      "share_subtitle": "高耸冷峻，追求卓越。",
+      "rule": {"type": "top_archetype", "key": "snow_mountain"},
+      "extra": {"tags": ["卓越", "意志坚定", "独立", "冷峻"]}
+    },
+    {
+      "key": "mist_mountain",
+      "name": "云雾之魂",
+      "subtitle": "神秘深邃的思想者",
+      "summary": "你的灵魂住在云雾缭绕的神秘山峰中。",
+      "long_desc": "你是一个喜欢思考的人，对世界充满好奇。你有深邃的思想和不为人知的一面，像云雾一样神秘莫测。你不轻易表露自己，需要的人才能懂你。",
+      "poster_image": "/images_fun/mountain-soul/result_mist.png",
+      "share_title": "我的灵魂住在云雾中",
+      "share_subtitle": "神秘深邃，不为人知。",
+      "rule": {"type": "top_archetype", "key": "mist_mountain"},
+      "extra": {"tags": ["神秘", "思想者", "好奇", "内敛"]}
+    },
+    {
+      "key": "forest_mountain",
+      "name": "森林之魂",
+      "subtitle": "生机盎然的守护者",
+      "summary": "你的灵魂住在郁郁葱葱的森林山中。",
+      "long_desc": "你是一个热爱生命的人，对自然和生命充满敬畏。你有强大的包容力，像森林一样容纳万物。你善于倾听和理解，是朋友的温暖港湾。",
+      "poster_image": "/images_fun/mountain-soul/result_forest.png",
+      "share_title": "我的灵魂住在森林里",
+      "share_subtitle": "生机盎然，温暖包容。",
+      "rule": {"type": "top_archetype", "key": "forest_mountain"},
+      "extra": {"tags": ["包容", "热爱生命", "温暖", "守护"]}
+    },
+    {
+      "key": "red_rock_mountain",
+      "name": "岩石之魂",
+      "subtitle": "坚硬稳固的现实主义者",
+      "summary": "你的灵魂住在坚硬稳固的岩石山中。",
+      "long_desc": "你是一个脚踏实的人，重视实际和稳定。你有坚定的立场和原则，像岩石一样不可动摇。你是朋友中可以依靠的存在。",
+      "poster_image": "/images_fun/mountain-soul/result_red_rock.png",
+      "share_title": "我的灵魂住在岩石山里",
+      "share_subtitle": "坚硬稳固，脚踏实地。",
+      "rule": {"type": "top_archetype", "key": "red_rock_mountain"},
+      "extra": {"tags": ["务实", "坚定", "可靠", "有原则"]}
+    },
+    {
+      "key": "grass_mountain",
+      "name": "草原之魂",
+      "subtitle": "自由奔放的乐天派",
+      "summary": "你的灵魂住在广袤无垠的草原上。",
+      "long_desc": "你是一个热爱自由的人，不喜欢被束缚。你随和亲切，像草原一样给人开阔舒服的感觉。你不计较小事，活得轻松自在。",
+      "poster_image": "/images_fun/mountain-soul/result_grass.png",
+      "share_title": "我的灵魂住在草原上",
+      "share_subtitle": "自由奔放，开阔自在。",
+      "rule": {"type": "top_archetype", "key": "grass_mountain"},
+      "extra": {"tags": ["自由", "乐观", "随和", "不计较"]}
+    },
+    {
+      "key": "waterfall_mountain",
+      "name": "瀑布之魂",
+      "subtitle": "奔涌向前的行动派",
+      "summary": "你的灵魂住在飞流直下的瀑布旁。",
+      "long_desc": "你是一个充满动力的人，一旦决定就会全力以赴。你像瀑布一样有冲劲，不畏惧困难。你的人生充满活力，是一个行动派。",
+      "poster_image": "/images_fun/mountain-soul/result_waterfall.png",
+      "share_title": "我的灵魂住在瀑布旁",
+      "share_subtitle": "奔涌向前，勇往直前。",
+      "rule": {"type": "top_archetype", "key": "waterfall_mountain"},
+      "extra": {"tags": ["行动派", "有冲劲", "果断", "不怕困难"]}
+    },
+    {
+      "key": "valley_mountain",
+      "name": "幽谷之魂",
+      "subtitle": "宁静深邃的思考者",
+      "summary": "你的灵魂住在静谧的山谷中。",
+      "long_desc": "你是一个喜欢宁静的人，在安静中思考人生。你有丰富的内心世界，像幽谷一样深邃。你不张扬，但很有深度。",
+      "poster_image": "/images_fun/mountain-soul/result_valley.png",
+      "share_title": "我的灵魂住在幽谷中",
+      "share_subtitle": "宁静深邃，不张扬有深度。",
+      "rule": {"type": "top_archetype", "key": "valley_mountain"},
+      "extra": {"tags": ["宁静", "深度", "思考", "内省"]}
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "slug": "cat-life",
+  "title": "如果你是猫，你会在哪一刻",
+  "subtitle": "8道题测出你的猫生阶段",
+  "description": "用猫的视角看人生，测测你现在处于猫生的哪个阶段。",
+  "cover_image": "/images_fun/cat-life/cover.png",
+  "theme_color": "#f97316",
+  "estimated_minutes": 2,
+  "play_style": "quick",
+  "scoring_mode": "archetype_sum",
+  "question_count": 8,
+  "result_count": 6,
+  "disclaimer": "本测验仅供娱乐，不代替真正的心理测试。",
+  "sort_order": 14,
+  "questions": [
+    {
+      "id": "q1",
+      "position": 1,
+      "type": "single_choice",
+      "text": "你现在的状态更像？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "刚出生不久的小奶猫", "scores": {"kitten_stage": 3, "curious_teen": 1}},
+        {"value": "B", "label": "精力旺盛到处拆家的年轻猫", "scores": {"curious_teen": 3, "confident_adult": 1}},
+        {"value": "C", "label": "稳重成熟的中年猫", "scores": {"confident_adult": 3, "wise_elder": 1}},
+        {"value": "D", "label": "睿智淡定的老年猫", "scores": {"wise_elder": 3, "comfortable_senior": 1}}
+      ]
+    },
+    {
+      "id": "q2",
+      "position": 2,
+      "type": "single_choice",
+      "text": "你对未来的态度是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "充满好奇，什么都想尝试", "scores": {"kitten_stage": 3, "curious_teen": 1}},
+        {"value": "B", "label": "有明确目标，努力奋斗中", "scores": {"confident_adult": 3, "curious_teen": 1}},
+        {"value": "C", "label": "顺其自然，不强求", "scores": {"comfortable_senior": 3, "wise_elder": 1}},
+        {"value": "D", "label": "已经在规划退休生活", "scores": {"wise_elder": 3, "comfortable_senior": 1}}
+      ]
+    },
+    {
+      "id": "q3",
+      "position": 3,
+      "type": "single_choice",
+      "text": "你更在意什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "每天能不能玩得开心", "scores": {"curious_teen": 3, "kitten_stage": 1}},
+        {"value": "B", "label": "能不能实现自己的价值", "scores": {"confident_adult": 3, "wise_elder": 1}},
+        {"value": "C", "label": "身边有没有知心的人", "scores": {"comfortable_senior": 3, "kitten_stage": 1}},
+        {"value": "D", "label": "能不能做真实的自己", "scores": {"wise_elder": 3, "confident_adult": 1}}
+      ]
+    },
+    {
+      "id": "q4",
+      "position": 4,
+      "type": "single_choice",
+      "text": "你现在的压力主要来自？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "选择太多，不知道怎么选", "scores": {"curious_teen": 3, "kitten_stage": 1}},
+        {"value": "B", "label": "工作和生活的平衡", "scores": {"confident_adult": 3, "curious_teen": 1}},
+        {"value": "C", "label": "上有老下有小的责任", "scores": {"comfortable_senior": 3, "confident_adult": 1}},
+        {"value": "D", "label": "对过去的遗憾和对未来的迷茫", "scores": {"wise_elder": 3, "comfortable_senior": 1}}
+      ]
+    },
+    {
+      "id": "q5",
+      "position": 5,
+      "type": "single_choice",
+      "text": "周末你最想做什么？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "出去浪，探索新地方", "scores": {"curious_teen": 3, "kitten_stage": 1}},
+        {"value": "B", "label": "加班提升自己", "scores": {"confident_adult": 3, "wise_elder": 1}},
+        {"value": "C", "label": "在家休息陪家人", "scores": {"comfortable_senior": 3, "confident_adult": 1}},
+        {"value": "D", "label": "一个人安静地看书", "scores": {"wise_elder": 3, "kitten_stage": 1}}
+      ]
+    },
+    {
+      "id": "q6",
+      "position": 6,
+      "type": "single_choice",
+      "text": "别人对你的评价通常是？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "活泼可爱，有活力", "scores": {"kitten_stage": 2, "curious_teen": 2}},
+        {"value": "B", "label": "可靠有能力，有上进心", "scores": {"confident_adult": 3, "curious_teen": 1}},
+        {"value": "C", "label": "和善可亲，热心肠", "scores": {"comfortable_senior": 3, "confident_adult": 1}},
+        {"value": "D", "label": "有智慧，看问题透彻", "scores": {"wise_elder": 3, "comfortable_senior": 1}}
+      ]
+    },
+    {
+      "id": "q7",
+      "position": 7,
+      "type": "single_choice",
+      "text": "你更认同哪种说法？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "人生在于体验，趁年轻多折腾", "scores": {"curious_teen": 3, "kitten_stage": 1}},
+        {"value": "B", "label": "要努力奋斗，才能过上想要的生活", "scores": {"confident_adult": 3, "curious_teen": 1}},
+        {"value": "C", "label": "平平淡淡才是真", "scores": {"comfortable_senior": 3, "confident_adult": 1}},
+        {"value": "D", "label": "人生如猫，开心就好", "scores": {"wise_elder": 3, "comfortable_senior": 1}}
+      ]
+    },
+    {
+      "id": "q8",
+      "position": 8,
+      "type": "single_choice",
+      "text": "你现在的生活状态更像？",
+      "subtext": "选择最像的",
+      "options": [
+        {"value": "A", "label": "刚独立生活，什么都要自己来", "scores": {"curious_teen": 3, "kitten_stage": 1}},
+        {"value": "B", "label": "事业上升期，忙但充实", "scores": {"confident_adult": 3, "curious_teen": 1}},
+        {"value": "C", "label": "稳定期，开始享受生活", "scores": {"comfortable_senior": 3, "confident_adult": 1}},
+        {"value": "D", "label": "看开了，不再强求", "scores": {"wise_elder": 3, "comfortable_senior": 1}}
+      ]
+    }
+  ],
+  "results": [
+    {
+      "key": "kitten_stage",
+      "name": "小奶猫阶段",
+      "subtitle": "纯真好奇，对世界充满新鲜感",
+      "summary": "你的内心还住着一个纯真的小孩。",
+      "long_desc": "你是一个对世界充满好奇的人，不管年龄多大，内心都保持着童真。你喜欢新鲜事物，是朋友圈里的活泼担当。",
+      "poster_image": "/images_fun/cat-life/result_kitten.png",
+      "share_title": "我现在是小奶猫阶段",
+      "share_subtitle": "世界那么大，我要去看看！",
+      "rule": {"type": "top_archetype", "key": "kitten_stage"},
+      "extra": {"tags": ["好奇", "活泼", "纯真", "新鲜感"]}
+    },
+    {
+      "key": "curious_teen",
+      "name": "好奇少年猫",
+      "subtitle": "精力旺盛，到处探索",
+      "summary": "你正处于充满探索欲的少年期。",
+      "long_desc": "你有活力有冲劲，对未来充满期待。你敢于尝试不怕失败，是那种说走就走的人。你的生活充满了可能性。",
+      "poster_image": "/images_fun/cat-life/result_teen.png",
+      "share_title": "我是好奇少年猫",
+      "share_subtitle": "世界那么大，我要到处去闯闯！",
+      "rule": {"type": "top_archetype", "key": "curious_teen"},
+      "extra": {"tags": ["探索", "活力", "冲动", "可能性"]}
+    },
+    {
+      "key": "confident_adult",
+      "name": "自信成年猫",
+      "subtitle": "稳中求进，实力担当",
+      "summary": "你正处于人生最黄金的时期。",
+      "long_desc": "你成熟稳重，有目标有追求，是社会的中坚力量。你知道自己想要什么，也在为之努力。你是朋友圈里最靠谱的那一个。",
+      "poster_image": "/images_fun/cat-life/result_adult.png",
+      "share_title": "我是自信成年猫",
+      "share_subtitle": "稳中求进，实力担当就是我。",
+      "rule": {"type": "top_archetype", "key": "confident_adult"},
+      "extra": {"tags": ["成熟", "稳重", "靠谱", "中坚"]}
+    },
+    {
+      "key": "comfortable_senior",
+      "name": "舒适老年猫",
+      "subtitle": "生活稳定，开始享受",
+      "summary": "你已经找到了生活的节奏。",
+      "long_desc": "你不再那么焦虑，懂得了生活的真谛。你开始享受简单的生活，注重生活的质量。你是朋友圈里的生活家。",
+      "poster_image": "/images_fun/cat-life/result_senior.png",
+      "share_title": "我是舒适老年猫",
+      "share_subtitle": "生活就是要慢慢享受。",
+      "rule": {"type": "top_archetype", "key": "comfortable_senior"},
+      "extra": {"tags": ["稳定", "享受", "慢活", "生活家"]}
+    },
+    {
+      "key": "wise_elder",
+      "name": "智慧老年猫",
+      "subtitle": "看透世事，内心平静",
+      "summary": "你已经达到了人生的豁达境界。",
+      "long_desc": "你是一个有智慧的人，对人生有了更深的理解。你不再为小事纠结，内心平静如水。你是朋友圈里的定海神针。",
+      "poster_image": "/images_fun/cat-life/result_wise.png",
+      "share_title": "我是智慧老年猫",
+      "share_subtitle": "看透世事，内心平静。",
+      "rule": {"type": "top_archetype", "key": "wise_elder"},
+      "extra": {"tags": ["智慧", "豁达", "平静", "通透"]}
+    },
+    {
+      "key": "reborn_kitten",
+      "name": "返老还童猫",
+      "subtitle": "历尽千帆，归来仍是少年",
+      "summary": "你经历了许多，但内心依然年轻。",
+      "long_desc": "你有故事有阅历，但内心依然保持着对世界的热爱。你是朋友圈里最通透的人，活得明白又洒脱。",
+      "poster_image": "/images_fun/cat-life/result_reborn.png",
+      "share_title": "我是返老还童猫",
+      "share_subtitle": "历尽千帆，归来仍是少年。",
+      "rule": {"type": "top_archetype", "key": "reborn_kitten"},
+      "extra": {"tags": ["通透", "洒脱", "历尽千帆", "少年心"]}
+    }
+  ]
+}
