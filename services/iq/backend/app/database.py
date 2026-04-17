@@ -8,7 +8,7 @@ engine_url = settings.database_url
 if engine_url.startswith("sqlite"):
     engine = create_engine(
         URL.create("sqlite", database=engine_url.replace("sqlite:///", "", 1)),
-        connect_args={"check_same_thread": False},
+        connect_args={"check_same_thread": False, "timeout": 30},
         pool_pre_ping=True,
     )
 else:

@@ -261,40 +261,48 @@ def recent_question_ids_for_attempt(payload: StartAttemptIn, request: Request, d
 def start_attempt(payload: StartAttemptIn, request: Request, db: Session = Depends(get_db)):
     question_rows = db.query(Question).filter(Question.is_active.is_(True)).all()
     avoid_question_ids = recent_question_ids_for_attempt(payload, request, db)
+
     try:
         selected_questions = sample_questions(question_rows, avoid_question_ids=avoid_question_ids)
     except ValueError as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
-    attempt = TestAttempt(
-        nickname=payload.nickname,
-        email=str(payload.email) if payload.email else None,
-        started_at=datetime.utcnow(),
-        total_questions=len(selected_questions),
-        client_ip=request.client.host if request.client else None,
-        user_agent=request.headers.get("user-agent", "")[:255],
-    )
-    db.add(attempt)
-    db.flush()
+    if not selected_questions:
+        raise HTTPException(status_code=500, detail="no questions available")
 
-    for display_order, question in enumerate(selected_questions, start=1):
-        db.add(
-            AttemptAnswer(
-                attempt_id=attempt.id,
-                question_id=question.id,
-                question_order=display_order,
-                question_dimension=normalize_dimension(question.category),
-                question_difficulty=question.difficulty,
-                question_weight=question.difficulty_weight,
-                estimated_seconds=question.estimated_seconds,
-                prompt_snapshot=question.prompt,
-                correct_answer_snapshot=question.correct_option,
-                explanation_snapshot=question.explanation,
-            )
+    try:
+        attempt = TestAttempt(
+            nickname=payload.nickname,
+            email=str(payload.email) if payload.email else None,
+            started_at=datetime.utcnow(),
+            total_questions=len(selected_questions),
+            client_ip=request.client.host if request.client else None,
+            user_agent=request.headers.get("user-agent", "")[:255],
         )
+        db.add(attempt)
+        db.flush()
 
-    db.commit()
-    db.refresh(attempt)
+        for display_order, question in enumerate(selected_questions, start=1):
+            db.add(
+                AttemptAnswer(
+                    attempt_id=attempt.id,
+                    question_id=question.id,
+                    question_order=display_order,
+                    question_dimension=normalize_dimension(question.category),
+                    question_difficulty=question.difficulty,
+                    question_weight=question.difficulty_weight,
+                    estimated_seconds=question.estimated_seconds,
+                    prompt_snapshot=question.prompt,
+                    correct_answer_snapshot=question.correct_option,
+                    explanation_snapshot=question.explanation,
+                )
+            )
+
+        db.commit()
+        db.refresh(attempt)
+    except Exception as exc:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"failed to create attempt: {str(exc)}") from exc
 
     question_payload = [
         QuestionOut(
@@ -610,45 +618,62 @@ def submit_personality_attempt(
     if attempt.submitted_at is not None:
         raise HTTPException(status_code=400, detail="attempt already submitted")
     
-    # Save answers
-    answers_dict = {}
-    for answer in payload.answers:
-        pa = PersonalityAnswer(
-            attempt_id=attempt.id,
-            question_id=answer.question_id,
-            score=answer.score,
+    total_questions = db.query(PersonalityQuestion).count()
+    if len(payload.answers) != total_questions:
+        raise HTTPException(
+            status_code=400,
+            detail=f"incomplete answers: expected {total_questions}, got {len(payload.answers)}"
         )
-        db.add(pa)
-        answers_dict[answer.question_id] = answer.score
     
-    # Calculate scores
-    scores = calculate_personality_scores(answers_dict)
+    submitted_question_ids = {a.question_id for a in payload.answers}
+    all_question_ids = {q.id for q in db.query(PersonalityQuestion.id).all()}
+    missing = all_question_ids - submitted_question_ids
+    if missing:
+        raise HTTPException(
+            status_code=400,
+            detail=f"missing answers for question IDs: {sorted(missing)}"
+        )
     
-    # Find top matches
-    top_matches = find_top_matches(scores, limit=3)
-    
-    # Update attempt with results
-    attempt.submitted_at = datetime.utcnow()
-    attempt.duration_seconds = payload.duration_seconds
-    attempt.openness_score = scores["openness"]
-    attempt.conscientiousness_score = scores["conscientiousness"]
-    attempt.extraversion_score = scores["extraversion"]
-    attempt.agreeableness_score = scores["agreeableness"]
-    attempt.neuroticism_score = scores["neuroticism"]
-    
-    if top_matches:
-        attempt.top_match_id = top_matches[0]["figure_id"]
-        attempt.top_match_similarity = top_matches[0]["similarity"]
-    if len(top_matches) > 1:
-        attempt.second_match_id = top_matches[1]["figure_id"]
-        attempt.second_match_similarity = top_matches[1]["similarity"]
-    if len(top_matches) > 2:
-        attempt.third_match_id = top_matches[2]["figure_id"]
-        attempt.third_match_similarity = top_matches[2]["similarity"]
-    
-    attempt.summary = generate_summary(scores, top_matches)
-    
-    db.commit()
+    try:
+        answers_dict = {}
+        for answer in payload.answers:
+            pa = PersonalityAnswer(
+                attempt_id=attempt.id,
+                question_id=answer.question_id,
+                score=answer.score,
+            )
+            db.add(pa)
+            answers_dict[answer.question_id] = answer.score
+        
+        attempt.submitted_at = datetime.utcnow()
+        attempt.duration_seconds = payload.duration_seconds
+        
+        scores = calculate_personality_scores(answers_dict)
+        
+        top_matches = find_top_matches(scores, limit=3)
+        
+        attempt.openness_score = scores["openness"]
+        attempt.conscientiousness_score = scores["conscientiousness"]
+        attempt.extraversion_score = scores["extraversion"]
+        attempt.agreeableness_score = scores["agreeableness"]
+        attempt.neuroticism_score = scores["neuroticism"]
+        
+        if top_matches:
+            attempt.top_match_id = top_matches[0]["figure_id"]
+            attempt.top_match_similarity = top_matches[0]["similarity"]
+        if len(top_matches) > 1:
+            attempt.second_match_id = top_matches[1]["figure_id"]
+            attempt.second_match_similarity = top_matches[1]["similarity"]
+        if len(top_matches) > 2:
+            attempt.third_match_id = top_matches[2]["figure_id"]
+            attempt.third_match_similarity = top_matches[2]["similarity"]
+        
+        attempt.summary = generate_summary(scores, top_matches)
+        
+        db.commit()
+    except Exception as exc:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"failed to submit: {str(exc)}") from exc
     
     # Build response
     dimensions = []
