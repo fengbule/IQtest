@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="/iq/styles.css?v=20260415-5" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
+    :root {
+      --color-primary: #10b981;
+      --color-secondary: #0d9668;
+    }
+
     .dynasty-test-container {
       max-width: 900px;
       margin: 0 auto;
@@ -118,11 +123,19 @@
     .button.primary {
       background: var(--color-primary);
       color: white;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+      position: relative;
+      z-index: 10;
     }
 
     .button.primary:hover {
-      background: var(--color-secondary);
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+      background: #0d9668;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .button.primary:active {
+      transform: translateY(0);
     }
 
     .button.secondary {
@@ -179,46 +192,55 @@
       margin-bottom: 10px;
     }
 
+    .option-item {
+      margin-bottom: 8px;
+    }
+
     .option-label {
       display: flex;
-      align-items: flex-start;
-      padding: 14px 16px;
-      background: #f9fafb;
+      align-items: center;
+      padding: 18px 20px;
+      background: #ffffff;
       border: 2px solid #e5e7eb;
-      border-radius: 10px;
+      border-radius: 14px;
       cursor: pointer;
       transition: all 0.2s ease;
+      min-height: 64px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
 
     .option-label:hover {
       border-color: var(--color-primary);
-      background: rgba(16, 185, 129, 0.05);
+      background: rgba(16, 185, 129, 0.06);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
     }
 
     .option-input {
-      margin-right: 12px;
-      width: 18px;
-      height: 18px;
+      width: 24px;
+      height: 24px;
       accent-color: var(--color-primary);
       cursor: pointer;
       flex-shrink: 0;
-      margin-top: 2px;
+      margin-right: 16px;
     }
 
     .option-text {
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       color: #374151;
-      line-height: 1.4;
+      line-height: 1.5;
+      flex: 1;
     }
 
     .option-item.selected .option-label {
       border-color: var(--color-primary);
       background: rgba(16, 185, 129, 0.1);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2);
     }
 
     .option-item.selected .option-text {
       color: #059669;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .progress-bar {
