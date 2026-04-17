@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>历史朝代人物匹配</title>
+  <link rel="stylesheet" href="/iq/styles.css?v=20260415-5" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --color-primary: #10b981;
+      --color-secondary: #059669;
+    }
+
+    .dynasty-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .dynasty-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%);
+      border-radius: 16px;
+      color: white;
+    }
+
+    .dynasty-header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+
+    .dynasty-header p {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .dynasty-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .dynasty-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .dynasty-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+      border-color: var(--color-primary);
+    }
+
+    .dynasty-card-banner {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: white;
+    }
+
+    .dynasty-card-content {
+      padding: 24px;
+    }
+
+    .dynasty-card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #1f2937;
+    }
+
+    .dynasty-card-subtitle {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    .dynasty-card-stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: #f3f4f6;
+      border-radius: 8px;
+    }
+
+    .dynasty-stat {
+      text-align: center;
+      flex: 1;
+    }
+
+    .dynasty-stat-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .dynasty-stat-label {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .dynasty-card-desc {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .dynasty-card-btn {
+      width: 100%;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dynasty-card-btn:hover {
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .dynasty-card.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .dynasty-card.disabled:hover {
+      transform: none;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      border-color: transparent;
+    }
+
+    .coming-soon-badge {
+      background: #6b7280;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .portal-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: white;
+      color: #1f2937;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 30px;
+      transition: all 0.2s ease;
+    }
+
+    .portal-back:hover {
+      background: #f3f4f6;
+    }
+
+    .page-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .disclaimer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #fef3c7;
+      border-radius: 12px;
+      color: #92400e;
+      font-size: 0.9rem;
+    }
+
+    .disclaimer strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .dynasty-header h1 {
+        font-size: 1.6rem;
+      }
+
+      .dynasty-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-top {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="ambient ambient-left" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.03));"></div>
+    <div class="ambient ambient-right" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.03), rgba(16, 185, 129, 0.08));"></div>
+
+    <main class="container dynasty-container">
+      <div class="page-top">
+        <a href="/portal.html" class="portal-back">
+          <span>&#8592;</span> 返回首页
+        </a>
+      </div>
+
+      <header class="dynasty-header">
+        <h1>历史朝代人物匹配</h1>
+        <p>选择一个你感兴趣的朝代，看看你在那个时代最像哪位历史人物</p>
+      </header>
+
+      <div id="dynasty-grid" class="dynasty-grid"></div>
+
+      <div class="disclaimer">
+        <strong>测评说明</strong>
+        这不是历史知识考试，也不是严肃心理诊断；它是一种基于人格倾向、行为风格与时代情境的趣味化人物映射。测试结果仅供参考娱乐。
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const API_BASE = '/api';
+
+    async function loadDynasties() {
+      try {
+        const response = await fetch(`${API_BASE}/dynasty`);
+        if (!response.ok) throw new Error('Failed to load dynasties');
+        const data = await response.json();
+        renderDynastyGrid(data.dynasties);
+      } catch (error) {
+        console.error('Error loading dynasties:', error);
+        document.getElementById('dynasty-grid').innerHTML = '<p style="text-align:center;color:#666;">加载失败，请刷新页面重试</p>';
+      }
+    }
+
+    function renderDynastyGrid(dynasties) {
+      const grid = document.getElementById('dynasty-grid');
+      
+      grid.innerHTML = dynasties.map(dynasty => `
+        <article class="dynasty-card" data-dynasty-id="${dynasty.id}">
+          <div class="dynasty-card-banner" style="background: ${dynasty.bg_gradient};">
+            ${dynasty.icon}
+          </div>
+          <div class="dynasty-card-content">
+            <h2 class="dynasty-card-title">${dynasty.name}</h2>
+            <p class="dynasty-card-subtitle">${dynasty.subtitle}</p>
+            <div class="dynasty-card-stats">
+              <div class="dynasty-stat">
+                <div class="dynasty-stat-value">${dynasty.character_count}</div>
+                <div class="dynasty-stat-label">位人物</div>
+              </div>
+              <div class="dynasty-stat">
+                <div class="dynasty-stat-value">${dynasty.question_count}</div>
+                <div class="dynasty-stat-label">道题目</div>
+              </div>
+              <div class="dynasty-stat">
+                <div class="dynasty-stat-value">${dynasty.estimated_minutes}</div>
+                <div class="dynasty-stat-label">分钟</div>
+              </div>
+            </div>
+            <p class="dynasty-card-desc">${dynasty.description}</p>
+            <button class="dynasty-card-btn">进入测试</button>
+          </div>
+        </article>
+      `).join('');
+
+      document.querySelectorAll('.dynasty-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const dynastyId = card.dataset.dynastyId;
+          window.location.href = `/dynasty/${dynastyId}/`;
+        });
+      });
+    }
+
+    loadDynasties();
+  </script>
+</body>
+</html>

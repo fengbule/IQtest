@@ -227,3 +227,101 @@ class PersonalityAttemptListOut(BaseModel):
     page_size: int
     total: int
     items: list[PersonalityAttemptSummaryOut]
+
+
+# Dynasty-based Matching Schemas
+
+class DynastyInfoOut(BaseModel):
+    id: str
+    name: str
+    subtitle: str
+    theme_color: str
+    bg_gradient: str
+    icon: str
+    character_count: int
+    question_count: int
+    estimated_minutes: int
+    description: str
+
+
+class DynastyListOut(BaseModel):
+    dynasties: list[DynastyInfoOut]
+
+
+class DynastyQuestionOptionOut(BaseModel):
+    id: str
+    text: str
+
+
+class DynastyQuestionOut(BaseModel):
+    id: str
+    text: str
+    options: list[DynastyQuestionOptionOut]
+
+
+class DynastyStartOut(BaseModel):
+    attempt_id: int
+    dynasty_id: str
+    dynasty_name: str
+    started_at: str
+    questions: list[DynastyQuestionOut]
+    note: str
+
+
+class DynastyAnswerIn(BaseModel):
+    question_id: str
+    selected_option_id: Literal["A", "B", "C", "D"]
+
+
+class DynastySubmitIn(BaseModel):
+    answers: list[DynastyAnswerIn]
+    duration_seconds: int = Field(ge=0, le=1200)
+
+
+class DynastyMatchOut(BaseModel):
+    character_id: str
+    name: str
+    dynasty: str
+    title: str
+    role_label: str
+    summary: str
+    description: str
+    similarity: float
+    prototype_score: float
+    cosine_similarity: float
+    tags: list[str]
+    similarities: list[str] = Field(default_factory=list, description="与该人物的相似点")
+    differences: list[str] = Field(default_factory=list, description="与该人物的差异点")
+
+
+class DynastyResultOut(BaseModel):
+    attempt_id: int
+    dynasty_id: str
+    dynasty_name: str
+    duration_seconds: int
+    submitted_at: str | None
+    dominant_prototype_id: str
+    dominant_prototype_name: str
+    dominant_prototype_score: float
+    top_match: DynastyMatchOut
+    second_match: DynastyMatchOut
+    third_match: DynastyMatchOut
+    summary: str
+
+
+class DynastyAttemptSummaryOut(BaseModel):
+    attempt_id: int
+    dynasty_id: str
+    dynasty_name: str
+    nickname: str
+    submitted_at: str | None
+    duration_seconds: int
+    top_match_name: str
+    top_match_similarity: float
+
+
+class DynastyAttemptListOut(BaseModel):
+    page: int
+    page_size: int
+    total: int
+    items: list[DynastyAttemptSummaryOut]

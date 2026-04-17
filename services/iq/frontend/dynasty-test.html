@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>历史朝代人物匹配 - 测评</title>
+  <link rel="stylesheet" href="/iq/styles.css?v=20260415-5" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    .dynasty-test-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .dynasty-test-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 30px 20px;
+      border-radius: 12px;
+      color: white;
+    }
+
+    .dynasty-test-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .dynasty-test-header p {
+      font-size: 1rem;
+      opacity: 0.95;
+    }
+
+    .welcome-section {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .welcome-title {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      color: #1f2937;
+    }
+
+    .welcome-subtitle {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    .welcome-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .welcome-feature {
+      background: #f3f4f6;
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .welcome-feature-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .welcome-feature-label {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .welcome-desc {
+      background: #fef3c7;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      color: #92400e;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .notice-badge {
+      background: #f0fdf4;
+      border-left: 4px solid var(--color-primary);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .notice-badge strong {
+      color: #059669;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      padding: 14px 32px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .button.primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .button.primary:hover {
+      background: var(--color-secondary);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+    }
+
+    .button.secondary {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .button.secondary:hover {
+      background: #d1d5db;
+    }
+
+    .question-item {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      border-left: 4px solid var(--color-primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .question-item:hover {
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.12);
+    }
+
+    .question-item.answered {
+      border-left-color: var(--color-primary);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.02), rgba(16, 185, 129, 0.05));
+    }
+
+    .question-number {
+      display: inline-block;
+      background: var(--color-primary);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 32px;
+      font-weight: bold;
+      margin-right: 12px;
+      font-size: 0.9rem;
+    }
+
+    .question-text {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 18px;
+      line-height: 1.5;
+      color: #1f2937;
+    }
+
+    .option-item {
+      margin-bottom: 10px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      padding: 14px 16px;
+      background: #f9fafb;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option-label:hover {
+      border-color: var(--color-primary);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .option-input {
+      margin-right: 12px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .option-text {
+      font-size: 0.95rem;
+      color: #374151;
+      line-height: 1.4;
+    }
+
+    .option-item.selected .option-label {
+      border-color: var(--color-primary);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .option-item.selected .option-text {
+      color: #059669;
+      font-weight: 500;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    .test-footer {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      justify-content: center;
+    }
+
+    .btn-back {
+      background: #6b7280;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-back:hover {
+      background: #4b5563;
+    }
+
+    .btn-submit {
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      padding: 12px 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: var(--color-secondary);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .result-section {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .result-hero {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      color: white;
+      padding: 40px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .result-hero .eyebrow {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .result-hero h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .result-hero .lead {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+
+    .result-card {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .result-card h3 {
+      font-size: 1.1rem;
+      color: #1f2937;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f3f4f6;
+    }
+
+    .match-item {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      background: #f9fafb;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .match-rank {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+
+    .match-rank.gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .match-rank.silver { background: linear-gradient(135deg, #9ca3af, #6b7280); }
+    .match-rank.bronze { background: linear-gradient(135deg, #d97706, #b45309); }
+
+    .match-info {
+      flex: 1;
+    }
+
+    .match-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .match-title {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .match-similarity {
+      text-align: right;
+    }
+
+    .match-similarity-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .match-similarity-label {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .similarity-detail {
+      background: #f3f4f6;
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    .similarity-detail p {
+      font-size: 0.95rem;
+      color: #374151;
+      line-height: 1.6;
+    }
+
+    .result-summary {
+      background: #fef3c7;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 16px;
+      color: #92400e;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .result-summary strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #b45309;
+    }
+
+    .explore-section {
+      margin-top: 30px;
+    }
+
+    .explore-title {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .explore-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .explore-card {
+      background: #f3f4f6;
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+      text-decoration: none;
+      color: #374151;
+      transition: all 0.2s ease;
+    }
+
+    .explore-card:hover {
+      background: #e5e7eb;
+    }
+
+    .explore-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+
+    .explore-card-name {
+      font-weight: 600;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .dynasty-test-container {
+        padding: 16px 12px;
+      }
+
+      .welcome-section {
+        padding: 24px 16px;
+      }
+
+      .welcome-title {
+        font-size: 1.4rem;
+      }
+
+      .question-item {
+        padding: 18px 14px;
+      }
+
+      .question-text {
+        font-size: 1rem;
+      }
+
+      .test-footer {
+        flex-direction: column;
+      }
+
+      .btn-back, .btn-submit {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="ambient ambient-left" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.03));"></div>
+    <div class="ambient ambient-right" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.03), rgba(16, 185, 129, 0.08));"></div>
+
+    <main class="container dynasty-test-container">
+      <a href="/dynasty-select.html" class="portal-back" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:white;color:#1f2937;border-radius:8px;text-decoration:none;font-weight:500;margin-bottom:20px;">
+        <span>&#8592;</span> 选择其他朝代
+      </a>
+
+      <!-- 欢迎界面 -->
+      <section id="welcome-section" class="welcome-section">
+        <div id="dynasty-info"></div>
+
+        <div class="notice-badge">
+          <strong>测评说明</strong>
+          <p>请根据自己的真实情况回答以下问题。答案没有对错之分，只需选择最接近你真实想法的选项。</p>
+        </div>
+
+        <div class="actions">
+          <button id="start-btn" class="button primary">开始测评</button>
+        </div>
+      </section>
+
+      <!-- 答题界面 -->
+      <section id="test-section" class="hidden">
+        <div id="dynasty-test-header" class="dynasty-test-header">
+          <h1>历史人物风格测评</h1>
+          <p>请选择最符合你想法的选项</p>
+        </div>
+
+        <div class="progress-text">
+          <span id="progress-count">已答 0/20</span>
+        </div>
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <div class="test-footer">
+          <button id="back-btn" class="btn-back">返回</button>
+          <button id="submit-btn" class="btn-submit" disabled>提交答卷</button>
+        </div>
+      </section>
+
+      <!-- 结果界面 -->
+      <section id="result-section" class="result-section hidden"></section>
+    </main>
+  </div>
+
+  <script>
+    const API_BASE = '/api';
+
+    function getDynastyIdFromUrl() {
+      const path = window.location.pathname;
+      const match = path.match(/\/dynasty\/([^/]+)\//);
+      return match ? match[1] : null;
+    }
+
+    let dynastyId = getDynastyIdFromUrl();
+    let dynastyInfo = null;
+    let allQuestions = [];
+    let answers = {};
+    let currentAttemptId = null;
+    const startTime = Date.now();
+
+    const welcomeSection = document.getElementById('welcome-section');
+    const testSection = document.getElementById('test-section');
+    const resultSection = document.getElementById('result-section');
+    const startBtn = document.getElementById('start-btn');
+    const backBtn = document.getElementById('back-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const questionsContainer = document.getElementById('questions-container');
+
+    async function loadDynastyInfo() {
+      if (!dynastyId) {
+        window.location.href = '/dynasty-select.html';
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/dynasty/${dynastyId}`);
+        if (!response.ok) throw new Error('Failed to load dynasty');
+        const data = await response.json();
+        dynastyInfo = data.dynasty;
+
+        document.title = `历史朝代人物匹配 - ${dynastyInfo.name}`;
+
+        const header = document.getElementById('dynasty-test-header');
+        header.style.background = dynastyInfo.bg_gradient;
+
+        document.getElementById('dynasty-info').innerHTML = `
+          <h2 class="welcome-title">${dynastyInfo.icon} ${dynastyInfo.name}</h2>
+          <p class="welcome-subtitle">${dynastyInfo.subtitle}</p>
+          <div class="welcome-features">
+            <div class="welcome-feature">
+              <div class="welcome-feature-value">${dynastyInfo.character_count}</div>
+              <div class="welcome-feature-label">位历史人物</div>
+            </div>
+            <div class="welcome-feature">
+              <div class="welcome-feature-value">${dynastyInfo.question_count}</div>
+              <div class="welcome-feature-label">道测评题</div>
+            </div>
+            <div class="welcome-feature">
+              <div class="welcome-feature-value">${dynastyInfo.estimated_minutes}</div>
+              <div class="welcome-feature-label">分钟</div>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        console.error('Error loading dynasty:', error);
+        alert('加载失败，请刷新页面重试');
+      }
+    }
+
+    async function startTest() {
+      try {
+        const response = await fetch(`${API_BASE}/dynasty/${dynastyId}/attempts`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({}),
+        });
+
+        if (!response.ok) throw new Error('Failed to start attempt');
+        const data = await response.json();
+
+        currentAttemptId = data.attempt_id;
+        allQuestions = data.questions;
+        answers = {};
+
+        renderQuestions();
+        welcomeSection.classList.add('hidden');
+        testSection.classList.remove('hidden');
+      } catch (error) {
+        console.error('Error starting test:', error);
+        alert('启动测评失败，请重试');
+      }
+    }
+
+    function renderQuestions() {
+      questionsContainer.innerHTML = '';
+
+      allQuestions.forEach((question, index) => {
+        const questionEl = document.createElement('div');
+        questionEl.className = 'question-item';
+        questionEl.id = `question-${question.id}`;
+
+        let optionsHtml = question.options.map(opt => `
+          <div class="option-item" data-option-id="${opt.id}">
+            <label class="option-label">
+              <input type="radio" name="question-${question.id}" value="${opt.id}" class="option-input" />
+              <span class="option-text">${opt.text}</span>
+            </label>
+          </div>
+        `).join('');
+
+        questionEl.innerHTML = `
+          <div style="display: flex; align-items: flex-start; margin-bottom: 16px;">
+            <span class="question-number">${index + 1}</span>
+            <div class="question-text">${question.text}</div>
+          </div>
+          ${optionsHtml}
+        `;
+
+        questionsContainer.appendChild(questionEl);
+
+        questionEl.querySelectorAll('.option-item').forEach(optEl => {
+          optEl.addEventListener('click', () => {
+            const optionId = optEl.dataset.optionId;
+            handleAnswer(question.id, optionId);
+
+            questionEl.querySelectorAll('.option-item').forEach(o => o.classList.remove('selected'));
+            optEl.classList.add('selected');
+            optEl.querySelector('.option-input').checked = true;
+          });
+        });
+      });
+    }
+
+    function handleAnswer(questionId, optionId) {
+      answers[questionId] = optionId;
+      updateProgress();
+      checkAllAnswered();
+    }
+
+    function updateProgress() {
+      const answered = Object.keys(answers).length;
+      const total = allQuestions.length;
+      document.getElementById('progress-count').textContent = `已答 ${answered}/${total}`;
+      document.getElementById('progress-fill').style.width = `${(answered / total) * 100}%`;
+    }
+
+    function checkAllAnswered() {
+      const answered = Object.keys(answers).length;
+      const total = allQuestions.length;
+      submitBtn.disabled = answered < total;
+    }
+
+    backBtn.addEventListener('click', () => {
+      if (confirm('确定要返回？已填写的答案将丢失')) {
+        answers = {};
+        testSection.classList.add('hidden');
+        welcomeSection.classList.remove('hidden');
+      }
+    });
+
+    submitBtn.addEventListener('click', async () => {
+      const durationSeconds = Math.round((Date.now() - startTime) / 1000);
+
+      const payload = {
+        answers: Object.entries(answers).map(([question_id, selected_option_id]) => ({
+          question_id,
+          selected_option_id,
+        })),
+        duration_seconds: durationSeconds,
+      };
+
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '提交中...';
+
+        const response = await fetch(`${API_BASE}/dynasty/${dynastyId}/attempts/${currentAttemptId}/submit`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error('Failed to submit');
+        const result = await response.json();
+
+        displayResult(result);
+        testSection.classList.add('hidden');
+        resultSection.classList.remove('hidden');
+      } catch (error) {
+        console.error('Error submitting:', error);
+        alert('提交失败，请重试');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '提交答卷';
+      }
+    });
+
+    function displayResult(result) {
+      const rankColors = ['gold', 'silver', 'bronze'];
+      const matches = [result.top_match, result.second_match, result.third_match];
+
+      const topMatch = result.top_match;
+      const hasSimilarities = topMatch.similarities && topMatch.similarities.length > 0;
+      const hasDifferences = topMatch.differences && topMatch.differences.length > 0;
+
+      resultSection.innerHTML = `
+        <div class="result-hero" style="background: ${dynastyInfo.bg_gradient};">
+          <p class="eyebrow">${dynastyInfo.name} · 历史人物风格匹配</p>
+          <h2>与你的风格最接近的历史人物</h2>
+          <p class="lead">${topMatch.name}（${topMatch.role_label}）</p>
+        </div>
+
+        <div class="result-card">
+          <h3>性格特征标签</h3>
+          <div class="tag-list">
+            ${topMatch.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+          </div>
+        </div>
+
+        <div class="result-card">
+          <h3>Top 3 匹配人物</h3>
+          ${matches.map((match, index) => `
+            <div class="match-item">
+              <div class="match-rank ${rankColors[index]}">${index + 1}</div>
+              <div class="match-info">
+                <div class="match-name">${match.name}</div>
+                <div class="match-title">${match.title} · ${match.role_label}</div>
+              </div>
+              <div class="match-similarity">
+                <div class="match-similarity-value">${match.similarity}%</div>
+                <div class="match-similarity-label">相似度</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        ${hasSimilarities ? `
+        <div class="result-card">
+          <h3>与 ${topMatch.name} 的相似之处</h3>
+          <div class="similarity-detail">
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+              ${topMatch.similarities.map(s => `<li style="margin-bottom: 8px;">${s}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+        ` : ''}
+
+        ${hasDifferences ? `
+        <div class="result-card">
+          <h3>与 ${topMatch.name} 的不同之处</h3>
+          <div class="similarity-detail" style="background: #fef3c7;">
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+              ${topMatch.differences.map(d => `<li style="margin-bottom: 8px;">${d}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+        ` : ''}
+
+        <div class="result-card">
+          <h3>人格画像解读</h3>
+          <div class="similarity-detail">
+            <p>${topMatch.summary}</p>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <h3>人物简介</h3>
+          <p style="color: #555; line-height: 1.7;">${topMatch.description}</p>
+        </div>
+
+        <div class="result-summary">
+          <strong>测评小结</strong>
+          ${result.summary}
+        </div>
+
+        <div class="explore-section">
+          <p class="explore-title">探索其他朝代</p>
+          <div class="explore-cards">
+            <a href="/dynasty-select.html" class="explore-card">
+              <div class="explore-card-icon">🏛️</div>
+              <div class="explore-card-name">选择其他朝代</div>
+            </a>
+            <a href="/portal.html" class="explore-card">
+              <div class="explore-card-icon">🏠</div>
+              <div class="explore-card-name">返回首页</div>
+            </a>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px;">
+          <button id="save-image-btn" class="button secondary" style="padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; background: #e5e7eb; color: #374151;">
+            📥 保存结果
+          </button>
+          <button id="restart-btn" class="button secondary" style="padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; background: #e5e7eb; color: #374151;">
+            🔄 重新测试
+          </button>
+        </div>
+      `;
+
+      document.getElementById('restart-btn').addEventListener('click', () => {
+        answers = {};
+        currentAttemptId = null;
+        resultSection.classList.add('hidden');
+        welcomeSection.classList.remove('hidden');
+        updateProgress();
+        checkAllAnswered();
+        submitBtn.textContent = '提交答卷';
+      });
+
+      document.getElementById('save-image-btn').addEventListener('click', saveResultImage);
+    }
+
+    async function saveResultImage() {
+      const btn = document.getElementById('save-image-btn');
+      if (!btn) return;
+
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = '⏳ 生成中...';
+
+      try {
+        const resultSectionEl = document.getElementById('result-section');
+
+        const canvas = await html2canvas(resultSectionEl, {
+          backgroundColor: '#ffffff',
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          allowTaint: true
+        });
+
+        const link = document.createElement('a');
+        const timestamp = new Date().toISOString().slice(0, 10);
+        const dynastyName = dynastyInfo ? dynastyInfo.name : '测评';
+        link.download = `${dynastyName}人物匹配结果-${timestamp}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+        btn.textContent = '✅ 已保存';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 2000);
+      } catch (error) {
+        console.error('Failed to save image:', error);
+        btn.textContent = '❌ 保存失败';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 2000);
+      }
+    }
+
+    startBtn.addEventListener('click', startTest);
+
+    loadDynastyInfo();
+  </script>
+</body>
+</html>

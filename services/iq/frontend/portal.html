@@ -121,6 +121,15 @@
       background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(139, 92, 246, 0.02));
     }
 
+    .test-card.dynasty {
+      border-top-color: #1e3a5f;
+    }
+
+    .test-card.dynasty:hover {
+      border-top-color: #1e3a5f;
+      background: linear-gradient(135deg, rgba(30, 58, 95, 0.05), rgba(30, 58, 95, 0.02));
+    }
+
     .card-icon {
       font-size: 3rem;
       margin-bottom: 15px;
@@ -215,6 +224,16 @@
       box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
     }
 
+    .card-button.dynasty {
+      background: #1e3a5f;
+      color: white;
+    }
+
+    .card-button.dynasty:hover {
+      background: #0f2744;
+      box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+    }
+
     .portal-footer {
       margin-top: 50px;
       text-align: center;
@@ -277,6 +296,20 @@
     </div>
 
     <div class="portal-grid">
+      <!-- 历史朝代人物匹配卡片 -->
+      <a href="/dynasty-select.html" class="test-card dynasty">
+        <div class="card-icon">⚔️</div>
+        <h2 class="card-title">历史朝代人物匹配</h2>
+        <p class="card-description">选择一个你感兴趣的朝代，看看你在那个时代最像哪位历史人物。全新改版，分朝代专题测评！</p>
+        <ul class="card-features">
+          <li>6大朝代专题</li>
+          <li>12-16位历史人物/朝代</li>
+          <li>20道情境题</li>
+          <li>约3-4分钟</li>
+        </ul>
+        <button class="card-button dynasty">进入测试</button>
+      </a>
+
       <!-- IQ 测试卡片 -->
       <a href="/iq/" class="test-card iq">
         <div class="card-icon">🧠</div>

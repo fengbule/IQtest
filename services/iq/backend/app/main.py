@@ -17,7 +17,7 @@ from sqlalchemy.orm import Session
 from .database import Base, SessionLocal, engine, get_db
 from .dimension_mapping import normalize_dimension
 from .migrations import apply_lightweight_migrations
-from .models import AdminUser, AttemptAnswer, Question, TestAttempt, PersonalityQuestion, PersonalityAttempt, PersonalityAnswer
+from .models import AdminUser, AttemptAnswer, Question, TestAttempt, PersonalityQuestion, PersonalityAttempt, PersonalityAnswer, DynastyAttempt, DynastyAnswer
 from .question_selector import DIMENSIONS, QUESTION_PLAN, TIME_LIMIT_SECONDS, sample_questions
 from .schemas import (
     AdminLoginIn,
@@ -51,6 +51,24 @@ from .fun_quiz_seed import seed_fun_quizzes
 from .personality_scorer import calculate_personality_scores, find_top_matches, get_dimension_interpretation, generate_summary
 from .personality_data import HISTORICAL_FIGURES
 from .fun_quiz_routes import router as fun_quiz_router
+from .dynasty_data import (
+    DYNASTIES,
+    get_dynasty_config,
+    get_questions_for_dynasty,
+)
+from .dynasty_matcher import calculate_result, generate_result_summary, get_prototype_name
+from .schemas import (
+    DynastyListOut,
+    DynastyInfoOut,
+    DynastyStartOut,
+    DynastyQuestionOut,
+    DynastyQuestionOptionOut,
+    DynastySubmitIn,
+    DynastyResultOut,
+    DynastyMatchOut,
+    DynastyAttemptSummaryOut,
+    DynastyAttemptListOut,
+)
 
 
 VALIDITY_LABELS = {
@@ -764,6 +782,306 @@ def list_personality_attempts(
     )
 
 
+# ===== Dynasty-based Historical Figure Matching API Routes =====
+
+@app.get("/api/dynasty", response_model=DynastyListOut)
+def list_dynasties():
+    """List all available dynasties"""
+    dynasties = [
+        DynastyInfoOut(
+            id=d["id"],
+            name=d["name"],
+            subtitle=d["subtitle"],
+            theme_color=d["theme_color"],
+            bg_gradient=d["bg_gradient"],
+            icon=d["icon"],
+            character_count=d["character_count"],
+            question_count=d["question_count"],
+            estimated_minutes=d["estimated_minutes"],
+            description=d["description"],
+        )
+        for d in DYNASTIES
+    ]
+    return DynastyListOut(dynasties=dynasties)
+
+
+@app.get("/api/dynasty/{dynasty_id}")
+def get_dynasty(dynasty_id: str):
+    """Get dynasty details"""
+    dynasty = get_dynasty_config(dynasty_id)
+    if not dynasty:
+        raise HTTPException(status_code=404, detail="dynasty not found")
+    
+    questions = get_questions_for_dynasty(dynasty_id)
+    question_payload = [
+        DynastyQuestionOut(
+            id=q["id"],
+            text=q["text"],
+            options=[
+                DynastyQuestionOptionOut(id=opt["id"], text=opt["text"])
+                for opt in q["options"]
+            ],
+        )
+        for q in questions
+    ]
+    
+    return {
+        "dynasty": DynastyInfoOut(
+            id=dynasty["id"],
+            name=dynasty["name"],
+            subtitle=dynasty["subtitle"],
+            theme_color=dynasty["theme_color"],
+            bg_gradient=dynasty["bg_gradient"],
+            icon=dynasty["icon"],
+            character_count=dynasty["character_count"],
+            question_count=dynasty["question_count"],
+            estimated_minutes=dynasty["estimated_minutes"],
+            description=dynasty["description"],
+        ),
+        "questions": question_payload,
+    }
+
+
+@app.post("/api/dynasty/{dynasty_id}/attempts", response_model=DynastyStartOut)
+def start_dynasty_attempt(dynasty_id: str, request: Request, db: Session = Depends(get_db)):
+    """Start a new dynasty matching test"""
+    dynasty = get_dynasty_config(dynasty_id)
+    if not dynasty:
+        raise HTTPException(status_code=404, detail="dynasty not found")
+    
+    # Create new attempt
+    attempt = DynastyAttempt(
+        dynasty_id=dynasty_id,
+        client_ip=request.client.host if request.client else None,
+        user_agent=request.headers.get("user-agent"),
+    )
+    db.add(attempt)
+    db.flush()
+    
+    # Get questions
+    questions = get_questions_for_dynasty(dynasty_id)
+    question_payload = [
+        DynastyQuestionOut(
+            id=q["id"],
+            text=q["text"],
+            options=[
+                DynastyQuestionOptionOut(id=opt["id"], text=opt["text"])
+                for opt in q["options"]
+            ],
+        )
+        for q in questions
+    ]
+    
+    db.commit()
+    
+    return DynastyStartOut(
+        attempt_id=attempt.id,
+        dynasty_id=dynasty_id,
+        dynasty_name=dynasty["name"],
+        started_at=attempt.started_at.isoformat(),
+        questions=question_payload,
+        note=f"请根据自己的真实情况回答以下{dynasty['question_count']}道问题。答案没有对错之分，只需选择最接近你真实想法的选项。",
+    )
+
+
+@app.post("/api/dynasty/{dynasty_id}/attempts/{attempt_id}/submit", response_model=DynastyResultOut)
+def submit_dynasty_attempt(
+    dynasty_id: str,
+    attempt_id: int,
+    payload: DynastySubmitIn,
+    db: Session = Depends(get_db)
+):
+    """Submit dynasty test and get results"""
+    dynasty = get_dynasty_config(dynasty_id)
+    if not dynasty:
+        raise HTTPException(status_code=404, detail="dynasty not found")
+    
+    attempt = db.query(DynastyAttempt).filter(
+        DynastyAttempt.id == attempt_id,
+        DynastyAttempt.dynasty_id == dynasty_id
+    ).first()
+    if not attempt:
+        raise HTTPException(status_code=404, detail="attempt not found")
+    if attempt.submitted_at is not None:
+        raise HTTPException(status_code=400, detail="attempt already submitted")
+    
+    # Get questions
+    questions = get_questions_for_dynasty(dynasty_id)
+    question_map = {q["id"]: q for q in questions}
+    
+    # Validate answers
+    if len(payload.answers) != len(questions):
+        raise HTTPException(
+            status_code=400,
+            detail=f"incomplete answers: expected {len(questions)}, got {len(payload.answers)}"
+        )
+    
+    submitted_question_ids = {a.question_id for a in payload.answers}
+    all_question_ids = set(question_map.keys())
+    missing = all_question_ids - submitted_question_ids
+    if missing:
+        raise HTTPException(
+            status_code=400,
+            detail=f"missing answers for question IDs: {sorted(missing)}"
+        )
+    
+    try:
+        # Process answers - build answer list with prototype_scores and trait_delta
+        processed_answers = []
+        for answer in payload.answers:
+            question = question_map.get(answer.question_id)
+            if not question:
+                continue
+            
+            # Find the selected option
+            selected_option = None
+            for opt in question["options"]:
+                if opt["id"] == answer.selected_option_id:
+                    selected_option = opt
+                    break
+            
+            if selected_option:
+                processed_answers.append({
+                    "prototype_scores": selected_option.get("prototype_scores", {}),
+                    "trait_delta": selected_option.get("trait_delta", {}),
+                })
+            
+            # Save answer
+            da = DynastyAnswer(
+                attempt_id=attempt.id,
+                question_id=answer.question_id,
+                selected_option_id=answer.selected_option_id,
+            )
+            db.add(da)
+        
+        attempt.submitted_at = datetime.utcnow()
+        attempt.duration_seconds = payload.duration_seconds
+        
+        # Calculate results
+        top_matches = calculate_result(processed_answers, dynasty_id)
+        
+        # Save results
+        if top_matches:
+            attempt.top_match_id = top_matches[0]["character_id"]
+            attempt.top_match_similarity = top_matches[0]["similarity"]
+            attempt.dominant_prototype_id = top_matches[0].get("role_label", "").split("型")[0] if top_matches[0].get("role_label") else ""
+            attempt.dominant_prototype_score = top_matches[0].get("prototype_score", 0)
+        if len(top_matches) > 1:
+            attempt.second_match_id = top_matches[1]["character_id"]
+            attempt.second_match_similarity = top_matches[1]["similarity"]
+        if len(top_matches) > 2:
+            attempt.third_match_id = top_matches[2]["character_id"]
+            attempt.third_match_similarity = top_matches[2]["similarity"]
+        
+        attempt.summary = generate_result_summary(top_matches, dynasty["name"])
+        
+        db.commit()
+    except Exception as exc:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"failed to submit: {str(exc)}") from exc
+    
+    # Build response
+    def build_match_out(match_data: dict) -> DynastyMatchOut:
+        return DynastyMatchOut(
+            character_id=match_data["character_id"],
+            name=match_data["name"],
+            dynasty=match_data["dynasty"],
+            title=match_data["title"],
+            role_label=match_data["role_label"],
+            summary=match_data["summary"],
+            description=match_data["description"],
+            similarity=match_data["similarity"],
+            prototype_score=match_data["prototype_score"],
+            cosine_similarity=match_data["cosine_similarity"],
+            tags=match_data["tags"],
+        )
+    
+    # Ensure we have at least 3 matches
+    while len(top_matches) < 3:
+        top_matches.append(top_matches[-1] if top_matches else {
+            "character_id": "",
+            "name": "未知",
+            "dynasty": dynasty_id,
+            "title": "",
+            "role_label": "",
+            "summary": "",
+            "description": "",
+            "similarity": 0,
+            "prototype_score": 0,
+            "cosine_similarity": 0,
+            "tags": [],
+        })
+    
+    # Determine dominant prototype
+    dominant_proto_id = attempt.dominant_prototype_id or "leader"
+    dominant_proto_name = get_prototype_name(dominant_proto_id)
+    
+    return DynastyResultOut(
+        attempt_id=attempt.id,
+        dynasty_id=dynasty_id,
+        dynasty_name=dynasty["name"],
+        duration_seconds=attempt.duration_seconds,
+        submitted_at=attempt.submitted_at.isoformat() if attempt.submitted_at else None,
+        dominant_prototype_id=dominant_proto_id,
+        dominant_prototype_name=dominant_proto_name,
+        dominant_prototype_score=attempt.dominant_prototype_score,
+        top_match=build_match_out(top_matches[0]),
+        second_match=build_match_out(top_matches[1]),
+        third_match=build_match_out(top_matches[2]),
+        summary=attempt.summary,
+    )
+
+
+@app.get("/api/dynasty/attempts", response_model=DynastyAttemptListOut)
+def list_dynasty_attempts(
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
+    dynasty_id: str | None = None,
+    _: str = Depends(get_current_admin),
+    db: Session = Depends(get_db)
+):
+    """List all dynasty test attempts (admin only)"""
+    query = db.query(DynastyAttempt).filter(DynastyAttempt.submitted_at.isnot(None))
+    
+    if dynasty_id:
+        query = query.filter(DynastyAttempt.dynasty_id == dynasty_id)
+    
+    total = query.count()
+    offset = (page - 1) * page_size
+    attempts = query.order_by(DynastyAttempt.submitted_at.desc()).offset(offset).limit(page_size).all()
+    
+    items = []
+    for attempt in attempts:
+        dynasty = get_dynasty_config(attempt.dynasty_id)
+        dynasty_name = dynasty["name"] if dynasty else attempt.dynasty_id
+        
+        top_figure_name = "未知"
+        if attempt.top_match_id:
+            from .dynasty_data import HISTORICAL_FIGURES
+            for fig in HISTORICAL_FIGURES:
+                if fig["id"] == attempt.top_match_id:
+                    top_figure_name = fig["name"]
+                    break
+        
+        items.append(DynastyAttemptSummaryOut(
+            attempt_id=attempt.id,
+            dynasty_id=attempt.dynasty_id,
+            dynasty_name=dynasty_name,
+            nickname=attempt.nickname or "匿名用户",
+            submitted_at=attempt.submitted_at.isoformat() if attempt.submitted_at else None,
+            duration_seconds=attempt.duration_seconds,
+            top_match_name=top_figure_name,
+            top_match_similarity=attempt.top_match_similarity,
+        ))
+    
+    return DynastyAttemptListOut(
+        page=page,
+        page_size=page_size,
+        total=total,
+        items=items,
+    )
+
+
 # Mount frontend files (must be after all API routes)
 @app.get("/personality", include_in_schema=False)
 def personality_page():
@@ -803,3 +1121,12 @@ def fun_play_page():
 
 app.mount("/iq", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="iq-frontend")
 app.mount("", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="root-frontend")
+
+# Dynasty Selection Page
+@app.get("/dynasty-select.html", include_in_schema=False)
+def dynasty_select_page():
+    return FileResponse(Path(FRONTEND_DIR) / "dynasty-select.html", media_type="text/html")
+
+@app.get("/dynasty/{dynasty_id}/", include_in_schema=False)
+def dynasty_test_page(dynasty_id: str):
+    return FileResponse(Path(FRONTEND_DIR) / "dynasty-test.html", media_type="text/html")

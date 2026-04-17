@@ -155,6 +155,51 @@ class PersonalityAnswer(Base):
     attempt: Mapped[PersonalityAttempt] = relationship("PersonalityAttempt", back_populates="answers")
 
 
+class DynastyAttempt(Base):
+    __tablename__ = "dynasty_attempts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    dynasty_id: Mapped[str] = mapped_column(String(50), nullable=False)
+    nickname: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    email: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    started_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    submitted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    duration_seconds: Mapped[int] = mapped_column(Integer, default=0)
+    
+    # Top 3 匹配结果
+    top_match_id: Mapped[str] = mapped_column(String(50), nullable=True)
+    top_match_similarity: Mapped[float] = mapped_column(Float, default=0.0)
+    second_match_id: Mapped[str] = mapped_column(String(50), nullable=True)
+    second_match_similarity: Mapped[float] = mapped_column(Float, default=0.0)
+    third_match_id: Mapped[str] = mapped_column(String(50), nullable=True)
+    third_match_similarity: Mapped[float] = mapped_column(Float, default=0.0)
+    
+    # 原型匹配结果
+    dominant_prototype_id: Mapped[str] = mapped_column(String(50), nullable=True)
+    dominant_prototype_score: Mapped[float] = mapped_column(Float, default=0.0)
+    
+    summary: Mapped[str] = mapped_column(Text, default="")
+    client_ip: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    user_agent: Mapped[str | None] = mapped_column(String(255), nullable=True)
+
+    answers: Mapped[list["DynastyAnswer"]] = relationship(
+        "DynastyAnswer",
+        back_populates="attempt",
+        cascade="all, delete-orphan",
+    )
+
+
+class DynastyAnswer(Base):
+    __tablename__ = "dynasty_answers"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    attempt_id: Mapped[int] = mapped_column(ForeignKey("dynasty_attempts.id"), nullable=False)
+    question_id: Mapped[str] = mapped_column(String(20), nullable=False)  # e.g., "tk_q01"
+    selected_option_id: Mapped[str] = mapped_column(String(1), nullable=False)  # "A", "B", "C", "D"
+
+    attempt: Mapped[DynastyAttempt] = relationship("DynastyAttempt", back_populates="answers")
+
+
 class FunQuizDefinition(Base):
     __tablename__ = "fun_quiz_definitions"
 
