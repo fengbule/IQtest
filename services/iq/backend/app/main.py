@@ -993,7 +993,9 @@ def submit_dynasty_attempt(
             similarity=match_data["similarity"],
             prototype_score=match_data["prototype_score"],
             cosine_similarity=match_data["cosine_similarity"],
-            tags=match_data["tags"],
+            tags=match_data.get("tags", []),
+            similarities=match_data.get("similarities", []),
+            differences=match_data.get("differences", []),
         )
     
     # Ensure we have at least 3 matches
@@ -1010,6 +1012,8 @@ def submit_dynasty_attempt(
             "prototype_score": 0,
             "cosine_similarity": 0,
             "tags": [],
+            "similarities": [],
+            "differences": [],
         })
     
     # Determine dominant prototype
