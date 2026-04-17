@@ -88,33 +88,35 @@
 
     .likert-scale {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
       justify-content: space-between;
     }
 
     .likert-option {
       flex: 1;
-      min-width: 100px;
+      min-width: 60px;
     }
 
     .likert-label {
       display: block;
       text-align: center;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       color: #666;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-weight: 500;
+      line-height: 1.3;
     }
 
     .likert-input {
       width: 100%;
       aspect-ratio: 1;
+      max-height: 50px;
       border: 2px solid #ddd;
       border-radius: 8px;
       background: white;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: bold;
       transition: all 0.2s ease;
       color: #666;
@@ -129,6 +131,82 @@
       background: #10b981;
       color: white;
       border-color: #10b981;
+    }
+
+    @media (max-width: 600px) {
+      .personality-container {
+        padding: 16px 12px;
+      }
+
+      .personality-header {
+        padding: 20px 16px;
+      }
+
+      .personality-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .personality-header p {
+        font-size: 0.9rem;
+      }
+
+      .question-item {
+        padding: 18px 14px;
+      }
+
+      .question-text {
+        font-size: 0.95rem;
+      }
+
+      .likert-scale {
+        gap: 4px;
+      }
+
+      .likert-option {
+        min-width: 50px;
+      }
+
+      .likert-label {
+        font-size: 0.65rem;
+      }
+
+      .likert-input {
+        max-height: 44px;
+        font-size: 0.85rem;
+      }
+
+      .test-footer {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn-back,
+      .btn-submit {
+        width: 100%;
+      }
+
+      #welcome-section {
+        padding: 24px 16px;
+      }
+
+      .notice-badge {
+        padding: 12px;
+      }
+
+      .feature-grid {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .likert-label {
+        font-size: 0.6rem;
+      }
+
+      .likert-input {
+        max-height: 40px;
+        font-size: 0.8rem;
+      }
     }
 
     .progress-bar {

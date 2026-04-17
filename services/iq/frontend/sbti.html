@@ -673,12 +673,46 @@
     }
 
     @media (max-width: 600px) {
-      .shell { padding: 14px 12px 42px; }
-      .hero, .test-wrap, .result-wrap { padding: 16px; }
-      .hero h1 { font-size: 32px; }
-      .question-title { font-size: 15px; }
+      .shell { padding: 12px 10px 42px; }
+      .hero, .test-wrap, .result-wrap { padding: 14px; }
+      .hero h1 { font-size: 28px; }
+      .hero .sub { font-size: 14px; }
+      .question-title { font-size: 15px; line-height: 1.6; }
       .dim-grid,
       .score-grid { grid-template-columns: 1fr; }
+      .dim-pill .value { font-size: 18px; }
+      .score-item .v { font-size: 18px; }
+      .type-name { font-size: 28px; }
+      .type-subname { font-size: 13px; }
+      .result-actions { flex-direction: column; }
+      .result-actions > div { width: 100%; }
+      .result-actions button,
+      .result-actions .btn-primary,
+      .result-actions .btn-secondary { width: 100%; }
+      .btn-primary, .btn-secondary {
+        padding: 12px 16px;
+        font-size: 15px;
+      }
+      .actions-bottom { flex-direction: column; }
+      .actions-bottom > * { width: 100%; }
+      .option {
+        padding: 12px;
+      }
+      .option-code {
+        min-width: 18px;
+        font-size: 14px;
+      }
+      .topbar {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .progress {
+        width: 100%;
+        min-width: unset;
+      }
+      .progress-text {
+        font-size: 12px;
+      }
     }
 
     .author-info {

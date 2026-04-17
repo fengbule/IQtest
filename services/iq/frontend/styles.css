@@ -783,6 +783,20 @@ select:focus {
   .test-topbar {
     top: 8px;
     padding: 16px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .test-topbar h2 {
+    font-size: 1.2rem;
+  }
+
+  .test-topbar p {
+    font-size: 0.85rem;
+  }
+
+  .timer-box {
+    text-align: left;
   }
 
   .floating-timer {
@@ -801,6 +815,10 @@ select:focus {
     font-size: 1.05rem;
   }
 
+  .question-card {
+    padding: 16px;
+  }
+
   .option-grid,
   .metric-grid,
   .factor-grid,
@@ -809,5 +827,187 @@ select:focus {
   .form-grid,
   .filter-grid {
     grid-template-columns: 1fr;
+  }
+
+  .option-item {
+    grid-template-columns: 20px 28px 1fr;
+    gap: 10px;
+    padding: 14px;
+    min-height: auto;
+  }
+
+  .option-letter {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+  }
+
+  .hero-stat strong {
+    font-size: 1.25rem;
+  }
+
+  .metric strong {
+    font-size: 1.25rem;
+  }
+
+  .review-item {
+    padding: 14px;
+  }
+
+  .admin-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .admin-item-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .pager {
+    flex-wrap: wrap;
+  }
+
+  .section-head {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .result-hero {
+    flex-direction: column;
+  }
+
+  .result-badge-group {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 0 16px;
+    margin-top: 16px;
+    margin-bottom: 40px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 18px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  .lead {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .hero-tags {
+    gap: 8px;
+  }
+
+  .pill,
+  .report-tag,
+  .badge {
+    font-size: 0.78rem;
+    min-height: 30px;
+    padding: 0 10px;
+  }
+
+  .button {
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    border-radius: 14px;
+  }
+
+  .test-topbar {
+    padding: 14px;
+  }
+
+  .timer-box strong {
+    font-size: 1.6rem;
+  }
+
+  .floating-timer {
+    bottom: 12px;
+    right: 8px;
+    left: 8px;
+    padding: 12px 14px;
+  }
+
+  .floating-timer strong {
+    font-size: 1.5rem;
+  }
+
+  .floating-timer-label {
+    font-size: 0.7rem;
+  }
+
+  .question-prompt {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .option-item {
+    grid-template-columns: 18px 26px 1fr;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .option-letter {
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+  }
+
+  .option-item label {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .metric {
+    padding: 14px 16px;
+  }
+
+  .metric strong {
+    font-size: 1.1rem;
+  }
+
+  .feature-card {
+    padding: 14px 16px;
+  }
+
+  .notice-badge {
+    padding: 12px 14px;
+  }
+
+  .sticky-actions {
+    padding-bottom: 120px;
+  }
+
+  .admin-item {
+    padding: 14px 16px;
+  }
+
+  .review-item {
+    padding: 12px 14px;
+  }
+
+  .dimension-card {
+    padding: 14px 16px;
   }
 }
