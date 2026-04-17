@@ -201,14 +201,15 @@
     .option-label {
       display: flex;
       align-items: center;
-      padding: 18px 20px;
+      padding: 16px 18px;
       background: #ffffff;
       border: 2px solid #e5e7eb;
       border-radius: 14px;
       cursor: pointer;
       transition: all 0.2s ease;
-      min-height: 64px;
+      min-height: 60px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
     }
 
     .option-label:hover {
@@ -219,19 +220,22 @@
     }
 
     .option-input {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       accent-color: var(--color-primary);
       cursor: pointer;
       flex-shrink: 0;
-      margin-right: 16px;
+      margin-right: 14px;
     }
 
     .option-text {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: #374151;
-      line-height: 1.5;
+      line-height: 1.4;
       flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .option-item.selected .option-label {
