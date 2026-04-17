@@ -231,6 +231,61 @@ def submit_fun_quiz_attempt(
     )
 
 
+@router.get("/fun-quizzes/{slug}/attempts/{attempt_id}/result", response_model=FunQuizSubmitOut)
+def get_fun_quiz_attempt_result(
+    slug: str,
+    attempt_id: int,
+    db: Session = Depends(get_db)
+):
+    quiz = db.query(FunQuizDefinition).filter(
+        FunQuizDefinition.slug == slug,
+        FunQuizDefinition.is_active == True
+    ).first()
+
+    if not quiz:
+        raise HTTPException(status_code=404, detail="quiz not found")
+
+    attempt = db.query(FunQuizAttempt).filter(
+        FunQuizAttempt.id == attempt_id,
+        FunQuizAttempt.quiz_id == quiz.id
+    ).first()
+
+    if not attempt:
+        raise HTTPException(status_code=404, detail="attempt not found")
+
+    if attempt.submitted_at is None:
+        raise HTTPException(status_code=400, detail="attempt not submitted yet")
+
+    manifest = load_fun_quiz_manifest(slug)
+    if not manifest:
+        raise HTTPException(status_code=500, detail="quiz manifest not found")
+
+    scoring_result = {}
+    if attempt.score_payload_json:
+        try:
+            scoring_result = json.loads(attempt.score_payload_json)
+        except json.JSONDecodeError:
+            scoring_result = {}
+
+    result_cards = resolve_result_card(manifest, scoring_result)
+
+    dimension_breakdown = []
+    if manifest.get("scoring_mode") == "scorecard":
+        dimension_breakdown = build_dimension_breakdown(manifest, scoring_result.get("dimension_scores", {}))
+
+    return FunQuizSubmitOut(
+        attempt_id=attempt.id,
+        submitted_at=attempt.submitted_at.isoformat(),
+        duration_seconds=attempt.duration_seconds or 0,
+        quiz_slug=slug,
+        primary_result=result_cards.get("primary_result"),
+        secondary_result=result_cards.get("secondary_result"),
+        dimension_breakdown=dimension_breakdown,
+        score_payload=scoring_result,
+        disclaimer=quiz.disclaimer or "本测验仅供娱乐，请勿当真。",
+    )
+
+
 @router.get("/admin/fun-quizzes/attempts", response_model=FunQuizAttemptListOut)
 def list_fun_quiz_attempts(
     page: int = Query(1, ge=1),

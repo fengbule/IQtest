@@ -457,6 +457,175 @@
       to { transform: rotate(360deg); }
     }
 
+    .save-btn {
+      padding: 10px 16px;
+      background: #f3f4f6;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .save-btn:hover {
+      background: #e5e7eb;
+    }
+
+    .save-btn.saving {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      z-index: 1000;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.hidden {
+      display: none;
+    }
+
+    .modal-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .modal-message {
+      color: var(--color-text-light);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .modal-btn.cancel {
+      background: #f3f4f6;
+      color: var(--color-text);
+    }
+
+    .modal-btn.cancel:hover {
+      background: #e5e7eb;
+    }
+
+    .modal-btn.confirm {
+      background: #10b981;
+      color: white;
+    }
+
+    .modal-btn.confirm:hover {
+      opacity: 0.9;
+    }
+
+    .modal-btn.danger {
+      background: #ef4444;
+      color: white;
+    }
+
+    .modal-btn.danger:hover {
+      opacity: 0.9;
+    }
+
+    .modal-btn.secondary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .modal-btn.secondary:hover {
+      opacity: 0.9;
+    }
+
+    .resume-card {
+      background: var(--color-card);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .resume-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+
+    .resume-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .resume-message {
+      color: var(--color-text-light);
+      margin-bottom: 24px;
+    }
+
+    .resume-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
     .error-card {
       background: var(--color-card);
       border-radius: var(--radius);
@@ -593,6 +762,39 @@
       <p class="error-message">抱歉，找不到这个测验</p>
       <a href="/fun/" class="action-btn primary">返回测验中心</a>
     </div>
+
+    <div id="resume-state" class="resume-card hidden">
+      <div class="resume-icon">📝</div>
+      <h2 class="resume-title">继续上次作答</h2>
+      <p class="resume-message">你上次有未完成的测验，要继续还是重新开始？</p>
+      <div class="resume-buttons">
+        <button class="action-btn secondary" id="resume-btn">继续上次作答</button>
+        <button class="action-btn secondary" id="restart-btn" style="background: #f3f4f6; color: var(--color-text)">重新开始</button>
+      </div>
+    </div>
+
+    <div id="result-review-state" class="resume-card hidden">
+      <div class="resume-icon">📊</div>
+      <h2 class="resume-title">查看上次结果</h2>
+      <p class="resume-message">你上次已完成测验，要查看结果还是重新测试？</p>
+      <div class="resume-buttons">
+        <button class="action-btn primary" id="review-btn">查看上次结果</button>
+        <button class="action-btn secondary" id="retest-btn" style="background: #f3f4f6; color: var(--color-text)">重新测试</button>
+      </div>
+    </div>
+
+    <div id="confirm-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h3 class="modal-title" id="modal-title">确认提交？</h3>
+        <p class="modal-message" id="modal-message">提交后将生成本次测试结果。你之后仍可以再次查看本次结果。</p>
+        <div class="modal-buttons">
+          <button class="modal-btn cancel" id="modal-cancel">取消</button>
+          <button class="modal-btn confirm" id="modal-confirm">确认提交</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
   </div>
 
   <script>
@@ -603,10 +805,84 @@
     let currentQuestions = [];
     let userAnswers = {};
     let currentIndex = 0;
+    let hasUnsavedProgress = false;
 
     function getQuizSlug() {
       const params = new URLSearchParams(window.location.search);
       return params.get('quiz');
+    }
+
+    function getStorageKey(slug) {
+      return `fun_quiz_progress_${slug}`;
+    }
+
+    function saveProgress(submitted = false) {
+      const slug = getQuizSlug();
+      if (!slug || !currentAttempt) return;
+
+      const data = {
+        quiz_slug: slug,
+        attempt_id: currentAttempt.attempt_id,
+        current_question_index: currentIndex,
+        answers: userAnswers,
+        submitted: submitted,
+        saved_at: new Date().toISOString()
+      };
+
+      localStorage.setItem(getStorageKey(slug), JSON.stringify(data));
+      hasUnsavedProgress = !submitted;
+    }
+
+    function loadProgress(slug) {
+      const key = getStorageKey(slug);
+      const data = localStorage.getItem(key);
+      if (!data) return null;
+
+      try {
+        return JSON.parse(data);
+      } catch {
+        return null;
+      }
+    }
+
+    function clearProgress(slug) {
+      localStorage.removeItem(getStorageKey(slug));
+      hasUnsavedProgress = false;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2000);
+    }
+
+    function showConfirmModal(title, message, onConfirm, isDanger = false) {
+      const modal = document.getElementById('confirm-modal');
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-message').textContent = message;
+
+      const confirmBtn = document.getElementById('modal-confirm');
+      confirmBtn.className = isDanger ? 'modal-btn danger' : 'modal-btn confirm';
+      confirmBtn.textContent = '确认';
+
+      modal.classList.remove('hidden');
+
+      const handleConfirm = () => {
+        modal.classList.add('hidden');
+        confirmBtn.removeEventListener('click', handleConfirm);
+        onConfirm();
+      };
+
+      const handleCancel = () => {
+        modal.classList.add('hidden');
+        confirmBtn.removeEventListener('click', handleConfirm);
+      };
+
+      confirmBtn.addEventListener('click', handleConfirm);
+      document.getElementById('modal-cancel').onclick = handleCancel;
     }
 
     async function loadQuiz() {
@@ -625,9 +901,90 @@
           throw new Error('Failed to load quiz');
         }
         currentQuiz = await response.json();
-        showWelcome();
+
+        const savedProgress = loadProgress(slug);
+
+        if (savedProgress && savedProgress.submitted) {
+          showResultReviewState(savedProgress.attempt_id);
+        } else if (savedProgress && !savedProgress.submitted) {
+          showResumeState(savedProgress);
+        } else {
+          showWelcome();
+        }
       } catch (error) {
         showError();
+      }
+    }
+
+    function showResumeState(savedProgress) {
+      document.getElementById('loading-state').classList.add('hidden');
+      document.getElementById('welcome-state').classList.add('hidden');
+      document.getElementById('question-state').classList.add('hidden');
+      document.getElementById('result-state').classList.add('hidden');
+      document.getElementById('error-state').classList.add('hidden');
+      document.getElementById('result-review-state').classList.add('hidden');
+      document.getElementById('resume-state').classList.remove('hidden');
+
+      document.getElementById('resume-btn').onclick = () => resumeQuiz(savedProgress);
+      document.getElementById('restart-btn').onclick = () => {
+        clearProgress(getQuizSlug());
+        startQuiz();
+      };
+    }
+
+    function showResultReviewState(attemptId) {
+      document.getElementById('loading-state').classList.add('hidden');
+      document.getElementById('welcome-state').classList.add('hidden');
+      document.getElementById('question-state').classList.add('hidden');
+      document.getElementById('result-state').classList.add('hidden');
+      document.getElementById('error-state').classList.add('hidden');
+      document.getElementById('resume-state').classList.add('hidden');
+      document.getElementById('result-review-state').classList.remove('hidden');
+
+      document.getElementById('review-btn').onclick = () => reviewResult(attemptId);
+      document.getElementById('retest-btn').onclick = () => {
+        clearProgress(getQuizSlug());
+        startQuiz();
+      };
+    }
+
+    async function resumeQuiz(savedProgress) {
+      try {
+        const response = await fetch(`${API_BASE}/fun-quizzes/${currentQuiz.slug}/attempts/${savedProgress.attempt_id}`);
+        if (!response.ok) {
+          clearProgress(getQuizSlug());
+          startQuiz();
+          return;
+        }
+
+        currentAttempt = await response.json();
+        currentQuestions = currentAttempt.questions;
+        userAnswers = savedProgress.answers || {};
+        currentIndex = savedProgress.current_question_index || 0;
+
+        if (currentIndex >= currentQuestions.length) {
+          currentIndex = 0;
+        }
+
+        showQuestion();
+      } catch (error) {
+        clearProgress(getQuizSlug());
+        startQuiz();
+      }
+    }
+
+    async function reviewResult(attemptId) {
+      try {
+        const response = await fetch(`${API_BASE}/fun-quizzes/${currentQuiz.slug}/attempts/${attemptId}/result`);
+        if (!response.ok) {
+          showToast('获取结果失败');
+          return;
+        }
+
+        const result = await response.json();
+        showResult(result);
+      } catch (error) {
+        showToast('获取结果失败');
       }
     }
 
@@ -637,6 +994,8 @@
       document.getElementById('question-state').classList.add('hidden');
       document.getElementById('result-state').classList.add('hidden');
       document.getElementById('error-state').classList.add('hidden');
+      document.getElementById('resume-state').classList.add('hidden');
+      document.getElementById('result-review-state').classList.add('hidden');
 
       document.getElementById('quiz-icon').textContent = getQuizIcon(currentQuiz.slug);
       document.getElementById('quiz-title').textContent = currentQuiz.title;
@@ -662,6 +1021,7 @@
         userAnswers = {};
         currentIndex = 0;
 
+        saveProgress(false);
         showQuestion();
       } catch (error) {
         alert('启动测验失败，请重试');
@@ -674,6 +1034,8 @@
       document.getElementById('question-state').classList.remove('hidden');
       document.getElementById('result-state').classList.add('hidden');
       document.getElementById('error-state').classList.add('hidden');
+      document.getElementById('resume-state').classList.add('hidden');
+      document.getElementById('result-review-state').classList.add('hidden');
 
       const question = currentQuestions[currentIndex];
       const total = currentQuestions.length;
@@ -709,22 +1071,33 @@
         btn.classList.toggle('selected', btn.dataset.value === value);
       });
       document.getElementById('next-btn').disabled = false;
+      saveProgress(false);
     }
 
     function nextQuestion() {
       if (currentIndex < currentQuestions.length - 1) {
         currentIndex++;
+        saveProgress(false);
         showQuestion();
       } else {
-        submitQuiz();
+        showSubmitConfirm();
       }
     }
 
     function prevQuestion() {
       if (currentIndex > 0) {
         currentIndex--;
+        saveProgress(false);
         showQuestion();
       }
+    }
+
+    function showSubmitConfirm() {
+      showConfirmModal(
+        '确认提交？',
+        '提交后将生成本次测试结果。你之后仍可以再次查看本次结果。',
+        () => submitQuiz()
+      );
     }
 
     async function submitQuiz() {
@@ -749,10 +1122,16 @@
         if (!response.ok) throw new Error('Failed to submit quiz');
 
         const result = await response.json();
+        saveProgress(true);
         showResult(result);
       } catch (error) {
-        alert('提交失败，请重试');
+        showToast('提交失败，请重试');
       }
+    }
+
+    function manualSave() {
+      saveProgress(false);
+      showToast('已保存当前进度');
     }
 
     function showResult(result) {
@@ -761,6 +1140,10 @@
       document.getElementById('question-state').classList.add('hidden');
       document.getElementById('result-state').classList.remove('hidden');
       document.getElementById('error-state').classList.add('hidden');
+      document.getElementById('resume-state').classList.add('hidden');
+      document.getElementById('result-review-state').classList.add('hidden');
+
+      hasUnsavedProgress = false;
 
       const primary = result.primary_result;
 
@@ -838,6 +1221,8 @@
       document.getElementById('question-state').classList.add('hidden');
       document.getElementById('result-state').classList.add('hidden');
       document.getElementById('error-state').classList.remove('hidden');
+      document.getElementById('resume-state').classList.add('hidden');
+      document.getElementById('result-review-state').classList.add('hidden');
     }
 
     function getQuizIcon(slug) {
@@ -856,12 +1241,30 @@
       return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
     }
 
+    function handleBeforeUnload(e) {
+      if (hasUnsavedProgress) {
+        e.preventDefault();
+        e.returnValue = '你当前还有未提交的作答进度，确定离开吗？';
+        return e.returnValue;
+      }
+    }
+
     document.getElementById('start-btn').addEventListener('click', startQuiz);
     document.getElementById('next-btn').addEventListener('click', nextQuestion);
     document.getElementById('prev-btn').addEventListener('click', prevQuestion);
     document.getElementById('retry-btn').addEventListener('click', () => {
+      clearProgress(getQuizSlug());
       startQuiz();
     });
+
+    let saveBtn = document.createElement('button');
+    saveBtn.id = 'save-btn';
+    saveBtn.className = 'save-btn';
+    saveBtn.textContent = '保存进度';
+    saveBtn.onclick = manualSave;
+    document.querySelector('.nav-buttons').appendChild(saveBtn);
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
     loadQuiz();
   </script>
