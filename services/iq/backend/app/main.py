@@ -1123,10 +1123,7 @@ def fun_play_page():
     return FileResponse(Path(FRONTEND_DIR) / "fun-play.html", media_type="text/html")
 
 
-app.mount("/iq", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="iq-frontend")
-app.mount("", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="root-frontend")
-
-# Dynasty Selection Page
+# Dynasty Selection Page (must be before static file mount)
 @app.get("/dynasty-select.html", include_in_schema=False)
 def dynasty_select_page():
     return FileResponse(Path(FRONTEND_DIR) / "dynasty-select.html", media_type="text/html")
@@ -1134,3 +1131,6 @@ def dynasty_select_page():
 @app.get("/dynasty/{dynasty_id}/", include_in_schema=False)
 def dynasty_test_page(dynasty_id: str):
     return FileResponse(Path(FRONTEND_DIR) / "dynasty-test.html", media_type="text/html")
+
+app.mount("/iq", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="iq-frontend")
+app.mount("", FrontendStaticFiles(directory=str(FRONTEND_DIR), html=True), name="root-frontend")
