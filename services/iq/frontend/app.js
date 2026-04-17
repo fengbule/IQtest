@@ -343,6 +343,54 @@ function restart() {
   window.location.reload();
 }
 
+async function saveResultImage() {
+  const btn = document.getElementById('save-image-btn');
+  const icon = document.getElementById('save-image-icon');
+  if (!btn || !icon) return;
+  
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  icon.textContent = '⏳';
+  btn.textContent = '生成中...';
+  
+  try {
+    const resultSection = document.getElementById('result-section');
+    
+    const canvas = await html2canvas(resultSection, {
+      backgroundColor: '#ffffff',
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      allowTaint: true
+    });
+    
+    const link = document.createElement('a');
+    const timestamp = new Date().toISOString().slice(0, 10);
+    link.download = `IQ测试结果-${timestamp}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    
+    icon.textContent = '✅';
+    btn.textContent = '已保存';
+    
+    setTimeout(() => {
+      icon.textContent = '📥';
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }, 2000);
+  } catch (error) {
+    console.error('Failed to save image:', error);
+    icon.textContent = '❌';
+    btn.textContent = '保存失败';
+    
+    setTimeout(() => {
+      icon.textContent = '📥';
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }, 2000);
+  }
+}
+
 window.addEventListener('blur', () => {
   syncActiveTiming();
   state.activeSince = null;
@@ -357,5 +405,6 @@ window.addEventListener('focus', () => {
 el('start-btn')?.addEventListener('click', startTest);
 el('submit-btn')?.addEventListener('click', submitTest);
 el('restart-btn')?.addEventListener('click', restart);
+document.getElementById('save-image-btn')?.addEventListener('click', saveResultImage);
 
 loadPublicInfo();

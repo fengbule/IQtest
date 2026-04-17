@@ -731,6 +731,7 @@
       text-decoration: underline;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
   <div class="shell">
@@ -810,6 +811,9 @@
 
         <div class="result-actions">
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <button id="saveImageBtn" class="btn-secondary">
+              <span id="saveImageIcon">📥</span> 保存图片
+            </button>
             <button id="restartBtn" class="btn-secondary">重新测试</button>
             <button id="toTopBtn" class="btn-primary">回到首页</button>
           </div>
@@ -1708,6 +1712,55 @@
     document.getElementById('submitBtn').addEventListener('click', renderResult);
     document.getElementById('restartBtn').addEventListener('click', () => startTest(false));
     document.getElementById('toTopBtn').addEventListener('click', () => showScreen('intro'));
+
+    async function saveResultImage() {
+      const btn = document.getElementById('saveImageBtn');
+      const icon = document.getElementById('saveImageIcon');
+      if (!btn || !icon) return;
+      
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      icon.textContent = '⏳';
+      btn.innerHTML = '<span id="saveImageIcon">⏳</span> 生成中...';
+      
+      try {
+        const resultScreen = document.getElementById('result');
+        
+        const canvas = await html2canvas(resultScreen, {
+          backgroundColor: '#f6faf6',
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          allowTaint: true
+        });
+        
+        const link = document.createElement('a');
+        const timestamp = new Date().toISOString().slice(0, 10);
+        const typeName = document.getElementById('resultTypeName')?.textContent || 'SBTI结果';
+        link.download = `${typeName}-${timestamp}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        icon.textContent = '✅';
+        btn.innerHTML = '<span id="saveImageIcon">✅</span> 已保存';
+        
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 2000);
+      } catch (error) {
+        console.error('Failed to save image:', error);
+        icon.textContent = '❌';
+        btn.innerHTML = '<span id="saveImageIcon">❌</span> 保存失败';
+        
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 2000);
+      }
+    }
+
+    document.getElementById('saveImageBtn')?.addEventListener('click', saveResultImage);
   </script>
 </body>
 </html>

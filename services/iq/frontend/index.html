@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>在线智力检测平台</title>
   <link rel="stylesheet" href="/iq/styles.css?v=20260415-4" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
   <div class="page-shell">
@@ -213,6 +214,9 @@
         </section>
 
         <div class="actions">
+          <button id="save-image-btn" class="button secondary">
+            <span id="save-image-icon">📥</span> 保存图片
+          </button>
           <button id="restart-btn" class="button secondary">重新开始</button>
         </div>
       </section>

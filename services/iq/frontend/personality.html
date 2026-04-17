@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>历史人物性格匹配</title>
   <link rel="stylesheet" href="/iq/styles.css?v=20260415-5" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     .personality-container {
       max-width: 900px;
@@ -396,6 +397,9 @@
         </section>
 
         <div class="actions">
+          <button id="save-image-btn" class="button secondary">
+            <span id="save-image-icon">📥</span> 保存图片
+          </button>
           <button id="restart-btn" class="button secondary">重新测评</button>
           <a href="/portal.html" class="button primary">返回首页</a>
         </div>
@@ -621,6 +625,57 @@
       resultSection.classList.add('hidden');
       welcomeSection.classList.remove('hidden');
     });
+
+    // 保存图片
+    async function saveResultImage() {
+      const btn = document.getElementById('save-image-btn');
+      const icon = document.getElementById('save-image-icon');
+      if (!btn || !icon) return;
+      
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      icon.textContent = '⏳';
+      btn.textContent = '生成中...';
+      
+      try {
+        const resultSectionEl = document.getElementById('result-section');
+        
+        const canvas = await html2canvas(resultSectionEl, {
+          backgroundColor: '#ffffff',
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          allowTaint: true
+        });
+        
+        const link = document.createElement('a');
+        const timestamp = new Date().toISOString().slice(0, 10);
+        link.download = `性格测试结果-${timestamp}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        icon.textContent = '✅';
+        btn.textContent = '已保存';
+        
+        setTimeout(() => {
+          icon.textContent = '📥';
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 2000);
+      } catch (error) {
+        console.error('Failed to save image:', error);
+        icon.textContent = '❌';
+        btn.textContent = '保存失败';
+        
+        setTimeout(() => {
+          icon.textContent = '📥';
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 2000);
+      }
+    }
+
+    document.getElementById('save-image-btn')?.addEventListener('click', saveResultImage);
 
     // 初始化
     checkAllAnswered();

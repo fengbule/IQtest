@@ -6,6 +6,7 @@
   <title>趣味心理测验</title>
   <link rel="stylesheet" href="/styles.css?v=20260415-4" />
   <link rel="stylesheet" href="/css/fun-quiz.css?v=20260415-1" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     :root {
       --color-primary: #8b5cf6;
@@ -361,6 +362,21 @@
     .result-actions {
       display: flex;
       gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn.save-image-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+    }
+
+    .action-btn.save-image-btn:hover {
+      opacity: 0.9;
+    }
+
+    .action-btn.save-image-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .action-btn {
@@ -935,6 +951,9 @@
       <div class="result-extra" id="result-extra"></div>
 
       <div class="result-actions">
+        <button class="action-btn secondary" id="save-image-btn">
+          <span id="save-image-icon">📥</span> 保存图片
+        </button>
         <button class="action-btn secondary" id="retry-btn">再测一次</button>
         <a href="/fun/" class="action-btn primary">返回测验中心</a>
       </div>
@@ -1425,6 +1444,54 @@
       return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
     }
 
+    async function saveResultImage() {
+      const btn = document.getElementById('save-image-btn');
+      const icon = document.getElementById('save-image-icon');
+      const originalText = btn.textContent;
+      
+      btn.disabled = true;
+      icon.textContent = '⏳';
+      btn.textContent = '生成中...';
+      
+      try {
+        const resultState = document.getElementById('result-state');
+        
+        const canvas = await html2canvas(resultState, {
+          backgroundColor: '#ffffff',
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          allowTaint: true
+        });
+        
+        const link = document.createElement('a');
+        const quizTitle = currentQuiz?.title || '测验结果';
+        const timestamp = new Date().toISOString().slice(0, 10);
+        link.download = `${quizTitle}-${timestamp}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        icon.textContent = '✅';
+        btn.textContent = '已保存';
+        
+        setTimeout(() => {
+          icon.textContent = '📥';
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 2000);
+      } catch (error) {
+        console.error('Failed to save image:', error);
+        icon.textContent = '❌';
+        btn.textContent = '保存失败';
+        
+        setTimeout(() => {
+          icon.textContent = '📥';
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 2000);
+      }
+    }
+
     function handleBeforeUnload(e) {
       if (hasUnsavedProgress) {
         e.preventDefault();
@@ -1440,6 +1507,7 @@
       clearProgress(getQuizSlug());
       startQuiz();
     });
+    document.getElementById('save-image-btn').addEventListener('click', saveResultImage);
 
     let saveBtn = document.createElement('button');
     saveBtn.id = 'save-btn';
