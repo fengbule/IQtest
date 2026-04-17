@@ -188,12 +188,14 @@
       color: #1f2937;
     }
 
-    .option-item {
-      margin-bottom: 10px;
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
 
     .option-item {
-      margin-bottom: 8px;
+      margin-bottom: 0;
     }
 
     .option-label {
@@ -525,6 +527,15 @@
         font-size: 1rem;
       }
 
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .option-label {
+        min-height: 56px;
+        padding: 14px 16px;
+      }
+
       .test-footer {
         flex-direction: column;
       }
@@ -683,14 +694,14 @@
         questionEl.className = 'question-item';
         questionEl.id = `question-${question.id}`;
 
-        let optionsHtml = question.options.map(opt => `
+        let optionsHtml = `<div class="options-grid">${question.options.map(opt => `
           <div class="option-item" data-option-id="${opt.id}">
             <label class="option-label">
               <input type="radio" name="question-${question.id}" value="${opt.id}" class="option-input" />
               <span class="option-text">${opt.text}</span>
             </label>
           </div>
-        `).join('');
+        `).join('')}</div>`;
 
         questionEl.innerHTML = `
           <div style="display: flex; align-items: flex-start; margin-bottom: 16px;">
