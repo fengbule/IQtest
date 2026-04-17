@@ -6,7 +6,7 @@
   "cover_image": "/images_fun/career-cake/cover.png",
   "theme_color": "#f97316",
   "estimated_minutes": 2,
-  "play_style": "scorecard",
+  "play_style": "quick",
   "scoring_mode": "scorecard",
   "question_count": 10,
   "result_count": 7,
@@ -171,7 +171,7 @@
       "poster_image": "/images_fun/career-cake/result_creator.png",
       "share_title": "我的人生蛋糕是创业蛋糕",
       "share_subtitle": "不满足于平庸，我要创造属于自己的事业。",
-      "rule": {"type": "score_range", "min_total": 28, "max_total": 40},
+      "rule": {"type": "score_range", "min_total": 30, "max_total": 31},
       "extra": {"tags": ["创业", "创新", "敢闯", "有魄力"], "level": "A+"}
     },
     {
@@ -183,7 +183,7 @@
       "poster_image": "/images_fun/career-cake/result_leader.png",
       "share_title": "我的人生蛋糕是领导蛋糕",
       "share_subtitle": "不是一个人在战斗，是带领大家一起冲。",
-      "rule": {"type": "score_range", "min_total": 22, "max_total": 27},
+      "rule": {"type": "score_range", "min_total": 28, "max_total": 29},
       "extra": {"tags": ["领导力", "协调力", "有全局观", "善激励"], "level": "A"}
     },
     {
@@ -195,44 +195,8 @@
       "poster_image": "/images_fun/career-cake/result_expert.png",
       "share_title": "我的人生蛋糕是专家蛋糕",
       "share_subtitle": "不求全，但求深。",
-      "rule": {"type": "score_range", "min_total": 16, "max_total": 21},
+      "rule": {"type": "score_range", "min_total": 26, "max_total": 27},
       "extra": {"tags": ["专业", "深度", "匠心", "专注"], "level": "B+"}
-    },
-    {
-      "key": "cake_free",
-      "name": "自由蛋糕",
-      "subtitle": "你的蛋糕是一块轻盈的提拉米苏",
-      "summary": "你追求自由，不想被束缚在工作岗位上。",
-      "long_desc": "你向往自由职业或远程办公的生活，不想被固定的上班时间束缚。你的人生蛋糕是一块轻盈的提拉米苏，随性而美味。",
-      "poster_image": "/images_fun/career-cake/result_free.png",
-      "share_title": "我的人生蛋糕是自由蛋糕",
-      "share_subtitle": "不想打卡的人生，才是向往的人生。",
-      "rule": {"type": "score_range", "min_total": 12, "max_total": 15},
-      "extra": {"tags": ["自由", "随性", "热爱生活", "不将就"], "level": "B"}
-    },
-    {
-      "key": "cake_stable",
-      "name": "安稳蛋糕",
-      "subtitle": "你的蛋糕是一块经典的海绵蛋糕",
-      "summary": "你追求稳定的生活，安安乐乐就是福。",
-      "long_desc": "你是一个脚踏实地的人，不喜欢冒险，更看重长期稳定。你的人生蛋糕是一块经典的海绵蛋糕，简单但耐吃。",
-      "poster_image": "/images_fun/career-cake/result_stable.png",
-      "share_title": "我的人生蛋糕是安稳蛋糕",
-      "share_subtitle": "平平淡淡才是真，安安乐乐才是福。",
-      "rule": {"type": "score_range", "min_total": 8, "max_total": 11},
-      "extra": {"tags": ["稳定", "踏实", "靠谱", "懂生活"], "level": "B"}
-    },
-    {
-      "key": "cake_impact",
-      "name": "影响力蛋糕",
-      "subtitle": "你的蛋糕是一块华丽的翻糖蛋糕",
-      "summary": "你渴望成功和影响力，想要被更多人看见。",
-      "long_desc": "你有野心，有目标，渴望在某个领域做出成绩获得认可。你的人生蛋糕是一块华丽的翻糖蛋糕，既好看又有实力。",
-      "poster_image": "/images_fun/career-cake/result_impact.png",
-      "share_title": "我的人生蛋糕是影响力蛋糕",
-      "share_subtitle": "不是我要出名，是我要做出改变世界的事。",
-      "rule": {"type": "score_range", "min_total": 18, "max_total": 25},
-      "extra": {"tags": ["有野心", "追求成功", "影响力", "敢拼搏"], "level": "A"}
     },
     {
       "key": "cake_balanced",
@@ -243,7 +207,7 @@
       "poster_image": "/images_fun/career-cake/result_balanced.png",
       "share_title": "我的人生蛋糕是平衡蛋糕",
       "share_subtitle": "工作是为了更好地生活，而不是生活为了工作。",
-      "rule": {"type": "score_range", "min_total": 0, "max_total": 7},
+      "rule": {"type": "score_range", "min_total": 0, "max_total": 25},
       "extra": {"tags": ["平衡", "智慧", "懂取舍", "生活家"], "level": "A+"}
     }
   ]

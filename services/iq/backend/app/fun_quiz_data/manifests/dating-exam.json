@@ -6,7 +6,7 @@
   "cover_image": "/images_fun/dating-exam/cover.png",
   "theme_color": "#ec4899",
   "estimated_minutes": 2,
-  "play_style": "scorecard",
+  "play_style": "quick",
   "scoring_mode": "scorecard",
   "question_count": 10,
   "result_count": 6,
@@ -161,7 +161,7 @@
       "poster_image": "/images_fun/dating-exam/result_top_student.png",
       "share_title": "我的脱单能力成绩单：高分恋爱生",
       "share_subtitle": "你不是不会，是还没轮到你。",
-      "rule": {"type": "score_range", "min_total": 22, "max_total": 30},
+      "rule": {"type": "score_range", "min_total": 22, "max_total": 24},
       "extra": {
         "tags": ["会聊天", "有边界感", "容易被喜欢"],
         "level": "A+",

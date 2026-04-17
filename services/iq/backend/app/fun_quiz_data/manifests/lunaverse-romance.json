@@ -142,7 +142,7 @@
       "poster_image": "/images_fun/lunaverse-romance/result_fire.png",
       "share_title": "我的月球恋人是火星恋人",
       "share_subtitle": "爱情要热烈，心动要常在。",
-      "rule": {"type": "score_range", "min_total": 20, "max_total": 28},
+      "rule": {"type": "score_range", "min_total": 20, "max_total": 24},
       "extra": {"tags": ["热情", "浪漫", "需要表达", "讨厌平淡"], "level": "A+"}
     },
     {
