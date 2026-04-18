@@ -195,12 +195,16 @@
     }
 
     .option-item {
+      display: block;
       margin-bottom: 0;
     }
 
     .option-label {
       display: flex;
-      align-items: center;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 14px;
+      width: 100%;
       padding: 16px 18px;
       background: #ffffff;
       border: 2px solid #e5e7eb;
@@ -209,7 +213,7 @@
       transition: all 0.2s ease;
       min-height: 60px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
+      overflow: visible;
     }
 
     .option-label:hover {
@@ -225,17 +229,19 @@
       accent-color: var(--color-primary);
       cursor: pointer;
       flex-shrink: 0;
-      margin-right: 14px;
+      margin-top: 2px;
     }
 
     .option-text {
       font-size: 1rem;
       color: #374151;
-      line-height: 1.4;
+      line-height: 1.5;
       flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      min-width: 0;
+      white-space: normal;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      overflow: visible;
     }
 
     .option-item.selected .option-label {
@@ -538,6 +544,7 @@
       .option-label {
         min-height: 56px;
         padding: 14px 16px;
+        gap: 12px;
       }
 
       .test-footer {
