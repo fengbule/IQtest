@@ -200,7 +200,7 @@
 
     .option-label {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       padding: 16px 18px;
       background: #ffffff;
       border: 2px solid #e5e7eb;
@@ -209,7 +209,12 @@
       transition: all 0.2s ease;
       min-height: 60px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
+      overflow: visible;
+    }
+
+    .option-label .option-input {
+      margin-top: 2px;
+      flex-shrink: 0;
     }
 
     .option-label:hover {
@@ -233,9 +238,9 @@
       color: #374151;
       line-height: 1.4;
       flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      min-width: 0;
+      word-break: break-word;
+      overflow: visible;
     }
 
     .option-item.selected .option-label {
