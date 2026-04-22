@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>测评中心</title>
-  <link rel="stylesheet" href="/styles.css?v=20260415-1" />
+  <link rel="stylesheet" href="/styles.css?v=20260422-beauty-1" />
   <style>
     :root {
       --color-primary: #3b82f6;
@@ -14,6 +14,8 @@
       --color-light: #f3f4f6;
       --color-border: #e5e7eb;
       --radius: 12px;
+      --color-beauty: #ec4899;
+      --color-beauty-2: #8b5cf6;
     }
 
     * {
@@ -62,7 +64,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 30px;
-      max-width: 900px;
+      max-width: 1180px;
       width: 100%;
       animation: slideUp 0.6s ease-out;
     }
@@ -83,6 +85,16 @@
     .test-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .test-card.beauty {
+      border-top-color: var(--color-beauty);
+      background: linear-gradient(135deg, rgba(236,72,153,0.06), rgba(139,92,246,0.03));
+    }
+
+    .test-card.beauty:hover {
+      border-top-color: var(--color-beauty);
+      background: linear-gradient(135deg, rgba(236,72,153,0.10), rgba(139,92,246,0.06));
     }
 
     .test-card.iq {
@@ -184,6 +196,15 @@
       text-decoration: none;
     }
 
+    .card-button.beauty {
+      background: linear-gradient(90deg, var(--color-beauty), var(--color-beauty-2));
+      color: white;
+    }
+
+    .card-button.beauty:hover {
+      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.35);
+    }
+
     .card-button.iq {
       background: var(--color-primary);
       color: white;
@@ -240,6 +261,7 @@
       color: rgba(255, 255, 255, 0.8);
       font-size: 0.9rem;
       animation: fadeIn 0.8s ease-out;
+      line-height: 1.7;
     }
 
     @keyframes slideDown {
@@ -292,11 +314,23 @@
   <div class="portal-container">
     <div class="portal-header">
       <h1>🎯 综合测评平台</h1>
-      <p>探索你的智力与性格特质</p>
+      <p>探索你的智力、性格与个人风格表达</p>
     </div>
 
     <div class="portal-grid">
-      <!-- 历史朝代人物匹配卡片 -->
+      <a href="/beauty.html" class="test-card beauty">
+        <div class="card-icon">✨</div>
+        <h2 class="card-title">AI 颜值测试</h2>
+        <p class="card-description">上传一张自拍，生成更精美的个人形象分析报告。支持男女分开建议，覆盖脸型倾向、风格标签、妆容或修饰建议、发型与拍照建议。</p>
+        <ul class="card-features">
+          <li>上传照片生成报告</li>
+          <li>男女分开分析逻辑</li>
+          <li>风格 / 配色 / 发型建议</li>
+          <li>适合截图分享</li>
+        </ul>
+        <button class="card-button beauty">立即体验</button>
+      </a>
+
       <a href="/dynasty-select.html" class="test-card dynasty">
         <div class="card-icon">⚔️</div>
         <h2 class="card-title">历史朝代人物匹配</h2>
@@ -310,7 +344,6 @@
         <button class="card-button dynasty">进入测试</button>
       </a>
 
-      <!-- IQ 测试卡片 -->
       <a href="/iq/" class="test-card iq">
         <div class="card-icon">🧠</div>
         <h2 class="card-title">IQ 智力测试</h2>
@@ -324,7 +357,6 @@
         <button class="card-button iq">进入测试</button>
       </a>
 
-      <!-- 历史人物性格匹配卡片 -->
       <a href="/personality/" class="test-card personality">
         <div class="card-icon">👤</div>
         <h2 class="card-title">历史人物匹配</h2>
@@ -338,7 +370,6 @@
         <button class="card-button personality">进入测试</button>
       </a>
 
-      <!-- SBTI人格测试卡片 -->
       <a href="/sbti/" class="test-card sbti">
         <div class="card-icon">🎭</div>
         <h2 class="card-title">SBTI 人格测试</h2>
@@ -352,7 +383,6 @@
         <button class="card-button sbti">进入测试</button>
       </a>
 
-      <!-- 趣味心理测验卡片 -->
       <a href="/fun/" class="test-card fun-quiz">
         <div class="card-icon">🎯</div>
         <h2 class="card-title">趣味心理测验</h2>
@@ -368,7 +398,8 @@
     </div>
 
     <div class="portal-footer">
-      <p>本平台测试结果仅供参考，不代表专业心理学诊断</p>
+      <p>本平台测试结果仅供参考，不代表专业心理学诊断。</p>
+      <p>AI 颜值测试不会根据照片推断地域、民族、籍贯等敏感属性。</p>
     </div>
   </div>
 </body>
