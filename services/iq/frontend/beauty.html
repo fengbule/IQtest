@@ -3,143 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI颜值测试</title>
-  <link rel="stylesheet" href="/beauty.css?v=20260422-1" />
+  <title>AI 形象分析报告</title>
+  <link rel="stylesheet" href="/beauty.css?v=20260422-cv-1" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4/face_mesh.js"></script>
 </head>
 <body>
-  <div class="beauty-shell">
-    <div class="beauty-ambient beauty-ambient-1"></div>
-    <div class="beauty-ambient beauty-ambient-2"></div>
+  <main class="beauty-container">
+    <section class="beauty-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">AI STYLE REPORT</p>
+        <h1>上传照片，生成专业 CV 形象报告</h1>
+        <p class="lead">
+          系统会优先调用人脸关键点模型判断脸型、五官比例、上镜重点与风格强化方向；模型不可用时会自动降级为图像特征分析。
+        </p>
+      </div>
+      <div class="hero-panel">
+        <div class="capability">
+          <span>01</span>
+          <strong>脸型与五官几何</strong>
+          <p>基于脸部轮廓、眉眼、鼻唇和下颌关键点生成判断。</p>
+        </div>
+        <div class="capability">
+          <span>02</span>
+          <strong>自动风格归纳</strong>
+          <p>强化风格和适合场景会写进报告，不再需要手动选择。</p>
+        </div>
+        <div class="capability">
+          <span>03</span>
+          <strong>明星风格参考</strong>
+          <p>输出公开人物风格相似参考，不做真实身份识别。</p>
+        </div>
+      </div>
+    </section>
 
-    <main class="beauty-container">
-      <section class="beauty-hero card">
-        <div class="hero-copy">
-          <p class="eyebrow">AI BEAUTY TEST · ENTERTAINMENT REPORT</p>
-          <h1>AI颜值测试 / 形象风格分析</h1>
-          <p class="lead">
-            上传一张自拍，生成更丰富的个人形象报告。系统会结合图片基础特征、风格偏好与大量内置建议库，给出男女分开的风格、妆容或修饰、发型、配色与拍照建议。
-          </p>
-          <div class="hero-tags">
-            <span>男女分开分析</span>
-            <span>风格标签更丰富</span>
-            <span>支持保存报告</span>
-            <span>适合截图分享</span>
+    <section class="config-section">
+      <div class="section-head">
+        <div>
+          <h2>开始分析</h2>
+          <p class="muted">选择报告建议方向后上传一张单人正脸或轻微侧脸照片。建议光线清晰、无遮挡、少滤镜。</p>
+        </div>
+        <a class="back-link" href="/">返回首页</a>
+      </div>
+
+      <div class="config-grid">
+        <div class="config-block">
+          <span class="config-title">报告建议方向</span>
+          <div class="chip-row" id="gender-row">
+            <button class="choice-chip active" data-group="gender" data-value="female">女生向建议</button>
+            <button class="choice-chip" data-group="gender" data-value="male">男生向建议</button>
           </div>
         </div>
-        <div class="hero-preview">
-          <div class="hero-mini-card">
-            <strong>示例报告 A</strong>
-            <p>轻熟通勤感 · 菱形脸倾向 · 眉眼清晰 · 适合奶油肌底妆与冷茶棕唇色。</p>
-          </div>
-          <div class="hero-mini-card">
-            <strong>示例报告 B</strong>
-            <p>利落清爽感 · 长脸倾向 · 适合顶部蓬松短发、冷灰蓝穿搭与侧身拍摄。</p>
-          </div>
+        <div class="model-note">
+          <strong>风格强化与使用场景将由模型自动生成</strong>
+          <p>报告会根据照片中的脸型、五官比例、色温、亮度和构图，给出更适合你的风格路线与应用场景。</p>
         </div>
-      </section>
+      </div>
 
-      <section class="card config-card">
-        <div class="section-head">
+      <div class="upload-grid">
+        <label class="upload-card" for="photo-input">
+          <input id="photo-input" type="file" accept="image/*" hidden />
+          <div id="upload-empty" class="upload-empty">
+            <div class="upload-icon">📷</div>
+            <strong>点击上传照片</strong>
+            <p>支持 JPG / PNG / WEBP，建议单人清晰照片</p>
+          </div>
+          <div id="preview-wrap" class="preview-wrap hidden">
+            <img id="photo-preview" alt="上传预览" />
+          </div>
+        </label>
+
+        <aside class="upload-tips">
+          <strong>建议上传条件</strong>
+          <ul>
+            <li>正脸或轻微侧脸，五官清楚</li>
+            <li>尽量是单人照片，脸部占画面 25% 以上</li>
+            <li>避免墨镜、口罩、过暗、过曝或强滤镜</li>
+            <li>只做人脸检测与风格建议，不做身份识别</li>
+          </ul>
+          <button id="analyze-btn" class="primary-btn">生成形象报告</button>
+        </aside>
+      </div>
+    </section>
+
+    <section id="analysis-card" class="loading-card hidden">
+      <div class="loading-head">
+        <strong>正在生成形象报告</strong>
+        <span id="loading-text">正在读取图片基础特征...</span>
+      </div>
+      <div class="loading-track">
+        <div id="loading-bar" class="loading-bar"></div>
+      </div>
+    </section>
+
+    <section id="result-section" class="result-section hidden">
+      <section id="report-board" class="result-board">
+        <div class="report-header">
           <div>
-            <h2>开始分析</h2>
-            <p class="muted">先选择基础信息，再上传一张单人正脸或半身自拍。为了让结果更细致，建议光线清晰、不要戴墨镜或口罩。</p>
+            <p class="eyebrow">PERSONAL CV STYLE REPORT</p>
+            <h2 id="report-title">你的 AI 形象报告</h2>
+            <p id="report-summary" class="lead muted"></p>
           </div>
-          <a class="back-link" href="/">返回首页</a>
-        </div>
-
-        <div class="config-grid">
-          <div class="config-block">
-            <span class="config-title">性别方向</span>
-            <div class="chip-row" id="gender-row">
-              <button class="choice-chip active" data-group="gender" data-value="female">女生向建议</button>
-              <button class="choice-chip" data-group="gender" data-value="male">男生向建议</button>
-            </div>
-          </div>
-
-          <div class="config-block">
-            <span class="config-title">想强化的风格</span>
-            <div class="chip-row" id="style-row">
-              <button class="choice-chip active" data-group="style" data-value="natural">自然耐看</button>
-              <button class="choice-chip" data-group="style" data-value="sweet">甜酷/减龄</button>
-              <button class="choice-chip" data-group="style" data-value="clean">清冷/利落</button>
-              <button class="choice-chip" data-group="style" data-value="office">通勤精致</button>
-            </div>
-          </div>
-
-          <div class="config-block">
-            <span class="config-title">主要使用场景</span>
-            <div class="chip-row" id="scene-row">
-              <button class="choice-chip active" data-group="scene" data-value="daily">日常自拍</button>
-              <button class="choice-chip" data-group="scene" data-value="social">社交头像</button>
-              <button class="choice-chip" data-group="scene" data-value="dating">约会氛围</button>
-              <button class="choice-chip" data-group="scene" data-value="work">通勤/职业照</button>
-            </div>
+          <div class="report-badges">
+            <span id="report-score" class="score-badge">上镜指数 -</span>
+            <span id="model-status" class="model-badge">CV 模型 -</span>
           </div>
         </div>
 
-        <div class="upload-grid">
-          <label class="upload-card" for="photo-input">
-            <input id="photo-input" type="file" accept="image/*" hidden />
-            <div id="upload-empty" class="upload-empty">
-              <div class="upload-icon">📸</div>
-              <strong>点击上传照片</strong>
-              <p>建议上传单人自拍，支持 JPG / PNG / WEBP</p>
-            </div>
-            <div id="preview-wrap" class="preview-wrap hidden">
-              <img id="photo-preview" alt="上传预览" />
-            </div>
-          </label>
-
-          <div class="upload-tips card-lite">
-            <strong>建议上传条件</strong>
-            <ul>
-              <li>正脸或轻微侧脸，五官清楚</li>
-              <li>尽量是单人照片</li>
-              <li>避免过暗、过曝或强滤镜</li>
-              <li>不做身份识别与敏感属性推断</li>
-            </ul>
-            <button id="analyze-btn" class="primary-btn">开始生成精美报告</button>
+        <div class="report-showcase">
+          <div class="report-photo-frame">
+            <img id="report-photo" alt="报告照片" />
           </div>
-        </div>
-      </section>
-
-      <section id="analysis-card" class="card loading-card hidden">
-        <div class="loader-orb"></div>
-        <h3>正在生成你的形象分析</h3>
-        <p id="loading-text" class="muted">正在读取图片基础特征...</p>
-        <div class="loading-track">
-          <div id="loading-bar" class="loading-bar"></div>
-        </div>
-      </section>
-
-      <section id="result-section" class="result-section hidden">
-        <section id="report-board" class="card result-board">
-          <div class="report-header">
-            <div>
-              <p class="eyebrow">PERSONAL STYLE REPORT</p>
-              <h2 id="report-title">你的 AI 颜值报告</h2>
-              <p id="report-summary" class="lead muted"></p>
-            </div>
-            <div class="report-actions-inline">
-              <span id="report-score" class="score-badge">上镜指数 -</span>
-              <span id="report-vibe" class="vibe-badge">风格标签 -</span>
-            </div>
-          </div>
-
           <div class="metric-grid">
             <article class="metric-card accent">
-              <span>脸型倾向</span>
+              <span>脸型判断</span>
               <strong id="face-shape">-</strong>
               <small id="face-shape-note"></small>
             </article>
             <article class="metric-card">
-              <span>整体气质</span>
+              <span>五官重点</span>
+              <strong id="feature-focus">-</strong>
+              <small id="feature-focus-note"></small>
+            </article>
+            <article class="metric-card">
+              <span>推荐强化风格</span>
               <strong id="style-type">-</strong>
               <small id="style-type-note"></small>
             </article>
             <article class="metric-card">
-              <span>最佳配色</span>
+              <span>适合使用场景</span>
+              <strong id="scene-fit">-</strong>
+              <small id="scene-fit-note"></small>
+            </article>
+            <article class="metric-card">
+              <span>推荐配色</span>
               <strong id="color-palette">-</strong>
               <small id="color-palette-note"></small>
             </article>
@@ -149,56 +146,63 @@
               <small id="camera-focus-note"></small>
             </article>
           </div>
-
-          <div class="result-grid two-col">
-            <article class="detail-card">
-              <h3>五官与气质观察</h3>
-              <ul id="feature-list" class="detail-list"></ul>
-            </article>
-            <article class="detail-card">
-              <h3>核心风格标签</h3>
-              <div id="tag-cloud" class="tag-cloud"></div>
-            </article>
-          </div>
-
-          <div class="result-grid two-col">
-            <article class="detail-card">
-              <h3 id="beauty-section-title">妆容 / 修饰建议</h3>
-              <ul id="beauty-suggestion-list" class="detail-list"></ul>
-            </article>
-            <article class="detail-card">
-              <h3>发型与配饰方向</h3>
-              <ul id="hair-accessory-list" class="detail-list"></ul>
-            </article>
-          </div>
-
-          <div class="result-grid two-col">
-            <article class="detail-card">
-              <h3>拍照建议</h3>
-              <ul id="photo-tip-list" class="detail-list"></ul>
-            </article>
-            <article class="detail-card">
-              <h3>尽量避免</h3>
-              <ul id="avoid-list" class="detail-list"></ul>
-            </article>
-          </div>
-
-          <article class="detail-card">
-            <h3>报告说明</h3>
-            <p class="muted">
-              本页为娱乐向形象分析报告，重点在风格表达和个人形象建议。它不会识别你的身份，也不会推断地域、民族、籍贯等敏感属性。
-            </p>
-          </article>
-        </section>
-
-        <div class="result-actions">
-          <button id="save-report-btn" class="secondary-btn">保存报告图片</button>
-          <button id="restart-btn" class="ghost-btn">重新测试</button>
         </div>
-      </section>
-    </main>
-  </div>
 
-  <script src="/beauty.js?v=20260422-1"></script>
+        <div class="result-grid two-col">
+          <article class="detail-panel">
+            <h3>CV 脸型与五官观察</h3>
+            <ul id="feature-list" class="detail-list"></ul>
+          </article>
+          <article class="detail-panel">
+            <h3>模型推荐风格标签</h3>
+            <div id="tag-cloud" class="tag-cloud"></div>
+            <ul id="style-suggestion-list" class="detail-list compact-list"></ul>
+          </article>
+        </div>
+
+        <article class="detail-panel">
+          <h3>明星风格相似参考</h3>
+          <div id="celebrity-list" class="celebrity-grid"></div>
+          <p class="fine-print">相似参考基于公开人物的风格气质与镜头路线，不代表身份识别、真实长相匹配或任何确定性结论。</p>
+        </article>
+
+        <div class="result-grid two-col">
+          <article class="detail-panel">
+            <h3 id="beauty-section-title">妆容 / 修饰建议</h3>
+            <ul id="beauty-suggestion-list" class="detail-list"></ul>
+          </article>
+          <article class="detail-panel">
+            <h3>发型与配饰方向</h3>
+            <ul id="hair-accessory-list" class="detail-list"></ul>
+          </article>
+        </div>
+
+        <div class="result-grid two-col">
+          <article class="detail-panel">
+            <h3>拍照建议</h3>
+            <ul id="photo-tip-list" class="detail-list"></ul>
+          </article>
+          <article class="detail-panel">
+            <h3>尽量避免</h3>
+            <ul id="avoid-list" class="detail-list"></ul>
+          </article>
+        </div>
+
+        <article class="detail-panel report-note">
+          <h3>报告说明</h3>
+          <p class="muted">
+            本页为娱乐向形象分析报告，重点在风格表达和个人形象建议。系统只做人脸检测、关键点几何和图像特征分析，不识别身份，也不推断地域、民族、籍贯等敏感属性。
+          </p>
+        </article>
+      </section>
+
+      <div class="result-actions">
+        <button id="save-report-btn" class="secondary-btn">保存报告图片</button>
+        <button id="restart-btn" class="ghost-btn">重新测试</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/beauty.js?v=20260422-cv-1"></script>
 </body>
 </html>

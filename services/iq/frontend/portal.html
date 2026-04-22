@@ -3,301 +3,241 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>测评中心</title>
+  <title>综合测评平台</title>
   <link rel="stylesheet" href="/styles.css?v=20260422-beauty-1" />
   <style>
     :root {
-      --color-primary: #3b82f6;
-      --color-secondary: #10b981;
-      --color-tertiary: #f59e0b;
-      --color-dark: #1f2937;
-      --color-light: #f3f4f6;
-      --color-border: #e5e7eb;
-      --radius: 12px;
-      --color-beauty: #ec4899;
-      --color-beauty-2: #8b5cf6;
+      --page-bg: #f6f2ea;
+      --surface: #ffffff;
+      --surface-soft: #fbf8f1;
+      --text: #1f2933;
+      --muted: #667085;
+      --line: #e4ddd1;
+      --shadow: 0 18px 48px rgba(31, 41, 51, 0.1);
+      --radius: 8px;
+      --beauty: #d84f87;
+      --dynasty: #253b59;
+      --iq: #2d7dd2;
+      --personality: #12a37f;
+      --sbti: #d9922e;
+      --fun: #7758d1;
     }
 
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
     }
 
-    html, body {
-      height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: var(--color-dark);
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(120deg, rgba(216, 79, 135, 0.07), transparent 34%),
+        linear-gradient(240deg, rgba(18, 163, 127, 0.08), transparent 32%),
+        var(--page-bg);
     }
 
     .portal-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 64px;
     }
 
     .portal-header {
-      text-align: center;
-      margin-bottom: 60px;
-      color: white;
-      animation: slideDown 0.6s ease-out;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 26px;
     }
 
     .portal-header h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      margin: 0 0 10px;
+      font-size: 2.45rem;
+      line-height: 1.14;
     }
 
     .portal-header p {
-      font-size: 1.1rem;
-      opacity: 0.95;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      max-width: 640px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .header-badge {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.78);
+      color: #476071;
+      font-weight: 800;
     }
 
     .portal-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      max-width: 1180px;
-      width: 100%;
-      animation: slideUp 0.6s ease-out;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
     }
 
     .test-card {
-      background: white;
+      position: relative;
+      display: flex;
+      min-height: 320px;
+      flex-direction: column;
+      border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 40px 30px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      text-decoration: none;
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
       color: inherit;
-      cursor: pointer;
-      border: 2px solid transparent;
+      text-decoration: none;
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .test-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 4px;
+      background: var(--accent);
     }
 
     .test-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 22px 56px rgba(31, 41, 51, 0.14);
     }
 
-    .test-card.beauty {
-      border-top-color: var(--color-beauty);
-      background: linear-gradient(135deg, rgba(236,72,153,0.06), rgba(139,92,246,0.03));
-    }
+    .test-card.beauty { --accent: var(--beauty); --accent-soft: rgba(216, 79, 135, 0.12); }
+    .test-card.dynasty { --accent: var(--dynasty); --accent-soft: rgba(37, 59, 89, 0.12); }
+    .test-card.iq { --accent: var(--iq); --accent-soft: rgba(45, 125, 210, 0.12); }
+    .test-card.personality { --accent: var(--personality); --accent-soft: rgba(18, 163, 127, 0.12); }
+    .test-card.sbti { --accent: var(--sbti); --accent-soft: rgba(217, 146, 46, 0.14); }
+    .test-card.fun-quiz { --accent: var(--fun); --accent-soft: rgba(119, 88, 209, 0.12); }
 
-    .test-card.beauty:hover {
-      border-top-color: var(--color-beauty);
-      background: linear-gradient(135deg, rgba(236,72,153,0.10), rgba(139,92,246,0.06));
-    }
-
-    .test-card.iq {
-      border-top-color: var(--color-primary);
-    }
-
-    .test-card.iq:hover {
-      border-top-color: var(--color-primary);
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02));
-    }
-
-    .test-card.personality {
-      border-top-color: var(--color-secondary);
-    }
-
-    .test-card.personality:hover {
-      border-top-color: var(--color-secondary);
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02));
-    }
-
-    .test-card.sbti {
-      border-top-color: var(--color-tertiary);
-    }
-
-    .test-card.sbti:hover {
-      border-top-color: var(--color-tertiary);
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.02));
-    }
-
-    .test-card.fun-quiz {
-      border-top-color: #8b5cf6;
-    }
-
-    .test-card.fun-quiz:hover {
-      border-top-color: #8b5cf6;
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(139, 92, 246, 0.02));
-    }
-
-    .test-card.dynasty {
-      border-top-color: #1e3a5f;
-    }
-
-    .test-card.dynasty:hover {
-      border-top-color: #1e3a5f;
-      background: linear-gradient(135deg, rgba(30, 58, 95, 0.05), rgba(30, 58, 95, 0.02));
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
     }
 
     .card-icon {
-      font-size: 3rem;
-      margin-bottom: 15px;
+      display: inline-flex;
+      width: 48px;
+      height: 48px;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      background: var(--accent-soft);
+      font-size: 1.8rem;
+    }
+
+    .card-time {
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 800;
     }
 
     .card-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 12px;
+      margin: 0 0 12px;
+      font-size: 1.42rem;
+      line-height: 1.25;
+      word-break: keep-all;
     }
 
     .card-description {
-      font-size: 0.95rem;
-      color: #666;
-      line-height: 1.6;
-      margin-bottom: 20px;
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.72;
     }
 
     .card-features {
-      text-align: left;
-      background: var(--color-light);
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
-      font-size: 0.9rem;
-      color: #555;
+      display: grid;
+      gap: 8px;
+      margin: auto 0 22px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-soft);
+      color: #566575;
+      list-style: none;
     }
 
     .card-features li {
-      margin: 8px 0;
-      padding-left: 20px;
-      list-style: none;
       position: relative;
+      padding-left: 18px;
+      line-height: 1.55;
     }
 
-    .card-features li:before {
-      content: "✓";
+    .card-features li::before {
+      content: "";
       position: absolute;
       left: 0;
-      font-weight: bold;
+      top: 0.68em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
     }
 
     .card-button {
-      display: inline-block;
-      padding: 12px 32px;
-      border: none;
-      border-radius: 8px;
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      align-self: flex-start;
+      border: 0;
+      border-radius: var(--radius);
+      padding: 0 20px;
+      background: var(--accent);
+      color: white;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 800;
       cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-    }
-
-    .card-button.beauty {
-      background: linear-gradient(90deg, var(--color-beauty), var(--color-beauty-2));
-      color: white;
-    }
-
-    .card-button.beauty:hover {
-      box-shadow: 0 4px 12px rgba(236, 72, 153, 0.35);
-    }
-
-    .card-button.iq {
-      background: var(--color-primary);
-      color: white;
-    }
-
-    .card-button.iq:hover {
-      background: #2563eb;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    }
-
-    .card-button.personality {
-      background: var(--color-secondary);
-      color: white;
-    }
-
-    .card-button.personality:hover {
-      background: #059669;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-    }
-
-    .card-button.sbti {
-      background: var(--color-tertiary);
-      color: white;
-    }
-
-    .card-button.sbti:hover {
-      background: #d97706;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-    }
-
-    .card-button.fun-quiz {
-      background: #8b5cf6;
-      color: white;
-    }
-
-    .card-button.fun-quiz:hover {
-      background: #7c3aed;
-      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-    }
-
-    .card-button.dynasty {
-      background: #1e3a5f;
-      color: white;
-    }
-
-    .card-button.dynasty:hover {
-      background: #0f2744;
-      box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
     }
 
     .portal-footer {
-      margin-top: 50px;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 0.9rem;
-      animation: fadeIn 0.8s ease-out;
-      line-height: 1.7;
+      margin-top: 26px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--muted);
+      line-height: 1.75;
     }
 
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .portal-footer p {
+      margin: 0;
     }
 
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
+    @media (max-width: 980px) {
+      .portal-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+
+      .portal-header {
+        align-items: flex-start;
+        flex-direction: column;
       }
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
+    @media (max-width: 680px) {
+      .portal-container {
+        width: min(100% - 24px, 1180px);
+        padding-top: 24px;
       }
-      to {
-        opacity: 1;
-      }
-    }
 
-    @media (max-width: 768px) {
       .portal-header h1 {
-        font-size: 1.8rem;
+        font-size: 1.9rem;
       }
 
       .portal-grid {
@@ -305,102 +245,123 @@
       }
 
       .test-card {
-        padding: 30px 20px;
+        min-height: auto;
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="portal-container">
-    <div class="portal-header">
-      <h1>🎯 综合测评平台</h1>
-      <p>探索你的智力、性格与个人风格表达</p>
-    </div>
+  <main class="portal-container">
+    <header class="portal-header">
+      <div>
+        <h1>综合测评平台</h1>
+        <p>探索你的智力、性格、历史人物匹配与个人风格表达。所有测评统一成更克制、清晰的卡片入口，移动端也保持同一套视觉节奏。</p>
+      </div>
+      <div class="header-badge">6 个测评入口</div>
+    </header>
 
-    <div class="portal-grid">
+    <section class="portal-grid">
       <a href="/beauty.html" class="test-card beauty">
-        <div class="card-icon">✨</div>
-        <h2 class="card-title">AI 颜值测试</h2>
-        <p class="card-description">上传一张自拍，生成更精美的个人形象分析报告。支持男女分开建议，覆盖脸型倾向、风格标签、妆容或修饰建议、发型与拍照建议。</p>
+        <div class="card-top">
+          <div class="card-icon">✨</div>
+          <span class="card-time">1-2 分钟</span>
+        </div>
+        <h2 class="card-title">AI 形象分析报告</h2>
+        <p class="card-description">上传自拍后由 CV 人脸关键点模型判断脸型、五官比例、风格强化方向和明星风格参考。</p>
         <ul class="card-features">
-          <li>上传照片生成报告</li>
-          <li>男女分开分析逻辑</li>
-          <li>风格 / 配色 / 发型建议</li>
-          <li>适合截图分享</li>
+          <li>脸型与五官几何分析</li>
+          <li>自动生成强化风格</li>
+          <li>明星风格相似参考</li>
+          <li>适合保存报告图片</li>
         </ul>
-        <button class="card-button beauty">立即体验</button>
+        <button class="card-button">立即体验</button>
       </a>
 
       <a href="/dynasty-select.html" class="test-card dynasty">
-        <div class="card-icon">⚔️</div>
+        <div class="card-top">
+          <div class="card-icon">⚔️</div>
+          <span class="card-time">3-4 分钟</span>
+        </div>
         <h2 class="card-title">历史朝代人物匹配</h2>
-        <p class="card-description">选择一个你感兴趣的朝代，看看你在那个时代最像哪位历史人物。全新改版，分朝代专题测评！</p>
+        <p class="card-description">选择一个你感兴趣的朝代，看看你在那个时代最像哪位历史人物。</p>
         <ul class="card-features">
-          <li>6大朝代专题</li>
-          <li>12-16位历史人物/朝代</li>
-          <li>20道情境题</li>
-          <li>约3-4分钟</li>
+          <li>6 大朝代专题</li>
+          <li>12-16 位历史人物 / 朝代</li>
+          <li>20 道情境题</li>
+          <li>分朝代专题测评</li>
         </ul>
-        <button class="card-button dynasty">进入测试</button>
+        <button class="card-button">进入测试</button>
       </a>
 
       <a href="/iq/" class="test-card iq">
-        <div class="card-icon">🧠</div>
+        <div class="card-top">
+          <div class="card-icon">🧠</div>
+          <span class="card-time">约 25 分钟</span>
+        </div>
         <h2 class="card-title">IQ 智力测试</h2>
-        <p class="card-description">从数理推理、逻辑推理、言语理解与空间想象四个维度，全面评估你的综合认知能力。</p>
+        <p class="card-description">从数理推理、逻辑推理、言语理解与空间想象四个维度评估综合认知能力。</p>
         <ul class="card-features">
-          <li>64题题库 / 随机抽取32题</li>
+          <li>64 题题库 / 随机抽取 32 题</li>
           <li>四维能力画像</li>
-          <li>参考IQ值与区间</li>
-          <li>约25分钟</li>
+          <li>参考 IQ 值与区间</li>
+          <li>结果可信度提示</li>
         </ul>
-        <button class="card-button iq">进入测试</button>
+        <button class="card-button">进入测试</button>
       </a>
 
       <a href="/personality/" class="test-card personality">
-        <div class="card-icon">👤</div>
+        <div class="card-top">
+          <div class="card-icon">👤</div>
+          <span class="card-time">约 10 分钟</span>
+        </div>
         <h2 class="card-title">历史人物匹配</h2>
-        <p class="card-description">通过科学的性格评测，发现你与哪位历史人物的性格最相似，了解你的性格特质。</p>
+        <p class="card-description">通过性格问卷发现你与哪位历史人物的性格最相似，了解你的性格特质。</p>
         <ul class="card-features">
-          <li>50道性格问卷</li>
+          <li>50 道性格问卷</li>
           <li>五大人格维度</li>
-          <li>12位历史人物库</li>
-          <li>约10分钟</li>
+          <li>12 位历史人物库</li>
+          <li>相似度报告</li>
         </ul>
-        <button class="card-button personality">进入测试</button>
+        <button class="card-button">进入测试</button>
       </a>
 
       <a href="/sbti/" class="test-card sbti">
-        <div class="card-icon">🎭</div>
+        <div class="card-top">
+          <div class="card-icon">🎭</div>
+          <span class="card-time">5-10 分钟</span>
+        </div>
         <h2 class="card-title">SBTI 人格测试</h2>
-        <p class="card-description">基于十五维度的人格测试，挖掘你最真实的人格类型，包含28种独特人格画像。</p>
+        <p class="card-description">基于十五维度的人格测试，挖掘你最真实的人格类型与独特人格画像。</p>
         <ul class="card-features">
-          <li>31道趣味题目</li>
+          <li>31 道趣味题目</li>
           <li>十五维度评分</li>
-          <li>28种人格类型</li>
-          <li>约5-10分钟</li>
+          <li>28 种人格类型</li>
+          <li>适合截图分享</li>
         </ul>
-        <button class="card-button sbti">进入测试</button>
+        <button class="card-button">进入测试</button>
       </a>
 
       <a href="/fun/" class="test-card fun-quiz">
-        <div class="card-icon">🎯</div>
+        <div class="card-top">
+          <div class="card-icon">🎯</div>
+          <span class="card-time">1-3 分钟</span>
+        </div>
         <h2 class="card-title">趣味心理测验</h2>
-        <p class="card-description">1~3 分钟，找到你的隐藏人设，17 种趣味测验持续更新中。</p>
+        <p class="card-description">快速找到你的隐藏人设，多个轻量化趣味测验持续更新中。</p>
         <ul class="card-features">
-          <li>17个趣味测验</li>
-          <li>1~3分钟超快体验</li>
+          <li>17 个趣味测验</li>
+          <li>超快体验</li>
           <li>适合截图分享</li>
           <li>娱乐向心理测验</li>
         </ul>
-        <button class="card-button fun-quiz">进入测验</button>
+        <button class="card-button">进入测验</button>
       </a>
-    </div>
+    </section>
 
-    <div class="portal-footer">
-      <p>本平台测试结果仅供参考，不代表专业心理学诊断。</p>
-      <p>AI 颜值测试不会根据照片推断地域、民族、籍贯等敏感属性。</p>
-    </div>
-  </div>
+    <footer class="portal-footer">
+      <p>本平台测试结果仅供参考，不代表专业心理学诊断。AI 形象分析只做人脸检测、关键点几何和风格建议，不做身份识别或敏感属性推断。</p>
+    </footer>
+  </main>
 </body>
 </html>
