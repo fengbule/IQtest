@@ -1,8 +1,9 @@
 # IQtest
 
-一个面向大众体验的在线智力检测 Demo，支持：
+一个面向大众体验的在线测评 Demo，支持：
 
-- 前台测评页
+- AI 颜值测试 / 形象风格分析
+- 前台 IQ 测评页
 - CPI / 参考 IQ 值 / 参考 IQ 区间展示
 - 四维能力画像
 - 管理员后台
@@ -11,6 +12,25 @@
 - Docker / 1Panel 部署
 
 本项目用于 Demo、课程设计、产品原型和轻量体验，不等同于正式标准化 IQ 测验、心理诊断或教育评估。
+
+## 新增功能：AI 颜值测试
+
+新增页面：`/beauty.html`
+
+当前版本特性：
+
+- 支持上传照片生成精美报告
+- 支持男女分开建议逻辑
+- 结果包含脸型倾向、风格标签、配色建议、发型建议、拍照建议
+- 女生向结果会突出妆容建议，男生向结果会突出修饰建议
+- 支持将报告保存为图片
+
+说明：
+
+- 本功能当前定位为**娱乐向形象分析**与**风格建议工具**
+- 不做人脸身份识别
+- 不根据照片推断地域、民族、籍贯等敏感属性
+- 结果更侧重个人风格表达，不构成专业诊断意见
 
 ## 已修复的部署问题
 
@@ -22,7 +42,9 @@
 
 ## 访问路径
 
-- 前台：`/iq/`
+- 门户首页：`/`
+- AI 颜值测试：`/beauty.html`
+- IQ 前台：`/iq/`
 - 后台：`/iq/admin.html`
 - 单次详情：`/iq/admin-attempt.html?id=<attempt_id>`
 - 健康检查：`/api/health`
@@ -142,11 +164,15 @@ curl http://127.0.0.1:8741/api/health
 
 公网直接访问示例：
 
+- `http://你的服务器IP:8000/`
+- `http://你的服务器IP:8000/beauty.html`
 - `http://你的服务器IP:8000/iq/`
 - `http://你的服务器IP:8000/iq/admin.html`
 
 仅本机监听示例：
 
+- `http://127.0.0.1:8741/`
+- `http://127.0.0.1:8741/beauty.html`
 - `http://127.0.0.1:8741/iq/`
 - `http://127.0.0.1:8741/iq/admin.html`
 
@@ -238,6 +264,8 @@ location / {
 - 站点域名指向你的服务器
 - 反向代理目标填：`http://127.0.0.1:8741`
 - 之后访问：
+  - `https://你的域名/`
+  - `https://你的域名/beauty.html`
   - `https://你的域名/iq/`
   - `https://你的域名/iq/admin.html`
 
@@ -268,6 +296,10 @@ curl http://127.0.0.1:8000/api/health
 
 关键文件：
 
+- `services/iq/frontend/portal.html`
+- `services/iq/frontend/beauty.html`
+- `services/iq/frontend/beauty.css`
+- `services/iq/frontend/beauty.js`
 - `services/iq/backend/app/main.py`
 - `services/iq/backend/app/scoring.py`
 - `services/iq/backend/app/question_selector.py`
@@ -280,3 +312,5 @@ curl http://127.0.0.1:8000/api/health
 ## 6. 免责声明
 
 结果页中的“参考 IQ 值”和“参考 IQ 区间”属于站内解释型映射，用于帮助普通用户理解结果层级，不代表正式 IQ 测验结论，也不能替代医疗、教育、招聘或心理测评中的专业判断。
+
+AI 颜值测试页面属于娱乐型形象分析与风格建议功能，不构成医疗美容、专业诊断或身份识别结论。
